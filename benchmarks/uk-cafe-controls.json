@@ -1,0 +1,96 @@
+[
+  {
+    "name": "cafes",
+    "query": "na[amenity=cafe]"
+  },
+  {
+    "name": "london_cafes",
+    "query": "na[amenity=cafe]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ]
+  },
+  {
+    "name": "uk_pubs",
+    "query": "na[amenity=pub]"
+  },
+  {
+    "name": "cafe_name",
+    "query": "na[amenity=cafe][name]"
+  },
+  {
+    "name": "q022_manchester_iterate",
+    "query": "na[amenity=restaurant][cuisine=thai]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q046_london_iterate",
+    "query": "w[highway=residential][name]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "london_buildings",
+    "query": "a[building=yes]",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ],
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ]
+  },
+  {
+    "name": "amenity_presence",
+    "query": "n[amenity]"
+  },
+  {
+    "name": "bus_routes",
+    "query": "r[type=route][route=bus]"
+  },
+  {
+    "name": "uk_missing_local_key",
+    "query": "n[gol_reader_missing_test_key]"
+  },
+  {
+    "name": "all_nodes",
+    "query": "n"
+  }
+]

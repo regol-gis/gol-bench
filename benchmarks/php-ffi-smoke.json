@@ -1,0 +1,11 @@
+[
+ {"name":"nodes", "operation":"iterate", "query":"n"},
+ {"name":"ways", "operation":"iterate", "query":"w"},
+ {"name":"relations", "operation":"iterate", "query":"r"},
+ {"name":"all", "operation":"iterate", "query":"*"},
+ {"name":"amenities", "operation":"iterate", "query":"n[amenity]"},
+ {"name":"buildings", "operation":"iterate", "query":"a[building]"},
+ {"name":"empty", "operation":"iterate", "query":"n[benchmark_absent_tag]"},
+ {"name":"bbox-origin", "operation":"iterate", "query":"*", "bbox_lonlat":[-1,-1,1,1]},
+ {"name":"bbox-vaduz", "operation":"iterate", "query":"a[building]", "bbox_lonlat":[9.48,47.11,9.57,47.18]}
+]

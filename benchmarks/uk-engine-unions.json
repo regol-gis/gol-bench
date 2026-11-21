@@ -1,0 +1,628 @@
+[
+  {
+    "name": "q068_edinburgh_tags",
+    "selector_id": "q068",
+    "query": "*[landuse=grass,farmland,farmyard,flowerbed,meadow,plant_nursery,vineyard,greenery,allotments,recreation_ground],*[leisure=park,dogpark,garden,nature_reserve,playground],*[natural=grassland,scrub]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q056_norfolk_iterate",
+    "selector_id": "q056",
+    "query": "w[public_transport=platform], w[highway=platform], w[railway=platform]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q081_cardiff_iterate",
+    "selector_id": "q081",
+    "query": "wa[public_transport=platform],wa[highway=platform],wa[railway=platform]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "region": "cardiff",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ]
+  },
+  {
+    "name": "q064_lake_district_iterate",
+    "selector_id": "q064",
+    "query": "*[landuse=forest,orchard],*[natural=wood]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q081_cardiff_tags",
+    "selector_id": "q081",
+    "query": "wa[public_transport=platform],wa[highway=platform],wa[railway=platform]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "region": "cardiff",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ]
+  },
+  {
+    "name": "q064_lake_district_geometry",
+    "selector_id": "q064",
+    "query": "*[landuse=forest,orchard],*[natural=wood]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q067_lake_district_iterate",
+    "selector_id": "q067",
+    "query": "*[landuse=commercial,construction,education,industrial,residential,retail,institutional,landfill,port,brownfield],*[area:highway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q067_lake_district_geometry",
+    "selector_id": "q067",
+    "query": "*[landuse=commercial,construction,education,industrial,residential,retail,institutional,landfill,port,brownfield],*[area:highway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q068_lake_district_iterate",
+    "selector_id": "q068",
+    "query": "*[landuse=grass,farmland,farmyard,flowerbed,meadow,plant_nursery,vineyard,greenery,allotments,recreation_ground],*[leisure=park,dogpark,garden,nature_reserve,playground],*[natural=grassland,scrub]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q081_norfolk_iterate",
+    "selector_id": "q081",
+    "query": "wa[public_transport=platform],wa[highway=platform],wa[railway=platform]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q099_lake_district_iterate",
+    "selector_id": "q099",
+    "query": "a[natural=water],w[waterway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q067_edinburgh_tags",
+    "selector_id": "q067",
+    "query": "*[landuse=commercial,construction,education,industrial,residential,retail,institutional,landfill,port,brownfield],*[area:highway]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q068_lake_district_geometry",
+    "selector_id": "q068",
+    "query": "*[landuse=grass,farmland,farmyard,flowerbed,meadow,plant_nursery,vineyard,greenery,allotments,recreation_ground],*[leisure=park,dogpark,garden,nature_reserve,playground],*[natural=grassland,scrub]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q068_edinburgh_iterate",
+    "selector_id": "q068",
+    "query": "*[landuse=grass,farmland,farmyard,flowerbed,meadow,plant_nursery,vineyard,greenery,allotments,recreation_ground],*[leisure=park,dogpark,garden,nature_reserve,playground],*[natural=grassland,scrub]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q099_edinburgh_iterate",
+    "selector_id": "q099",
+    "query": "a[natural=water],w[waterway]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q064_edinburgh_iterate",
+    "selector_id": "q064",
+    "query": "*[landuse=forest,orchard],*[natural=wood]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q099_edinburgh_tags",
+    "selector_id": "q099",
+    "query": "a[natural=water],w[waterway]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q067_edinburgh_iterate",
+    "selector_id": "q067",
+    "query": "*[landuse=commercial,construction,education,industrial,residential,retail,institutional,landfill,port,brownfield],*[area:highway]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q099_lake_district_geometry",
+    "selector_id": "q099",
+    "query": "a[natural=water],w[waterway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q063_edinburgh_iterate",
+    "selector_id": "q063",
+    "query": "*[water],*[natural=water],*[waterway]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q081_norfolk_geometry",
+    "selector_id": "q081",
+    "query": "wa[public_transport=platform],wa[highway=platform],wa[railway=platform]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q063_lake_district_geometry",
+    "selector_id": "q063",
+    "query": "*[water],*[natural=water],*[waterway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q064_edinburgh_tags",
+    "selector_id": "q064",
+    "query": "*[landuse=forest,orchard],*[natural=wood]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q056_uk_iterate",
+    "selector_id": "q056",
+    "query": "w[public_transport=platform], w[highway=platform], w[railway=platform]",
+    "region": "whole_file",
+    "operation": "iterate",
+    "semantics": "whole_file",
+    "status": "proposed_unrun",
+    "role": "candidate_selector"
+  },
+  {
+    "name": "q063_lake_district_iterate",
+    "selector_id": "q063",
+    "query": "*[water],*[natural=water],*[waterway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q056_norfolk_geometry",
+    "selector_id": "q056",
+    "query": "w[public_transport=platform], w[highway=platform], w[railway=platform]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q063_edinburgh_tags",
+    "selector_id": "q063",
+    "query": "*[water],*[natural=water],*[waterway]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q056_cardiff_tags",
+    "selector_id": "q056",
+    "query": "w[public_transport=platform], w[highway=platform], w[railway=platform]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "region": "cardiff",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ]
+  },
+  {
+    "name": "q056_cardiff_iterate",
+    "selector_id": "q056",
+    "query": "w[public_transport=platform], w[highway=platform], w[railway=platform]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "region": "cardiff",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ]
+  }
+]

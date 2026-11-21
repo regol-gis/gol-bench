@@ -1,0 +1,42 @@
+{
+  "all": {
+    "count": 43,
+    "work_items": 43,
+    "fingerprint": {
+      "count": 43,
+      "sum": "16974115484359627857",
+      "xor": "1780095672397782951"
+    },
+    "work_fingerprint": null
+  },
+  "nodes": {
+    "count": 41,
+    "work_items": 41,
+    "fingerprint": {
+      "count": 41,
+      "sum": "16270462442992341783",
+      "xor": "17190228302270767891"
+    },
+    "work_fingerprint": null
+  },
+  "ways": {
+    "count": 1,
+    "work_items": 1,
+    "fingerprint": {
+      "count": 1,
+      "sum": "14985551141465980627",
+      "xor": "14985551141465980627"
+    },
+    "work_fingerprint": null
+  },
+  "relations": {
+    "count": 1,
+    "work_items": 1,
+    "fingerprint": {
+      "count": 1,
+      "sum": "4164845973610857063",
+      "xor": "4164845973610857063"
+    },
+    "work_fingerprint": null
+  }
+}

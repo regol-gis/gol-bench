@@ -1,0 +1,85 @@
+#!/usr/bin/env python3
+"""Command-line entry point for GOL benchmark suites."""
+import argparse
+import importlib.util
+from pathlib import Path
+import os
+import sys
+import subprocess
+
+ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT/'tools'))
+SUITES = {
+    'charts': ('charts', 'Plot verified campaign results with individual rounds, medians and chart data'),
+    'writers': ('build_compare', 'Benchmark PBF-to-GOL writer implementations and verify each output'),
+    'fdw': ('benchmark_fdw', 'Set up PostgreSQL and measure verified foreign scans and counts'),
+    'concurrent': ('concurrent_readers', 'Compare concurrent independent histories at a fixed total CPU budget'),
+    'writer-readers': ('writer_readers', 'Compare readers on verified outputs of a writer campaign'),
+    'selectivity': ('selectivity', 'Compare query cost against viewport size and observed hit rate'),
+    'datasets': ('datasets', 'List, stage and checksum tiny through planet-scale inputs'),
+    'scale': ('scale', 'Replay verified map histories independently at each dataset scale'),
+    'sidecars': ('benchmark_tag_sidecars', 'Compare optional tag-sidecar indexing and scans'),
+    'setup': ('setup_engines', 'Build or install selected version-pinned workers'),
+    'smoke': ('smoke', 'Check a small fixture against independent fingerprints'),
+    'compare': ('campaign', 'Time readers in rotated order, verify results, write matched summaries'),
+    'reader-cache': ('benchmark_reader_cache', 'Cross cold and predecessor-warmed application readers on a private UK GOL'),
+    'applications': ('benchmark_application_sessions', 'Replay ten applications, including CLI exports'),
+    'stacks': ('benchmark_stacks', 'Measure persistent SDKs and bindings on ordered or shuffled corpora'),
+    'counts': ('benchmark_counts', 'Measure native scalar counts'),
+    'cli': ('benchmark_cli', 'Compare counts and real CSV, GeoJSON, GeoJSON Lines, XML and PBF exports'),
+    'cli-counts': ('benchmark_cli_counts', 'Compare fresh Regol and GOL Tool processes'),
+    'queries': ('benchmark_queries', 'Compare stored queries, fields, early stops and pan sessions'),
+    'startup': ('benchmark_startup', 'Time fresh opens with verified warm or cold input'),
+    'memory': ('benchmark_memory', 'Measure Linux cgroup limits, faults, RSS and OOM outcomes'),
+    'read-advice': ('benchmark_read_advice', 'Compare file advice at controlled residency'),
+    'build-compare': ('build_compare', 'Alternate writers, compare footprint and verify feature identities on each output'),
+    'build': ('measure_native_build', 'Measure PBF-to-GOL construction'),
+    'data-geodesk': ('fetch_application_gol', 'Fetch and verify the dated reference UK GOL'),
+    'data-regol': ('fetch_native_snapshot', 'Fetch and verify a native UK layout'),
+    'data-pbf': ('fetch_application_pbf', 'Fetch and verify the UK source PBF'),
+    'audit-counts': ('summarize_count_benchmarks', 'Check CLI and persistent scalar results against Python counts'),
+    'audit': ('summarize_stack_benchmarks', 'Compare identities and payloads across language stacks'),
+}
+if len(sys.argv)<2 or sys.argv[1] in ('-h','--help','list'):
+    print('Usage: gol-bench COMMAND [arguments]\n')
+    for k,(_,desc) in SUITES.items():
+        print(f'  {k:15} {desc}')
+    print('\nUse COMMAND --help for its inputs and options.')
+    sys.exit(0)
+name = sys.argv[1]
+if name not in SUITES:
+    sys.exit(f'Unknown command {name!r}. Run gol-bench list.')
+script = str(ROOT/'tools'/(SUITES[name][0]+'.py'))
+args = sys.argv[2:]
+
+def plotting_python():
+    if os.getenv('GOL_BENCH_CHART_PYTHON'):
+        return os.environ['GOL_BENCH_CHART_PYTHON']
+    if importlib.util.find_spec('matplotlib') or not Path('/usr/bin/python3').exists():
+        return sys.executable
+    return '/usr/bin/python3'
+
+if name == 'charts':
+    python = plotting_python()
+    os.execvp(python, [python, script, *args])
+
+auto_chart = {'cli', 'sidecars', 'selectivity', 'startup', 'read-advice', 'memory', 'queries', 'writer-readers', 'concurrent', 'fdw', 'scale', 'compare', 'applications', 'writers', 'build-compare', 'audit', 'audit-counts'}
+if name in auto_chart:
+    if '--help' in args or '-h' in args:
+        print('gol-bench writes comparison charts after a successful run. Pass --no-charts to skip.\n', flush=True)
+    if '--no-charts' in args:
+        args = [a for a in args if a != '--no-charts']
+    else:
+        # The suite owns argument validation and output defaults. Only inspect an
+        # explicit destination here and only plot after its successful exit.
+        parser = argparse.ArgumentParser(add_help=False, allow_abbrev=False)
+        parser.add_argument('--output', '--out', type=Path)
+        options, _ = parser.parse_known_args(args)
+        if options.output and not {'--help','-h','--list'}.intersection(args):
+            result = subprocess.run([sys.executable, script, *args])
+            if result.returncode:
+                sys.exit(result.returncode)
+            python = plotting_python()
+            report = options.output.with_suffix('.summary.json') if name == 'sidecars' else options.output
+            os.execvp(python, [python, str(ROOT/'tools/charts.py'), str(report)])
+os.execv(sys.executable, [sys.executable, script, *args])

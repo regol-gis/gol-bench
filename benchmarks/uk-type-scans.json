@@ -1,0 +1,5 @@
+[
+  {"name": "all_ways", "query": "w"},
+  {"name": "all_areas", "query": "a"},
+  {"name": "all_relations", "query": "r"}
+]

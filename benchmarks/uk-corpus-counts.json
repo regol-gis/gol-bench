@@ -1,0 +1,114 @@
+[
+  {
+    "name": "count_q014",
+    "query": "n[natural=peak,volcano,hill][ele]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q014_uk_iterate"
+  },
+  {
+    "name": "count_q017",
+    "query": "na[place=city][population>=250000]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q017_uk_iterate"
+  },
+  {
+    "name": "count_q054",
+    "query": "n[place=suburb,quarter,neighbourhood,village,hamlet][name]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q054_uk_iterate"
+  },
+  {
+    "name": "count_q022",
+    "query": "na[amenity=restaurant][cuisine=thai]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q022_uk_iterate"
+  },
+  {
+    "name": "count_q037",
+    "query": "r[route=subway]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q037_uk_iterate"
+  },
+  {
+    "name": "count_q113",
+    "query": "r[route=bicycle]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q113_uk_iterate"
+  },
+  {
+    "name": "count_q115",
+    "query": "r[type=restriction]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q115_uk_iterate"
+  },
+  {
+    "name": "count_q083",
+    "query": "n[highway=street_lamp]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q083_uk_iterate"
+  },
+  {
+    "name": "count_q109",
+    "query": "w[highway][mtb:scale>=2]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q109_uk_iterate"
+  },
+  {
+    "name": "count_q053",
+    "query": "a[boundary=administrative][name]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q053_uk_iterate"
+  },
+  {
+    "name": "count_q056",
+    "query": "w[public_transport=platform], w[highway=platform], w[railway=platform]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q056_uk_iterate"
+  },
+  {
+    "name": "count_q065",
+    "query": "*[power=tower,catenary_mast,pole]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q065_uk_iterate"
+  },
+  {
+    "name": "count_all",
+    "query": "*",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  },
+  {
+    "name": "count_roads",
+    "query": "w[highway]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  },
+  {
+    "name": "count_buildings",
+    "query": "a[building]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  },
+  {
+    "name": "count_cafes",
+    "query": "na[amenity=cafe]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  }
+]

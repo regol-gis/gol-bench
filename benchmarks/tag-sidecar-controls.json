@@ -1,0 +1,43 @@
+[
+  {
+    "name": "cafes-national",
+    "operation": "iterate",
+    "query": "na[amenity=cafe]"
+  },
+  {
+    "name": "cinemas-national",
+    "operation": "iterate",
+    "query": "na[amenity=cinema]"
+  },
+  {
+    "name": "subway-routes-national",
+    "operation": "iterate",
+    "query": "r[route=subway]"
+  },
+  {
+    "name": "cafes-manchester",
+    "operation": "iterate",
+    "query": "na[amenity=cafe]",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ]
+  },
+  {
+    "name": "residential-roads",
+    "operation": "iterate",
+    "query": "w[highway=residential]"
+  },
+  {
+    "name": "buildings-yes",
+    "operation": "iterate",
+    "query": "a[building=yes]"
+  },
+  {
+    "name": "buildings-fallback",
+    "operation": "iterate",
+    "query": "a[building]"
+  }
+]

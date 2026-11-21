@@ -1,0 +1,510 @@
+{
+  "version": 1,
+  "input_sha256": "47e289273cad6bacd5a8e2df69739a64ef27e2d104c6e460914b4bd1f2d94549",
+  "input_bytes": 4152390952,
+  "research_date": "2026-11-18",
+  "cases": [
+    {
+      "id": "osm2world",
+      "repository": "tordanik/OSM2World",
+      "stars": 882,
+      "interface": "Java",
+      "replay": "reader",
+      "pattern": "Open a library per viewport. In each box enumerate nodes, ways and relations, then read fields for conversion.",
+      "scope": "Three overlapping, authored Bristol views. Isolate node tags, non-area way vertices and non-area relation members. Recursive multipolygon closure, area objects, osm4j conversion and rendering are outside this replay.",
+      "sources": [
+        {
+          "url": "https://github.com/tordanik/OSM2World/blob/8a1c17e6a25f5238ca532c9460f69401151b4fd7/core-jvm/src/main/java/org/osm2world/osm/creation/GeodeskReader.java#L53-L75",
+          "sha256": "0015268f2d41b7d001e7e8a56db8a5e87f822a071aceb050d014d21602ae4c94"
+        },
+        {
+          "url": "https://github.com/tordanik/OSM2World/blob/8a1c17e6a25f5238ca532c9460f69401151b4fd7/core-jvm/src/main/java/org/osm2world/osm/creation/GeodeskReader.java#L109-L176",
+          "sha256": "0015268f2d41b7d001e7e8a56db8a5e87f822a071aceb050d014d21602ae4c94"
+        }
+      ],
+      "open_per_window": true,
+      "windows": [
+        [
+          -2.604,
+          51.451,
+          -2.595,
+          51.457
+        ],
+        [
+          -2.599,
+          51.451,
+          -2.59,
+          51.457
+        ],
+        [
+          -2.594,
+          51.451,
+          -2.585,
+          51.457
+        ]
+      ],
+      "layers": [
+        [
+          "nodes",
+          "n",
+          "tags"
+        ],
+        [
+          "ways",
+          "w",
+          "way_nodes"
+        ],
+        [
+          "relations",
+          "r",
+          "members"
+        ]
+      ]
+    },
+    {
+      "id": "ascend",
+      "repository": "styluslabs/geodesk-tiles",
+      "stars": 25,
+      "interface": "C++",
+      "replay": "reader",
+      "pattern": "Pan across adjacent zoom-7 tiles. Run place, water and major-road layers in source order on each tile.",
+      "scope": "Three representative layers from the low-zoom renderer. Includes decoding fields and shapes. Clipping, simplification, other layers and MVT encoding are outside this replay.",
+      "sources": [
+        {
+          "url": "https://github.com/styluslabs/geodesk-tiles/blob/9ed68ebfb3abe71f13fbba5cca5b0fe9a4bcb28d/ascendtiles.cpp#L103-L125",
+          "sha256": "df71a70d407ea2d6cfd6f08a12e0d595e9f0abc540f72c6dc3e015ed630974d8"
+        },
+        {
+          "url": "https://github.com/styluslabs/geodesk-tiles/blob/9ed68ebfb3abe71f13fbba5cca5b0fe9a4bcb28d/tilebuilder.cpp#L46-L94",
+          "sha256": "848e10abb5fe35412b0d7ad6c7d4cd32ec69a32f4e7f1b6a089cf9824496f095"
+        }
+      ],
+      "open_per_window": false,
+      "tiles": [
+        [
+          7,
+          62,
+          42
+        ],
+        [
+          7,
+          63,
+          42
+        ],
+        [
+          7,
+          64,
+          42
+        ]
+      ],
+      "layers": [
+        [
+          "places",
+          "n[place=continent,country,state,city,town]",
+          "tags"
+        ],
+        [
+          "water",
+          "a[natural=water,glacier]",
+          "geometry"
+        ],
+        [
+          "roads",
+          "w[highway=motorway,trunk,primary]",
+          "coordinates"
+        ]
+      ]
+    },
+    {
+      "id": "openplanetdata",
+      "repository": "openplanetdata/openplanetdata-osm",
+      "stars": 11,
+      "interface": "Airflow → gol CLI",
+      "replay": "cli",
+      "pattern": "Export three neighbouring Scottish island regions, one process per prepared polygon. Write complete PBF output.",
+      "scope": "Start at the prepared-boundary input of the GOL branch. The island outlines are authored coarse request polygons. Boundary preparation and optional Osmium complete_ways post-filtering run outside this phase.",
+      "sources": [
+        {
+          "url": "https://github.com/openplanetdata/openplanetdata-osm/blob/952b3627702838dd6478b7517017a99fec9f3a1b/workflows/utils/osm_subsets.py#L303-L312",
+          "sha256": "3c77d4f7efd41cc1f7b29d44a3a59f4120fc6b32233bd317dc4436d6bd7ff7f0"
+        },
+        {
+          "url": "https://github.com/openplanetdata/openplanetdata-osm/blob/952b3627702838dd6478b7517017a99fec9f3a1b/workflows/utils/osm_subsets.py#L359-L386",
+          "sha256": "3c77d4f7efd41cc1f7b29d44a3a59f4120fc6b32233bd317dc4436d6bd7ff7f0"
+        }
+      ],
+      "format": "pbf",
+      "polygons": [
+        [
+          "Westray",
+          [
+            [
+              -3.16,
+              59.24
+            ],
+            [
+              -3.025,
+              59.215
+            ],
+            [
+              -2.83,
+              59.339
+            ],
+            [
+              -3.015,
+              59.362
+            ],
+            [
+              -3.16,
+              59.24
+            ]
+          ]
+        ],
+        [
+          "Papa Westray",
+          [
+            [
+              -2.92,
+              59.33
+            ],
+            [
+              -2.895,
+              59.32
+            ],
+            [
+              -2.865,
+              59.373
+            ],
+            [
+              -2.913,
+              59.377
+            ],
+            [
+              -2.92,
+              59.33
+            ]
+          ]
+        ],
+        [
+          "Sanday",
+          [
+            [
+              -2.76,
+              59.205
+            ],
+            [
+              -2.61,
+              59.19
+            ],
+            [
+              -2.45,
+              59.264
+            ],
+            [
+              -2.5,
+              59.32
+            ],
+            [
+              -2.69,
+              59.28
+            ],
+            [
+              -2.76,
+              59.205
+            ]
+          ]
+        ]
+      ],
+      "reader_scope": "Open once per polygon and enumerate its bounding-box candidates. Exact clipping, dependency resolution and PBF writing are measured in the CLI session."
+    },
+    {
+      "id": "cesium",
+      "repository": "byjtew/cesium-streetlights-unreal",
+      "stars": 7,
+      "interface": "C++ / Unreal",
+      "replay": "binding",
+      "pattern": "Move a viewpoint three times. Reopen the GOL per request, count radius hits, then materialize node and way-vertex positions.",
+      "scope": "The plugin replaces its configured selector with a radius query against the whole library. Reproduce the effective result set, including non-light features and the count pass. Unreal object creation is outside timing.",
+      "sources": [
+        {
+          "url": "https://github.com/byjtew/cesium-streetlights-unreal/blob/82df94d6ae672bc1a4df05cc21d48744a4893a9e/Source/CesiumStreetlightsForUnreal/Private/CesiumStreetlightsGeodeskDataSource.cpp#L13-L29",
+          "sha256": "04aa822d77b6337ed1a6ddb7e344f36c845cda57ba6190ea9c3cd99799c63cbe"
+        },
+        {
+          "url": "https://github.com/byjtew/cesium-streetlights-unreal/blob/82df94d6ae672bc1a4df05cc21d48744a4893a9e/Source/CesiumStreetlightsForUnreal/Private/CesiumStreetlightsGeodeskDataSource.cpp#L105-L141",
+          "sha256": "04aa822d77b6337ed1a6ddb7e344f36c845cda57ba6190ea9c3cd99799c63cbe"
+        }
+      ],
+      "views": [
+        [
+          -1.553,
+          53.8,
+          80
+        ],
+        [
+          -1.5518,
+          53.8003,
+          80
+        ],
+        [
+          -1.5505,
+          53.8006,
+          80
+        ]
+      ],
+      "reader_scope": "For each view, count the enclosing-box candidates, then read node and way positions. The Python reference separately measures exact radius filtering and materialization."
+    },
+    {
+      "id": "osm-extractor",
+      "repository": "a-b-street/osm-extractor",
+      "stars": 2,
+      "interface": "Node.js → gol CLI",
+      "replay": "cli",
+      "pattern": "Submit a Leeds neighbourhood polygon, then enlarge the request to the published Leeds example. Launch gol for each request and write XML.",
+      "scope": "The second polygon is copied from the service’s README. The first is an authored smaller selection. HTTP, subsequent Osmium clipping and PBF delivery are outside this GOL phase.",
+      "sources": [
+        {
+          "url": "https://github.com/a-b-street/osm-extractor/blob/2e163824e03fd8b392b781a0a64e61cafbc5e1e1/server.js#L25-L58",
+          "sha256": "e2a28e56655f57cdd1ecd3a6e56fc9204f8ee2b9f7855fc4aeada84ecfd04f5c"
+        },
+        {
+          "url": "https://github.com/a-b-street/osm-extractor/blob/2e163824e03fd8b392b781a0a64e61cafbc5e1e1/README.md#L14-L25",
+          "sha256": "71b9b41f40dc2caec7a337b39e3c71f2bc67d43fad2ee88f0cd02f9168c09782"
+        }
+      ],
+      "format": "xml",
+      "polygons": [
+        [
+          "Leeds neighbourhood",
+          [
+            [
+              -1.558,
+              53.8
+            ],
+            [
+              -1.557,
+              53.797
+            ],
+            [
+              -1.55,
+              53.798
+            ],
+            [
+              -1.552,
+              53.802
+            ],
+            [
+              -1.558,
+              53.8
+            ]
+          ]
+        ],
+        [
+          "Leeds",
+          [
+            [
+              -1.6181559940271484,
+              53.83772286984376
+            ],
+            [
+              -1.6581718271386592,
+              53.75619889723589
+            ],
+            [
+              -1.411653714426592,
+              53.748948101502265
+            ],
+            [
+              -1.45839960864663,
+              53.842255054099155
+            ],
+            [
+              -1.6181559940271484,
+              53.83772286984376
+            ]
+          ]
+        ]
+      ],
+      "reader_scope": "Open once per request and enumerate its bounding-box candidates. The CLI session additionally clips, resolves dependencies and writes XML."
+    },
+    {
+      "id": "world2pixel",
+      "repository": "extrel-hg/world2pixel",
+      "stars": 2,
+      "interface": "C++",
+      "replay": "binding",
+      "pattern": "Visit 144 pixel centres in raster order. Each pixel does an exact radius existence query for the configured power layer, stopping at the first hit.",
+      "scope": "A single deterministic simple layer with the original radius formula. The authored Medway grid crosses a mapped tower. Excludes probabilistic layers, other layer precedence and terminal rendering.",
+      "sources": [
+        {
+          "url": "https://github.com/extrel-hg/world2pixel/blob/4b7c13df8178e930833892ee872e009e2d72bdff/world2pixel/build/1.xml#L127-L135",
+          "sha256": "377600c784d1fdd937639d88508e6cb369b9ae05d37f4becadd04aebd00b08c3"
+        },
+        {
+          "url": "https://github.com/extrel-hg/world2pixel/blob/4b7c13df8178e930833892ee872e009e2d72bdff/world2pixel/source/mapqueryfunctions.cpp#L4-L16",
+          "sha256": "aed73546a26e41dbb30bf6cb553a46275d5716c0b5090bf79c989a279b4626c9"
+        },
+        {
+          "url": "https://github.com/extrel-hg/world2pixel/blob/4b7c13df8178e930833892ee872e009e2d72bdff/world2pixel/source/main.cpp#L146-L175",
+          "sha256": "7f79aa3e7366cc8e6c73bd4efce0cbdac2c7203ccabf6ee4d518dd71caad906d"
+        }
+      ],
+      "query": "*[power=tower,catenary_mast,pole]",
+      "northwest": [
+        0.507,
+        51.4452
+      ],
+      "grid_side": 12,
+      "pixel_metres": 6,
+      "radius_add_metres": 2,
+      "reader_scope": "Visit all 144 pixel centres in row-major order. Test for a first candidate inside each enclosing square. The native reference tests exact distance inside the source’s larger extent."
+    },
+    {
+      "id": "next-higher",
+      "repository": "V0174/nextHigherMountain",
+      "stars": 1,
+      "interface": "Java",
+      "replay": "binding",
+      "pattern": "Select large settlements, then for each returned town find the highest eligible peak and enumerate peaks again for its distance profile.",
+      "scope": "UK adaptation of the source city selector. Preserve dependent scans, the elevation cutoff, name fallback and positions. Geodesic ranking and chart rendering are outside this reader phase.",
+      "sources": [
+        {
+          "url": "https://github.com/V0174/nextHigherMountain/blob/1a64fd9260f893c14c673071dea6096adab5d7ff/src/main/java/net/v0174/nexthighermountain/NextHigherMountain.java#L286-L326",
+          "sha256": "1bfc4645be30467ba331f381c399769e53ea0f0898cf1c222cfecd7d2c2cc6aa"
+        },
+        {
+          "url": "https://github.com/V0174/nextHigherMountain/blob/1a64fd9260f893c14c673071dea6096adab5d7ff/src/main/java/net/v0174/nexthighermountain/NextHigherMountain.java#L343-L363",
+          "sha256": "1bfc4645be30467ba331f381c399769e53ea0f0898cf1c222cfecd7d2c2cc6aa"
+        }
+      ],
+      "cities": "n[place=city,town,village,hamlet][name][population>=1000000]",
+      "peaks": "n[natural=peak,volcano,hill][ele]",
+      "reader_scope": "Resolve city seeds. For each matching city, read elevation on the national peak set, then reread elevation, localized name and point. The full Python session parses elevations and selects the maximum.",
+      "seed_nodes": [
+        107775,
+        17861291
+      ]
+    },
+    {
+      "id": "campsbourne",
+      "repository": "JoKent/campsbourne",
+      "stars": 0,
+      "interface": "Python notebook",
+      "replay": "binding",
+      "pattern": "Count all features in the project box, count named streets there, then export the named streets as GeoJSON.",
+      "scope": "Use the notebook’s exact London box. Time the three distinct operations including export. GeoPandas dissolve by name and gazetteer enrichment are downstream.",
+      "sources": [
+        {
+          "url": "https://github.com/JoKent/campsbourne/blob/165a75e81729c0b163229b2e4800854c414ab7f2/street-extract-to-linked-places.ipynb#L29-L42",
+          "sha256": "7a08e8c8f368535376420eb5d1b30660d01b5e763e62484aa05defcaf95e17cf"
+        },
+        {
+          "url": "https://github.com/JoKent/campsbourne/blob/165a75e81729c0b163229b2e4800854c414ab7f2/street-extract-to-linked-places.ipynb#L61-L74",
+          "sha256": "7a08e8c8f368535376420eb5d1b30660d01b5e763e62484aa05defcaf95e17cf"
+        },
+        {
+          "url": "https://github.com/JoKent/campsbourne/blob/165a75e81729c0b163229b2e4800854c414ab7f2/street-extract-to-linked-places.ipynb#L117-L134",
+          "sha256": "7a08e8c8f368535376420eb5d1b30660d01b5e763e62484aa05defcaf95e17cf"
+        },
+        {
+          "url": "https://github.com/JoKent/campsbourne/blob/165a75e81729c0b163229b2e4800854c414ab7f2/street-extract-to-linked-places.ipynb#L8-L17",
+          "sha256": "7a08e8c8f368535376420eb5d1b30660d01b5e763e62484aa05defcaf95e17cf"
+        }
+      ],
+      "window": [
+        -0.128,
+        51.587,
+        -0.116,
+        51.591
+      ],
+      "query": "w[highway][name]",
+      "reader_scope": "Count local features, count named streets, and build their geometries. The Python session finishes by serializing GeoJSON with properties.",
+      "preload_shapely": true
+    },
+    {
+      "id": "varna",
+      "repository": "polimerto360/varna_traffic_map",
+      "stars": 0,
+      "interface": "C++",
+      "replay": "binding",
+      "pattern": "Resolve one city boundary. Restrict ways by exact intersection with this feature, then read drivable ways, speeds and ordered nodes for graph construction.",
+      "scope": "Substitute Cambridge for the original Varna area. Retain the source’s road values and typed ways. Stops after road geometry and speed materialization, before edges, parking, workplaces and simulation.",
+      "sources": [
+        {
+          "url": "https://github.com/polimerto360/varna_traffic_map/blob/8db8adfb098dfe05fcd057d283a6ff284aee2160/traffic_map.hpp#L25-L29",
+          "sha256": "2c8abe0f1ff115cd7f7223eeabaf806e54d64e792610e1971f6b2816a84abaec"
+        },
+        {
+          "url": "https://github.com/polimerto360/varna_traffic_map/blob/8db8adfb098dfe05fcd057d283a6ff284aee2160/traffic_map.hpp#L969-L987",
+          "sha256": "2c8abe0f1ff115cd7f7223eeabaf806e54d64e792610e1971f6b2816a84abaec"
+        },
+        {
+          "url": "https://github.com/polimerto360/varna_traffic_map/blob/8db8adfb098dfe05fcd057d283a6ff284aee2160/traffic_map.hpp#L1644-L1661",
+          "sha256": "2c8abe0f1ff115cd7f7223eeabaf806e54d64e792610e1971f6b2816a84abaec"
+        }
+      ],
+      "area": "a[boundary=administrative][admin_level=8][name=Cambridge]",
+      "roads": "[highway=motorway,trunk,primary,secondary,tertiary,residential,road,track,motorway_link,trunk_link,primary_link,secondary_link,tertiary_link,unclassified,service]",
+      "reader_scope": "Resolve the city boundary, then read ordered way nodes from its stored bounding box. The native session additionally tests intersection with the actual boundary and reads maxspeed.",
+      "seed_relation": 295355,
+      "seed_bounds": [
+        818894,
+        731857179,
+        2201791,
+        733400464
+      ]
+    },
+    {
+      "id": "hillbomb",
+      "repository": "rmichnovicz/hillbomb",
+      "stars": 0,
+      "interface": "Python",
+      "replay": "reader",
+      "pattern": "Load highway ways and their ordered node IDs and coordinates, then tagged highway nodes. Move the routing box along the same hillside, reusing the open library.",
+      "scope": "Three overlapping authored Sheffield windows. The way-node consumer requires retained OSM IDs. The standalone node pass reads tags. Way classification, deduplication, trimming and graph assembly follow the selected reader stages.",
+      "sources": [
+        {
+          "url": "https://github.com/rmichnovicz/hillbomb/blob/77df39587fd05cb541a9d337739708ba67fb66e5/backend/geodesk_source.py#L93-L130",
+          "sha256": "3861be6d45244b11390a00ece9579c0459a4a8561e7461068cb391b5c3a53a1b"
+        },
+        {
+          "url": "https://github.com/rmichnovicz/hillbomb/blob/77df39587fd05cb541a9d337739708ba67fb66e5/backend/geodesk_source.py#L133-L166",
+          "sha256": "3861be6d45244b11390a00ece9579c0459a4a8561e7461068cb391b5c3a53a1b"
+        }
+      ],
+      "open_per_window": false,
+      "windows": [
+        [
+          -1.515,
+          53.363,
+          -1.499,
+          53.373
+        ],
+        [
+          -1.507,
+          53.365,
+          -1.491,
+          53.375
+        ],
+        [
+          -1.499,
+          53.367,
+          -1.483,
+          53.377
+        ]
+      ],
+      "layers": [
+        [
+          "roads",
+          "w[highway]",
+          "way_nodes"
+        ],
+        [
+          "controls",
+          "n[highway]",
+          "tags"
+        ]
+      ]
+    }
+  ]
+}

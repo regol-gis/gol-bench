@@ -1,0 +1,139 @@
+{
+  "tiny": {
+    "bytes": 16384,
+    "sha256": "3418fbc78c037b547627d00c993deffce92a3797b9207620c94f364ca47a8656",
+    "fixture": "tests/fixtures/query_semantics.gol",
+    "coverage": "Synthetic selector fixture",
+    "profile": "fixture"
+  },
+  "monaco": {
+    "bytes": 872448,
+    "sha256": "ab144151d7fb49d4ffd81fe130fb6116508979bacae5f2b0fa345023c1a27db0",
+    "coverage": "Monaco",
+    "profile": "urban",
+    "views": {
+      "monaco": [
+        7.423,
+        43.739
+      ]
+    },
+    "pbf_url": "https://download.geofabrik.de/europe/monaco/monaco-260101.osm.pbf",
+    "pbf": {
+      "bytes": 673493,
+      "sha256": "2c0debd7676c0d0d80ec534251cb004a6797441d14512cb83d01fe1ad81363bf"
+    },
+    "producer": "GOL Tool 2.0.0, default build settings"
+  },
+  "liechtenstein": {
+    "bytes": 4603904,
+    "sha256": "19d1f759829c6ceaf24fac2d5a31c955dee283276efd87e1df21455536d0d0a3",
+    "coverage": "Liechtenstein",
+    "profile": "urban",
+    "views": {
+      "liechtenstein": [
+        9.522,
+        47.139
+      ]
+    },
+    "pbf_url": "https://download.geofabrik.de/europe/liechtenstein/liechtenstein-260101.osm.pbf",
+    "pbf": {
+      "bytes": 3255783,
+      "sha256": "38c281920dcf599754a1e58f399b88c35d18b40dff932bd4dd926aa1a79cda76"
+    },
+    "producer": "GOL Tool 2.0.0, default build settings"
+  },
+  "bremen": {
+    "bytes": 33501184,
+    "sha256": "c772bae07018c6e1bde0624a01cd4130a3f1681d35c7995562abf615ba784b42",
+    "coverage": "Bremen",
+    "profile": "urban",
+    "views": {
+      "bremen": [
+        8.808,
+        53.076
+      ]
+    },
+    "pbf_url": "https://download.geofabrik.de/europe/germany/bremen/bremen-260101.osm.pbf",
+    "pbf": {
+      "bytes": 20804576,
+      "sha256": "f53e7d31150ddb34a6464282ec58422c1dd8f16a7f69f7dee060d44a8fac9b51"
+    },
+    "producer": "GOL Tool 2.0.0, default build settings"
+  },
+  "ghana": {
+    "bytes": 205615104,
+    "layout_sha256": "e8722cd721f13f2faeb7525ccb13ddc7527fc361a9e233e0858197d0b97e8aac",
+    "coverage": "Ghana",
+    "profile": "urban",
+    "views": {
+      "accra": [
+        -0.201,
+        5.552
+      ],
+      "kumasi": [
+        -1.625,
+        6.692
+      ]
+    },
+    "pbf_url": "https://download.geofabrik.de/africa/ghana/ghana-260101.osm.pbf",
+    "pbf": {
+      "bytes": 108105651,
+      "sha256": "64a00500ad5f8670ec23eee0099a4c696f0f14c9892b373744cdce7423a4c8f6"
+    },
+    "producer": "regol 0.2.0"
+  },
+  "uk": {
+    "bytes": 4152390952,
+    "sha256": "47e289273cad6bacd5a8e2df69739a64ef27e2d104c6e460914b4bd1f2d94549",
+    "coverage": "United Kingdom",
+    "profile": "urban",
+    "views": {
+      "bristol": [
+        -2.595,
+        51.454
+      ],
+      "belfast": [
+        -5.929,
+        54.598
+      ]
+    },
+    "pbf_url": "https://download.geofabrik.de/europe/united-kingdom-260101.osm.pbf",
+    "producer": "GOL Tool 2.0.0"
+  },
+  "planet": {
+    "bytes": 141420523924,
+    "sha256": "7c14d783bd4eb453c2a6a635d95ab68c14c288d9a2666e7c52aef4496b1ff958",
+    "coverage": "Worldwide",
+    "profile": "planet",
+    "views": {
+      "london": [
+        -0.127,
+        51.508
+      ],
+      "lagos": [
+        3.397,
+        6.451
+      ],
+      "tokyo": [
+        139.767,
+        35.681
+      ],
+      "sao-paulo": [
+        -46.634,
+        -23.55
+      ],
+      "new-york": [
+        -73.985,
+        40.748
+      ],
+      "sydney": [
+        151.209,
+        -33.869
+      ]
+    },
+    "snapshot": "2026-11-19",
+    "url": "https://download.openplanetdata.com/osm/planet/gol/v2/planet-latest.osm.gol",
+    "index": "https://download.openplanetdata.com/files?category=openstreetmap&subcategory=planet&limit=-1",
+    "producer": "OpenPlanetData GOL v2"
+  }
+}

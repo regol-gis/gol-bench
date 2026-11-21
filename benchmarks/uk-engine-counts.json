@@ -1,0 +1,850 @@
+[
+  {
+    "name": "count_q014",
+    "query": "n[natural=peak,volcano,hill][ele]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q014_uk_iterate"
+  },
+  {
+    "name": "count_q017",
+    "query": "na[place=city][population>=250000]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q017_uk_iterate"
+  },
+  {
+    "name": "count_q054",
+    "query": "n[place=suburb,quarter,neighbourhood,village,hamlet][name]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q054_uk_iterate"
+  },
+  {
+    "name": "count_q022",
+    "query": "na[amenity=restaurant][cuisine=thai]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q022_uk_iterate"
+  },
+  {
+    "name": "count_q037",
+    "query": "r[route=subway]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q037_uk_iterate"
+  },
+  {
+    "name": "count_q113",
+    "query": "r[route=bicycle]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q113_uk_iterate"
+  },
+  {
+    "name": "count_q115",
+    "query": "r[type=restriction]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q115_uk_iterate"
+  },
+  {
+    "name": "count_q083",
+    "query": "n[highway=street_lamp]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q083_uk_iterate"
+  },
+  {
+    "name": "count_q109",
+    "query": "w[highway][mtb:scale>=2]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q109_uk_iterate"
+  },
+  {
+    "name": "count_q053",
+    "query": "a[boundary=administrative][name]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q053_uk_iterate"
+  },
+  {
+    "name": "count_q056",
+    "query": "w[public_transport=platform], w[highway=platform], w[railway=platform]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q056_uk_iterate"
+  },
+  {
+    "name": "count_q065",
+    "query": "*[power=tower,catenary_mast,pole]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "q065_uk_iterate"
+  },
+  {
+    "name": "count_all",
+    "query": "*",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  },
+  {
+    "name": "count_roads",
+    "query": "w[highway]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  },
+  {
+    "name": "count_buildings",
+    "query": "a[building]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  },
+  {
+    "name": "count_cafes",
+    "query": "na[amenity=cafe]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  },
+  {
+    "name": "count_q001_highlands_iterate",
+    "selector_id": "q001",
+    "query": "n[place=continent,country,state,city]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q005_highlands_iterate",
+    "selector_id": "q005",
+    "query": "a[natural=water,glacier]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q009_highlands_iterate",
+    "selector_id": "q009",
+    "query": "w[highway=motorway,trunk]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q013_edinburgh_iterate",
+    "selector_id": "q013",
+    "query": "n[place=city,town,village,hamlet][name][population>=1000000]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q017_manchester_iterate",
+    "selector_id": "q017",
+    "query": "na[place=city][population>=250000]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "region": "manchester",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q021_manchester_iterate",
+    "selector_id": "q021",
+    "query": "na[amenity=cafe,coffee]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "region": "manchester",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q025_manchester_iterate",
+    "selector_id": "q025",
+    "query": "na[amenity=school]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "region": "manchester",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q029_manchester_iterate",
+    "selector_id": "q029",
+    "query": "wa[natural=water,waterway]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "region": "manchester",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q033_manchester_iterate",
+    "selector_id": "q033",
+    "query": "nwa[highway]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "region": "manchester",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q037_london_iterate",
+    "selector_id": "q037",
+    "query": "r[route=subway]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "region": "london",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q041_london_iterate",
+    "selector_id": "q041",
+    "query": "w[railway]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "region": "london",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q045_london_iterate",
+    "selector_id": "q045",
+    "query": "r[route=light_rail]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "region": "london",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q049_manchester_iterate",
+    "selector_id": "q049",
+    "query": "na[amenity=pub]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "region": "manchester",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q053_cornwall_iterate",
+    "selector_id": "q053",
+    "query": "a[boundary=administrative][name]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q057_cardiff_iterate",
+    "selector_id": "q057",
+    "query": "n[public_transport=platform]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "region": "cardiff",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q061_edinburgh_iterate",
+    "selector_id": "q061",
+    "query": "*[highway]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q065_edinburgh_iterate",
+    "selector_id": "q065",
+    "query": "*[power=tower,catenary_mast,pole]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q069_edinburgh_iterate",
+    "selector_id": "q069",
+    "query": "*[admin_level=8]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q073_cardiff_iterate",
+    "selector_id": "q073",
+    "query": "n[highway=crossing][!crossing][crossing_ref!~\"(zebra|pelican|toucan|pegasus|puffin|tiger)\"]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "region": "cardiff",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q077_cardiff_iterate",
+    "selector_id": "q077",
+    "query": "w[highway=footway,path,cycleway][!surface]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "region": "cardiff",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q081_cardiff_iterate",
+    "selector_id": "q081",
+    "query": "wa[public_transport=platform],wa[highway=platform],wa[railway=platform]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "region": "cardiff",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q085_belfast_iterate",
+    "selector_id": "q085",
+    "query": "n[highway=street_lamp][lit=yes]",
+    "bbox_lonlat": [
+      -6.0,
+      54.55,
+      -5.85,
+      54.65
+    ],
+    "region": "belfast",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -71582788,
+      779686612,
+      -69793219,
+      781746142
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q089_edinburgh_iterate",
+    "selector_id": "q089",
+    "query": "n[natural=peak,volcano,hill][ele][name]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q093_edinburgh_iterate",
+    "selector_id": "q093",
+    "query": "a[natural=wood]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q097_edinburgh_iterate",
+    "selector_id": "q097",
+    "query": "a[landuse=farmland,meadow]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q101_edinburgh_iterate",
+    "selector_id": "q101",
+    "query": "n[power=tower,pole]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q105_birmingham_iterate",
+    "selector_id": "q105",
+    "query": "w[highway][surface=gravel,unpaved,ground]",
+    "bbox_lonlat": [
+      -1.98,
+      52.42,
+      -1.8,
+      52.54
+    ],
+    "region": "birmingham",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -23622320,
+      736968499,
+      -21474836,
+      739319184
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q109_birmingham_iterate",
+    "selector_id": "q109",
+    "query": "w[highway][mtb:scale>=2]",
+    "bbox_lonlat": [
+      -1.98,
+      52.42,
+      -1.8,
+      52.54
+    ],
+    "region": "birmingham",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -23622320,
+      736968499,
+      -21474836,
+      739319184
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q113_london_iterate",
+    "selector_id": "q113",
+    "query": "r[route=bicycle]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "region": "london",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q117_cornwall_iterate",
+    "selector_id": "q117",
+    "query": "a[boundary=administrative][admin_level=6]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q121_manchester_iterate",
+    "selector_id": "q121",
+    "query": "na[amenity=restaurant][cuisine=\"*fish_and_chips*\"]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "region": "manchester",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "consumer": "scalar_count"
+  },
+  {
+    "name": "count_q125_manchester_iterate",
+    "selector_id": "q125",
+    "query": "na[amenity=parking][fee=yes]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "region": "manchester",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "consumer": "scalar_count"
+  }
+]

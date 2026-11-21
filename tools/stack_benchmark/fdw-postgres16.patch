@@ -1,0 +1,66 @@
+diff --git a/Makefile b/Makefile
+index 3e16ca8..eea2f78 100644
+--- a/Makefile
++++ b/Makefile
+@@ -14,16 +14,17 @@ CXXFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
+ 
+ # Include paths
+ PG_CPPFLAGS = -I$(srcdir)/include
+-PG_CPPFLAGS += -I/home/jeff/work/geodesk/libgeodesk/include
+-PG_CPPFLAGS += -I/home/jeff/work/geodesk/postgis/liblwgeom
+-PG_CPPFLAGS += -I/home/jeff/work/geodesk/postgis/libpgcommon
+-PG_CPPFLAGS += -I/home/jeff/work/geodesk/postgis/postgis
++PG_CPPFLAGS += -I$(srcdir)/deps/libgeodesk/include
++PG_CPPFLAGS += -I$(srcdir)/deps/libgeodesk/build/_deps/gtl-src/include
++PG_CPPFLAGS += -I$(srcdir)/deps/postgis/liblwgeom
++PG_CPPFLAGS += -I$(srcdir)/deps/postgis/libpgcommon
++PG_CPPFLAGS += -I$(srcdir)/deps/postgis/postgis
+ 
+ # Libraries to link - PostGIS and GEOS are required
+-SHLIB_LINK = /home/jeff/work/geodesk/libgeodesk/build/libgeodesk.a
+-SHLIB_LINK += /home/jeff/work/geodesk/postgis/liblwgeom/.libs/liblwgeom.a
+-SHLIB_LINK += /home/jeff/work/geodesk/postgis/libpgcommon/lwgeom_pg.o
+-SHLIB_LINK += -lgeos_c -lproj -ljson-c -lSFCGAL -lstdc++
++SHLIB_LINK = $(srcdir)/deps/libgeodesk/build/libgeodesk.a
++SHLIB_LINK += $(srcdir)/deps/postgis/liblwgeom/.libs/liblwgeom.a
++SHLIB_LINK += $(srcdir)/deps/postgis/libpgcommon/lwgeom_pg.o
++SHLIB_LINK += -lgeos_c -lproj -ljson-c -lstdc++
+ 
+ PG_CONFIG = pg_config
+ PGXS := $(shell $(PG_CONFIG) --pgxs)
+diff --git a/src/geodesk_fdw.c b/src/geodesk_fdw.c
+index 64cbd2a..31c3fea 100644
+--- a/src/geodesk_fdw.c
++++ b/src/geodesk_fdw.c
+@@ -457,8 +457,7 @@ geodeskGetForeignPaths(PlannerInfo *root,
+                                     NIL,     /* no pathkeys */
+                                     baserel->lateral_relids,
+                                     NULL,    /* no extra plan */
+-                                    NIL,     /* no private data */
+-                                    NIL));   /* no fdw_restrictinfo */
++                                    NIL));   /* no private data */
+ }
+ 
+ /*
+@@ -826,7 +825,7 @@ geodeskBeginForeignScan(ForeignScanState *node, int eflags)
+          * }
+          */
+         
+-        if (fpinfo.goql_filter || fpinfo.type_prefix)
++        if (fpinfo.goql_filter || (fpinfo.type_prefix && strcmp(fpinfo.type_prefix, "*") != 0))
+         {
+             geodesk_set_goql_filter_with_prefix(festate->connection, 
+                                                fpinfo.goql_filter, 
+diff --git a/src/geodesk_ring_assembler.cpp b/src/geodesk_ring_assembler.cpp
+index 1fa13a0..d777432 100644
+--- a/src/geodesk_ring_assembler.cpp
++++ b/src/geodesk_ring_assembler.cpp
+@@ -56,7 +56,7 @@ struct Ring {
+         // If the way already has AREA flag, it's a complete area - keep its closing coordinate
+         // Otherwise, get raw coordinates for assembly
+         int flags = way.flags();
+-        bool isCompleteArea = (flags & AREA) != 0;
++        bool isCompleteArea = (flags & geodesk::FeatureFlags::AREA) != 0;
+         iter.start(way, flags);
+         int count = isCompleteArea ? iter.coordinatesRemaining() : iter.storedCoordinatesRemaining();
+         

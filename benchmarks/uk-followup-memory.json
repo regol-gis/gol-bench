@@ -1,0 +1,178 @@
+[
+  {
+    "name": "q005_highlands_geometry",
+    "selector_id": "q005",
+    "query": "a[natural=water,glacier]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q061_lake_district_geometry",
+    "selector_id": "q061",
+    "query": "*[highway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q098_lake_district_geometry",
+    "selector_id": "q098",
+    "query": "w[waterway=river,stream,canal]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q004_highlands_geometry",
+    "selector_id": "q004",
+    "query": "a[place=island]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q117_cornwall_geometry",
+    "selector_id": "q117",
+    "query": "a[boundary=administrative][admin_level=6]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q030_norfolk_geometry",
+    "selector_id": "q030",
+    "query": "a[building]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q094_lake_district_geometry",
+    "selector_id": "q094",
+    "query": "a[landuse=forest]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q003_highlands_geometry",
+    "selector_id": "q003",
+    "query": "wra[boundary=administrative,disputed]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  }
+]

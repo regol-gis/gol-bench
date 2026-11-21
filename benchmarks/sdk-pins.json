@@ -1,0 +1,150 @@
+{
+  "stacks": {
+    "clarisma/libgeodesk": {
+      "commit": "f0f0b5b88a44876ff8157c723aa063bd1e6fabd5",
+      "repository_url": "https://github.com/clarisma/libgeodesk",
+      "license_metadata": "LGPL-3.0",
+      "version": "2.2.1",
+      "geos": "3.13.1",
+      "cmake_flags": [
+        "Release",
+        "GEODESK_WITH_GEOS=ON",
+        "GEODESK_MULTITHREADED=OFF (default)"
+      ]
+    },
+    "Sifir-io/geodesk-rs": {
+      "commit": "30e718ab41dcfb49d05912e8f686f4ddd05a27f5",
+      "repository_url": "https://github.com/Sifir-io/geodesk-rs",
+      "license_metadata": null,
+      "engine_commit": "0e4baedf470496f90440a99e2a1cdaf4a17f04eb",
+      "engine_version": "2.1.0",
+      "workaround": "CXXFLAGS=-include cstdint; unmodified binding build applies its own published destructor fix",
+      "payload": "query() materializes C++ records; to_vec() copies rich records into Rust; both timed"
+    },
+    "sweepinc/geodesk-net": {
+      "commit": "ff60cc70e4e2b750ed96282b77e9e7ecf84bc200",
+      "repository_url": "https://github.com/sweepinc/geodesk-net",
+      "license_metadata": "Apache-2.0",
+      "dotnet_sdk": "10.0.404",
+      "build": "Release",
+      "topology": "NetTopologySuite 2.6.0"
+    },
+    "zitsky/php-libgeodesk": {
+      "commit": "827df722ff23d5fc2106f46df3a15235a76a5432",
+      "repository_url": "https://github.com/zitsky/php-libgeodesk",
+      "license_metadata": "NOASSERTION",
+      "php": "8.4.27",
+      "engine_commit": "db8c7eb0468c2c2c36ad3e5abd92648c13d63f53",
+      "engine_version": "2.1.1",
+      "php_cpp_commit": "519d9557d9f02fc3e06d16ab0005504eb19fa26e",
+      "workarounds": [
+        "-include cstdint",
+        "local include/phpcpp symlink for PHP-CPP include layout"
+      ],
+      "api": "No bbox method; whole-file cases use public toArray() because Query does not register IteratorAggregate",
+      "container_base": "dcfb531d8f08",
+      "build_result": "built and loaded; all 12 whole-file array consumers and all 16 scalar-count cases exit 139 in this build"
+    },
+    "hjanetzek/geodesk-fdw": {
+      "commit": "5d1bc202785509c793f42a62c13131caba9f1098",
+      "repository_url": "https://github.com/hjanetzek/geodesk-fdw",
+      "license_metadata": "MIT",
+      "status": "build_failed",
+      "reason": "Built SDK and PostGIS dependencies in isolated PostgreSQL 16 bookworm container. Extension compilation fails: PostgreSQL create_foreignscan_path signature mismatch, unqualified AREA enum incompatible with current libgeodesk, and missing gtl include path. No database timing claimed; adapting API/version assumptions is outside this measurement.",
+      "build_instructions": "fetch-dependencies.sh builds libgeodesk and PostGIS; Makefile uses developer-local paths requiring adaptation",
+      "engine_commit": "f0f0b5b88a44876ff8157c723aa063bd1e6fabd5",
+      "postgres_major": 16,
+      "postgis_source": "3.4.1",
+      "build_image": "sha256:d1314ffa7d2729ebf716d757065dfdecccc3bb244a7b06ce6ffb94b3ef58718a"
+    },
+    "python": {
+      "geodesk": "2.0.4",
+      "python": "3.13.15",
+      "shapely": "2.1.2",
+      "binary": "/tmp/geodesk-python-oracle/lib/python3.13/site-packages/geodesk/_geodesk.cpython-313-x86_64-linux-gnu.so"
+    },
+    "java": {
+      "geodesk": "2.0.0",
+      "artifacts": [
+        {
+          "name": "geodesk-2.0.0.jar",
+          "url": "https://repo.maven.apache.org/maven2/com/geodesk/geodesk/2.0.0/geodesk-2.0.0.jar",
+          "sha256": "87fcddcc16d22c81fe45c02eb9ecc9e72c25de962df9e166a2a9a97dfff34ea3"
+        },
+        {
+          "name": "eclipse-collections-11.1.0.jar",
+          "url": "https://repo.maven.apache.org/maven2/org/eclipse/collections/eclipse-collections/11.1.0/eclipse-collections-11.1.0.jar",
+          "sha256": "8881749de791c28c6ccea621314a3a154cfe76ef77c30054b6e714c3dc76969d"
+        },
+        {
+          "name": "eclipse-collections-api-11.1.0.jar",
+          "url": "https://repo.maven.apache.org/maven2/org/eclipse/collections/eclipse-collections-api/11.1.0/eclipse-collections-api-11.1.0.jar",
+          "sha256": "1b8608ecf4e681f031c29a28c403f71476fe5df3a8f0c0dd8c7ad33b91984212"
+        },
+        {
+          "name": "jts-core-1.20.0.jar",
+          "url": "https://repo.maven.apache.org/maven2/org/locationtech/jts/jts-core/1.20.0/jts-core-1.20.0.jar",
+          "sha256": "6a783d8f9dba3d3cf7265435f134402f63c05838aa6cbcc4297ad3a5b2842baf"
+        },
+        {
+          "name": "asm-9.7.1.jar",
+          "url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar",
+          "sha256": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281"
+        }
+      ],
+      "runtime": "openjdk version \"25.0.5-ea\" 2026-10-20\nOpenJDK Runtime Environment (build 25.0.5-ea+7-1-Debian)\nOpenJDK 64-Bit Server VM (build 25.0.5-ea+7-1-Debian, mixed mode, sharing)\n"
+    },
+    "clojure": {
+      "clojure": "1.12.0",
+      "java_engine": "same GeoDesk 2.0.0 artifacts",
+      "interop": "typed direct Java interop; original benchmark adapter, not an independent engine"
+    },
+    "python-current": {
+      "geodesk": "2.3.1",
+      "python": "3.13.15",
+      "shapely": "2.2.0",
+      "note": "GeoDesk 2.3.1 requires Shapely>=2.2,<2.3; old Shapely 2.1.2 cannot be retained without breaking published dependencies."
+    },
+    "java-current": {
+      "geodesk": "2.1.0",
+      "artifacts": [
+        {
+          "name": "eclipse-collections",
+          "version": "13.0.0",
+          "url": "https://repo.maven.apache.org/maven2/org/eclipse/collections/eclipse-collections/13.0.0/eclipse-collections-13.0.0.jar",
+          "sha256": "4c1d2fc77eeb52325893337f4080c9f73cc53670956f80489b5f375fdc5bb6e1"
+        },
+        {
+          "name": "eclipse-collections-api",
+          "version": "13.0.0",
+          "url": "https://repo.maven.apache.org/maven2/org/eclipse/collections/eclipse-collections-api/13.0.0/eclipse-collections-api-13.0.0.jar",
+          "sha256": "2ede735db355b079fc08b0bc7657bd4f95d045416bdaa7ec5235853cf6f364d2"
+        },
+        {
+          "name": "jts-core",
+          "version": "1.20.0",
+          "url": "https://repo.maven.apache.org/maven2/org/locationtech/jts/jts-core/1.20.0/jts-core-1.20.0.jar",
+          "sha256": "6a783d8f9dba3d3cf7265435f134402f63c05838aa6cbcc4297ad3a5b2842baf"
+        },
+        {
+          "name": "asm",
+          "version": "9.11.1",
+          "url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.11.1/asm-9.11.1.jar",
+          "sha256": "ae4e6e10d59d0a1500317764b21881ad883f8550e33c66e6142f7032c6fb566c"
+        }
+      ],
+      "dependency_resolution": "Published POM uses RELEASE; exact resolved dependencies and digests recorded."
+    },
+    "clojure-current": {
+      "clojure": "1.12.0",
+      "java_engine": "GeoDesk 2.1.0 with the same resolved artifacts as java-current"
+    },
+    "gol-cli-current": {
+      "tag": "v2.5.3",
+      "architecture": "linux x86_64",
+      "url": "https://github.com/clarisma/geodesk-gol/releases/download/v2.5.3/gol-2.5.3-linux.zip",
+      "archive_sha256": "cbceffcf0c42cd75098895eb744abc379083c02ed0be538f5fe93534c32c04c8",
+      "binary_sha256": "23aceb23d05aa389c28a1109c9df331ae7d8f4da1d767c5ef0ccc29a0062a5ad"
+    }
+  }
+}

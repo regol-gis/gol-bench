@@ -1,0 +1,73 @@
+{
+  "java-current": [
+    {
+      "name": "eclipse-collections",
+      "version": "13.0.0",
+      "url": "https://repo.maven.apache.org/maven2/org/eclipse/collections/eclipse-collections/13.0.0/eclipse-collections-13.0.0.jar",
+      "sha256": "4c1d2fc77eeb52325893337f4080c9f73cc53670956f80489b5f375fdc5bb6e1"
+    },
+    {
+      "name": "eclipse-collections-api",
+      "version": "13.0.0",
+      "url": "https://repo.maven.apache.org/maven2/org/eclipse/collections/eclipse-collections-api/13.0.0/eclipse-collections-api-13.0.0.jar",
+      "sha256": "2ede735db355b079fc08b0bc7657bd4f95d045416bdaa7ec5235853cf6f364d2"
+    },
+    {
+      "name": "jts-core",
+      "version": "1.20.0",
+      "url": "https://repo.maven.apache.org/maven2/org/locationtech/jts/jts-core/1.20.0/jts-core-1.20.0.jar",
+      "sha256": "6a783d8f9dba3d3cf7265435f134402f63c05838aa6cbcc4297ad3a5b2842baf"
+    },
+    {
+      "name": "asm",
+      "version": "9.11.1",
+      "url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.11.1/asm-9.11.1.jar",
+      "sha256": "ae4e6e10d59d0a1500317764b21881ad883f8550e33c66e6142f7032c6fb566c"
+    },
+    {
+      "url": "https://repo.maven.apache.org/maven2/com/geodesk/geodesk/2.1.0/geodesk-2.1.0.jar",
+      "sha256": "8e7efaf57fe3d8e5c36f1205b04ca9ed64f26cbe720bcf156b0780bbc1a8b8fb"
+    }
+  ],
+  "java-legacy": [
+    {
+      "name": "geodesk-2.0.0.jar",
+      "url": "https://repo.maven.apache.org/maven2/com/geodesk/geodesk/2.0.0/geodesk-2.0.0.jar",
+      "sha256": "87fcddcc16d22c81fe45c02eb9ecc9e72c25de962df9e166a2a9a97dfff34ea3"
+    },
+    {
+      "name": "eclipse-collections-11.1.0.jar",
+      "url": "https://repo.maven.apache.org/maven2/org/eclipse/collections/eclipse-collections/11.1.0/eclipse-collections-11.1.0.jar",
+      "sha256": "8881749de791c28c6ccea621314a3a154cfe76ef77c30054b6e714c3dc76969d"
+    },
+    {
+      "name": "eclipse-collections-api-11.1.0.jar",
+      "url": "https://repo.maven.apache.org/maven2/org/eclipse/collections/eclipse-collections-api/11.1.0/eclipse-collections-api-11.1.0.jar",
+      "sha256": "1b8608ecf4e681f031c29a28c403f71476fe5df3a8f0c0dd8c7ad33b91984212"
+    },
+    {
+      "name": "jts-core-1.20.0.jar",
+      "url": "https://repo.maven.apache.org/maven2/org/locationtech/jts/jts-core/1.20.0/jts-core-1.20.0.jar",
+      "sha256": "6a783d8f9dba3d3cf7265435f134402f63c05838aa6cbcc4297ad3a5b2842baf"
+    },
+    {
+      "name": "asm-9.7.1.jar",
+      "url": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.7.1/asm-9.7.1.jar",
+      "sha256": "8cadd43ac5eb6d09de05faecca38b917a040bb9139c7edeb4cc81c740b713281"
+    }
+  ],
+  "clojure": [
+    {
+      "url": "https://repo.maven.apache.org/maven2/org/clojure/clojure/1.12.0/clojure-1.12.0.jar",
+      "sha256": "c45333006441a059ea9fdb1341fc6c1f40b921a10dccd82665311e48a0384763"
+    },
+    {
+      "url": "https://repo.maven.apache.org/maven2/org/clojure/core.specs.alpha/0.4.74/core.specs.alpha-0.4.74.jar",
+      "sha256": "eb73ac08cf49ba840c88ba67beef11336ca554333d9408808d78946e0feb9ddb"
+    },
+    {
+      "url": "https://repo.maven.apache.org/maven2/org/clojure/spec.alpha/0.5.238/spec.alpha-0.5.238.jar",
+      "sha256": "94cd99b6ea639641f37af4860a643b6ed399ee5a8be5d717cff0b663c8d75077"
+    }
+  ]
+}

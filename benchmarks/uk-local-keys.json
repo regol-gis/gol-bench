@@ -1,0 +1,26 @@
+[
+  {
+    "name": "uk_refill_presence",
+    "query": "na[drinking_water:refill]"
+  },
+  {
+    "name": "uk_refill_cafes",
+    "query": "na[amenity=cafe][drinking_water:refill]"
+  },
+  {
+    "name": "uk_cold_drinking_water",
+    "query": "n[amenity=drinking_water][cold_water=yes]"
+  },
+  {
+    "name": "uk_defibrillator_cabinet_colour",
+    "query": "n[emergency=defibrillator][cabinet:colour]"
+  },
+  {
+    "name": "uk_missing_local_key",
+    "query": "n[gol_reader_missing_test_key]"
+  },
+  {
+    "name": "uk_without_local_key",
+    "query": "n[!gol_reader_missing_test_key]"
+  }
+]

@@ -1,0 +1,68 @@
+[
+  {
+    "name": "q005_highlands_geometry",
+    "selector_id": "q005",
+    "query": "a[natural=water,glacier]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q004_highlands_geometry",
+    "selector_id": "q004",
+    "query": "a[place=island]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q003_highlands_geometry",
+    "selector_id": "q003",
+    "query": "wra[boundary=administrative,disputed]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  }
+]

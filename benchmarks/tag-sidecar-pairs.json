@@ -1,0 +1,14 @@
+[
+  ["amenity", "cafe"], ["amenity", "coffee"], ["amenity", "bar"],
+  ["amenity", "restaurant"], ["amenity", "hospital"], ["amenity", "school"],
+  ["amenity", "parking"], ["amenity", "bicycle_parking"], ["amenity", "pub"],
+  ["amenity", "cinema"], ["public_transport", "platform"],
+  ["boundary", "administrative"], ["highway", "crossing"],
+  ["highway", "street_lamp"], ["highway", "residential"],
+  ["highway", "traffic_signals"], ["highway", "cycleway"],
+  ["natural", "peak"], ["natural", "water"], ["natural", "wood"],
+  ["route", "bus"], ["route", "bicycle"], ["route", "subway"],
+  ["route", "train"], ["place", "city"], ["place", "island"],
+  ["type", "restriction"], ["leisure", "park"], ["landuse", "forest"],
+  ["railway", "light_rail"], ["railway", "rail"], ["building", "yes"]
+]

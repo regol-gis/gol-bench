@@ -1,0 +1,363 @@
+--- a/src/parallel.rs
++++ b/src/parallel.rs
+@@ -1,4 +1,4 @@
+-use crate::spatial::{DeferredTile, Features, Partitions};
++use crate::spatial::{DeferredTile, Features, Partitions, PreparedTile};
+ use crate::text_index::IndexedMatches;
+ use crate::{Bounds, Error, Feature, FeatureType, PreparedQuery, Result, source::Source};
+ use rayon::{iter::Either, prelude::*};
+@@ -80,9 +80,115 @@
+ /// The serial prefix delivers each feature immediately without buffering. Tile-index
+ /// partitions use additional memory proportional to the intersecting tile count.
+ pub struct QueryExecutor {
++    fetch: Option<FetchPlan>,
+     pool: rayon::ThreadPool,
+     reduction_prefix: ReductionPrefix,
+ }
++// Used only in a separate, untimed Linux diagnostic process.
++#[cfg(target_os = "linux")]
++fn thread_faults() -> i64 {
++    let mut usage = std::mem::MaybeUninit::<libc::rusage>::uninit();
++    // SAFETY: getrusage initializes the supplied structure on success.
++    #[allow(unsafe_code)]
++    unsafe {
++        if libc::getrusage(libc::RUSAGE_THREAD, usage.as_mut_ptr()) == 0 {
++            return usage.assume_init().ru_majflt as i64;
++        }
++    }
++    0
++}
++#[cfg(not(target_os = "linux"))]
++fn thread_faults() -> i64 {
++    0
++}
++struct FetchPlan {
++    width: usize,
++    to_leaf: bool,
++    pool: std::sync::OnceLock<io::Result<rayon::ThreadPool>>,
++}
++
++impl FetchPlan {
++    fn run<'a, S: Source + Sync>(
++        &self,
++        template: &Features<'a, S>,
++        tiles: &[DeferredTile],
++        budget: &Budget,
++        execute: impl FnOnce(mpsc::Receiver<Result<PreparedTile>>) -> Result<()>,
++    ) -> Result<()> {
++        let pool = self
++            .pool
++            .get_or_init(|| {
++                rayon::ThreadPoolBuilder::new()
++                    .num_threads(self.width)
++                    .build()
++                    .map_err(io::Error::other)
++            })
++            .as_ref()
++            .map_err(|e| Error::Io(io::Error::new(e.kind(), e.to_string())))?;
++        let trace = std::env::var_os("GOL_BENCH_HANDOFF_TRACE").is_some();
++        let fetch_faults = std::sync::atomic::AtomicI64::new(0);
++        let handed = AtomicUsize::new(0);
++        let next = AtomicUsize::new(0);
++        let (send, ready) = mpsc::sync_channel(0);
++        let exec_start = trace.then(thread_faults);
++        let result = pool.in_place_scope(|scope| {
++            for _ in 0..self.width.min(tiles.len()) {
++                let send = send.clone();
++                let (next, handed, fetch_faults) = (&next, &handed, &fetch_faults);
++                scope.spawn(move |_| {
++                    let start = trace.then(thread_faults);
++                    let mut sent = 0;
++                    let mut cursor = template.worker_cursor();
++                    while !budget.cancelled.load(Ordering::Relaxed) {
++                        let Some(tile) = tiles.get(next.fetch_add(1, Ordering::Relaxed)) else {
++                            break;
++                        };
++                        // Release the shared traversal budget before blocking on a handoff.
++                        let result = {
++                            let mut lease = budget.lease();
++                            cursor.prepare_tile(*tile, self.to_leaf, || lease.step())
++                        };
++                        match result {
++                            Ok(Some(tile)) => {
++                                sent += 1;
++                                if send.send(Ok(tile)).is_err() {
++                                    break;
++                                }
++                            }
++                            Ok(None) => (),
++                            Err(e) => {
++                                let _ = send.send(Err(e));
++                                break;
++                            }
++                        }
++                    }
++                    if let Some(start) = start {
++                        handed.fetch_add(sent, Ordering::Relaxed);
++                        fetch_faults.fetch_add(thread_faults() - start, Ordering::Relaxed);
++                    }
++                });
++            }
++            drop(send);
++            // Dropping the receiver inside the scope releases all blocked fetchers.
++            let result = execute(ready);
++            if result.is_err() {
++                budget.cancel();
++            }
++            result
++        });
++        if let Some(start) = exec_start {
++            eprintln!(
++                "HANDOFF {} {} {} {}",
++                tiles.len(),
++                handed.load(Ordering::Relaxed),
++                fetch_faults.load(Ordering::Relaxed),
++                thread_faults() - start
++            );
++        }
++        result
++    }
++}
++
+ impl QueryExecutor {
+     pub fn new(threads: usize) -> io::Result<Self> {
+         if threads == 0 {
+@@ -92,7 +198,26 @@
+             .num_threads(threads)
+             .build()
+             .map_err(io::Error::other)?;
++        let fetch = match std::env::var("GOL_BENCH_TILE_FETCH") {
++            Ok(value) if !value.is_empty() => {
++                let (depth, width) = value.split_once('/').ok_or(io::ErrorKind::InvalidInput)?;
++                let width = width.parse::<usize>().map_err(io::Error::other)?;
++                if threads != 1
++                    || !matches!(width, 4 | 16 | 32)
++                    || !matches!(depth, "roots" | "leaf")
++                {
++                    return Err(io::ErrorKind::InvalidInput.into());
++                }
++                Some(FetchPlan {
++                    width,
++                    to_leaf: depth == "leaf",
++                    pool: Default::default(),
++                })
++            }
++            _ => None,
++        };
+         Ok(Self {
++            fetch,
+             pool,
+             reduction_prefix: ReductionPrefix::Fixed(DEFAULT_PREFIX_STEPS),
+         })
+@@ -427,7 +552,8 @@
+                         true
+                     };
+                     let scan_partition = |features: &mut Features<'a, S>,
+-                                          tiles: &[DeferredTile]|
++                                          tiles: &[DeferredTile],
++                                          ready: Option<mpsc::Receiver<Result<PreparedTile>>>|
+                      -> Result<()> {
+                         let mut lease = worker_budget.lease();
+                         let mut batch = Vec::new();
+@@ -438,7 +564,9 @@
+                             .as_ref()
+                             .filter(|_| live())
+                             .map(mapped::PartitionProbe::new);
+-                        let mut scan = |features: &mut Features<'a, S>| -> Result<bool> {
++                        let mut scan = |features: &mut Features<'a, S>,
++                                        lease: &mut Lease<'_>|
++                         -> Result<bool> {
+                             // Skip prepaid tile-header reads after cancellation.
+                             if !live() {
+                                 return Ok(false);
+@@ -496,12 +624,23 @@
+                             }
+                             Ok(true)
+                         };
+-                        if tiles.is_empty() {
+-                            scan(features)?;
++                        if let Some(ready) = ready {
++                            if scan(features, &mut lease)? {
++                                lease.release();
++                                for tile in ready {
++                                    features.resume_tile(tile?);
++                                    if !scan(features, &mut lease)? {
++                                        break;
++                                    }
++                                    lease.release();
++                                }
++                            }
++                        } else if tiles.is_empty() {
++                            scan(features, &mut lease)?;
+                         } else {
+                             for &tile in tiles {
+                                 features.defer_tile(tile);
+-                                if !scan(features)? {
++                                if !scan(features, &mut lease)? {
+                                     break;
+                                 }
+                             }
+@@ -515,9 +654,19 @@
+                         }
+                         Ok(())
+                     };
+-                    let result =
+-                        map_partitions(partitions, Some(target.saturating_mul(4)), scan_partition)
+-                            .try_for_each(|result| result);
++                    let result = match (&self.fetch, partitions) {
++                        (Some(fetch), Partitions::Wide { template, tiles }) => {
++                            fetch.run(&template, &tiles, &worker_budget, |ready| {
++                                scan_partition(&mut template.fork_remaining(), &[], Some(ready))
++                            })
++                        }
++                        (_, rest) => {
++                            map_partitions(rest, Some(target.saturating_mul(4)), |cursor, tiles| {
++                                scan_partition(cursor, tiles, None)
++                            })
++                            .try_for_each(|result| result)
++                        }
++                    };
+                     if let Err(error) = result {
+                         let _ = sender.send(Err(error));
+                     } else if observation_enabled {
+--- a/src/spatial.rs
++++ b/src/spatial.rs
+@@ -209,6 +209,14 @@
+ pub(crate) struct DeferredTile {
+     pub(crate) start: u64,
+     pub(crate) bounds: Bounds,
++}
++
++#[cfg(feature = "parallel")]
++pub(crate) struct PreparedTile {
++    tile: TileExtent,
++    duplicate_flags: u16,
++    work: Vec<Work>,
++    leaf: Option<(u64, bool)>,
+ }
+
+ #[cfg(feature = "parallel")]
+@@ -560,6 +568,83 @@
+     pub(crate) fn fork_remaining(&self) -> Self {
+         self.fork_work(self.work.clone())
+     }
++    #[cfg(feature = "parallel")]
++    pub(crate) fn prepare_tile(
++        &mut self,
++        tile: DeferredTile,
++        to_leaf: bool,
++        mut step: impl FnMut() -> Result<bool>,
++    ) -> Result<Option<PreparedTile>> {
++        self.work.clear();
++        self.leaf = None;
++        self.steps = 0;
++        self.load_tile(tile.start, tile.bounds)?;
++        let mut heads = [(0, false); 4];
++        let count = self.work.len();
++        for (head, work) in heads.iter_mut().zip(self.work.drain(..).rev()) {
++            let Work::Roots { p, node } = work else {
++                unreachable!()
++            };
++            *head = (p, node);
++        }
++        // Store the original depth-first order in the continuation. Limit the
++        // preparation of unusual root tables or deep trees to 64 actual steps.
++        let mut remaining = 64;
++        for (mut p, node) in heads.into_iter().take(count) {
++            loop {
++                if remaining == 0 {
++                    self.work.push(Work::Roots { p, node });
++                    break;
++                }
++                if !self.try_step(&mut step)? {
++                    return Ok(None);
++                }
++                remaining -= 1;
++                let (more, target) = self.root(p)?;
++                if let Some(p) = target {
++                    self.work.push(Work::Branch { p, node, depth: 0 });
++                }
++                if !more {
++                    break;
++                }
++                p += 8;
++            }
++        }
++        self.work.reverse();
++        while to_leaf && remaining != 0 && self.leaf.is_none() {
++            let Some(&Work::Branch { p, node, depth }) = self.work.last() else {
++                break;
++            };
++            if !self.try_step(&mut step)? {
++                return Ok(None);
++            }
++            remaining -= 1;
++            self.work.pop();
++            self.expand_branch(p, node, depth)?;
++        }
++        Ok(
++            (self.leaf.is_some() || !self.work.is_empty()).then(|| PreparedTile {
++                tile: self.tile,
++                duplicate_flags: self.duplicate_flags,
++                work: std::mem::take(&mut self.work),
++                leaf: self.leaf.take(),
++            }),
++        )
++    }
++
++    #[cfg(feature = "parallel")]
++    pub(crate) fn resume_tile(&mut self, prepared: PreparedTile) {
++        self.records.clear();
++        self.tags.clear();
++        self.strings.clear();
++        self.tile = prepared.tile;
++        self.duplicate_flags = prepared.duplicate_flags;
++        self.work = prepared.work;
++        self.leaf = prepared.leaf;
++        self.steps = 0;
++        self.done = false;
++    }
++
+     #[cfg(feature = "parallel")]
+     pub(crate) fn defer_tile(&mut self, tile: DeferredTile) {
+         self.records.clear();
+--- a/examples/support/benchmark_worker.rs
++++ b/examples/support/benchmark_worker.rs
+@@ -153,6 +153,7 @@
+     opened_at: Instant,
+     storage_stats: fn(&S) -> Value,
+ ) -> Result<()> {
++    let latency_probe = std::env::var_os("GOL_BENCH_FIRST_MATCH").is_some();
+     let open_ns = opened_at.elapsed().as_nanos();
+     let start = Instant::now();
+     #[cfg(feature = "parallel")]
+@@ -306,6 +307,29 @@
+             );
+             continue;
+         }
++        #[cfg(feature = "parallel")]
++        if latency_probe {
++            assert!(operation == "iterate" && limit == Some(1));
++            let start = Instant::now();
++            let mut first_ns = None;
++            let mut take = |iter: &mut dyn Iterator<Item = Result<Feature<'_, S>>>| -> Result<_> {
++                let item = iter.next().transpose()?;
++                if item.is_some() { first_ns = Some(start.elapsed().as_nanos()); }
++                Ok(item.map(|f| f.id()))
++            };
++            let id = if let Some(pool) = &executor {
++                pool.with_query(&prepared, bounds, |iter| take(iter))??
++            } else if let Some(b) = bounds {
++                take(&mut prepared.in_bounds(b))?
++            } else {
++                take(&mut prepared.iter())?
++            };
++            let release_ns = start.elapsed().as_nanos();
++            let id = id.map(|id| format!("{:?}/{}", id.kind, id.id));
++            writeln!(output, "{}", json!({"name":name,"first_ns":first_ns,"release_ns":release_ns,
++                "id":id,"open_ns":open_ns,"pool_ns":executor_setup_ns,"setup_ns":setup_ns}))?;
++            continue;
++        }
+         let execute = || {
+             if operation == "count" {
+                 let serial_count = || match bounds {

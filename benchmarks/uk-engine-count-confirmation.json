@@ -1,0 +1,30 @@
+[
+  {
+    "name": "count_all",
+    "query": "*",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  },
+  {
+    "name": "count_roads",
+    "query": "w[highway]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  },
+  {
+    "name": "count_buildings",
+    "query": "a[building]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  },
+  {
+    "name": "count_cafes",
+    "query": "na[amenity=cafe]",
+    "operation": "iterate",
+    "consumer": "scalar_count",
+    "source_case": "historical UK workload"
+  }
+]

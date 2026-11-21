@@ -1,0 +1,242 @@
+--- a/src/source.rs
++++ b/src/source.rs
+@@ -479,7 +479,7 @@
+ #[cfg(all(feature = "mmap", target_os = "linux"))]
+ mod mmap_read_ahead;
+ #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
+-pub(crate) use mmap_read_ahead::FaultSample;
++pub(crate) use mmap_read_ahead::{control as prefetch_control, FaultSample};
+ #[cfg(all(feature = "mmap", target_os = "linux"))]
+ pub(crate) use mmap_read_ahead::{MappedScan, WorkerMap};
+
+--- a/src/source/mmap_read_ahead.rs
++++ b/src/source/mmap_read_ahead.rs
+@@ -137,7 +137,7 @@
+     advised: Option<(usize, usize)>,
+ }
+
+-fn control() -> &'static str {
++pub(crate) fn control() -> &'static str {
+     static MODE: std::sync::OnceLock<String> = std::sync::OnceLock::new();
+     MODE.get_or_init(|| std::env::var("GOL_BENCH_PREFETCH_CONTROL_V3").unwrap_or_default())
+ }
+--- a/src/spatial.rs
++++ b/src/spatial.rs
+@@ -237,6 +237,8 @@
+     tags: ReadWindow<'a, S>,
+     strings: ReadWindow<'a, S>,
+     work: Vec<Work>,
++    #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++    gate_sample: Option<Box<mapped_ahead::GateSample>>,
+     leaf: Option<(u64, bool)>,
+     bounds: Bounds,
+     prune: bool,
+@@ -287,6 +289,8 @@
+             },
+             #[cfg(all(feature = "mmap", target_os = "linux"))]
+             mapped_ahead: None,
++            #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++            gate_sample: None,
+         }
+     }
+     pub(crate) fn steps(&self) -> u64 {
+@@ -596,6 +600,8 @@
+             read_ahead: None,
+             #[cfg(all(feature = "mmap", target_os = "linux"))]
+             mapped_ahead: None,
++            #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++            gate_sample: None,
+         }
+     }
+     #[cfg(feature = "parallel")]
+@@ -674,6 +680,10 @@
+         }
+         if let Some(target) = target {
+             if word & 2 != 0 {
++                #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++                if let Some(sample) = &mut self.gate_sample {
++                    sample.visit(target);
++                }
+                 // The child is next in traversal order, including after a pause.
+                 self.leaf = Some((target, node));
+             } else {
+--- a/src/spatial/mapped_ahead.rs
++++ b/src/spatial/mapped_ahead.rs
+@@ -512,6 +512,40 @@
+     }
+ }
+
++/// Each completed tile votes on using the ordinary root-span hints for
++/// subsequent tiles. Updating the eight-bit history costs one atomic operation
++/// per stalled tile and does not require query-specific estimates or result IDs.
++#[cfg(feature = "parallel")]
++#[derive(Default)]
++pub(super) struct GateSample {
++    last: Option<u64>,
++    pages: u32,
++    forward: u32,
++    sampling: bool,
++    groups: u32,
++    dense: u32,
++    admitted: u32,
++}
++#[cfg(feature = "parallel")]
++impl GateSample {
++    pub(super) fn visit(&mut self, address: u64) {
++        let page = address / GOL_PAGE as u64;
++        if self.last == Some(page) { return; }
++        if self.last.replace(page).is_some_and(|previous| previous + 1 == page) {
++            self.forward = self.forward.saturating_add(1);
++        }
++        self.pages = self.pages.saturating_add(1);
++    }
++}
++#[cfg(feature = "parallel")]
++impl Drop for GateSample {
++    fn drop(&mut self) {
++        if std::env::var_os("GOL_BENCH_GATE_TRACE").is_some() {
++            eprintln!("ROOT_GATE {} {} {}", self.groups, self.dense, self.admitted);
++        }
++    }
++}
++
+ #[cfg(feature = "parallel")]
+ impl<S: Source> Features<'_, S> {
+     pub(crate) fn partition_fault_sample(&self) -> Option<crate::source::FaultSample> {
+@@ -521,12 +555,31 @@
+         crate::source::FaultSample::now()
+     }
+
++    pub(crate) fn finish_gate_sample(&mut self, history: &std::sync::atomic::AtomicU8) {
++        let Some(sample) = &mut self.gate_sample else { return; };
++        if !std::mem::take(&mut sample.sampling) { return; }
++        let dense = sample.pages >= 16 && u64::from(sample.forward) * 4 >= u64::from(sample.pages) * 3;
++        sample.dense += u32::from(dense);
++        let _ = history.fetch_update(Ordering::Relaxed, Ordering::Relaxed,
++            |old| Some((old << 1) | u8::from(dense)));
++    }
++
+     /// Split partitions may start partway through a tile. Only hint whole,
+     /// deferred payloads whose header the worker is about to traverse.
+-    pub(crate) fn hint_pending_tile(&self, live: &impl Fn() -> bool) {
++    pub(crate) fn hint_pending_tile(&mut self, live: &impl Fn() -> bool, gate: Option<&std::sync::atomic::AtomicU8>) {
+         let [Work::Payload { start, .. }] = self.work.as_slice() else {
+             return;
+         };
++        if let Some(history) = gate {
++            let sample = self.gate_sample.get_or_insert_with(Default::default);
++            sample.last = None;
++            sample.pages = 0;
++            sample.forward = 0;
++            sample.sampling = true;
++            sample.groups += 1;
++            if history.load(Ordering::Relaxed).count_ones() < 5 { return; }
++            sample.admitted += 1;
++        }
+         if let Some(source) = self.library.source.mapped_file() {
+             hint_roots(
+                 source.file(),
+--- a/src/parallel.rs
++++ b/src/parallel.rs
+@@ -414,6 +414,9 @@
+                 let (sender, receiver) = mpsc::sync_channel(queue_capacity);
+                 let worker_budget = Arc::clone(&budget);
+                 scope.spawn(move |_| {
++                    #[cfg(all(feature = "mmap", target_os = "linux"))]
++                    let gate = (crate::source::prefetch_control() == "root-gate")
++                        .then(std::sync::atomic::AtomicU8::default);
+                     let first_sent = AtomicBool::new(yielded != 0);
+                     let queued = AtomicUsize::new(yielded);
+                     let send_batch = |batch: Vec<Feature<'a, S>>| {
+@@ -448,7 +451,7 @@
+                                 .as_mut()
+                                 .is_some_and(mapped::PartitionProbe::before_tile)
+                             {
+-                                features.hint_pending_tile(&live);
++                                features.hint_pending_tile(&live, gate.as_ref());
+                             }
+                             // At most one initial single-feature batch makes the
+                             // first match visible without waiting for a full batch.
+@@ -504,6 +507,10 @@
+                                 if !scan(features)? {
+                                     break;
+                                 }
++                                #[cfg(all(feature = "mmap", target_os = "linux"))]
++                                if let Some(history) = gate.as_ref() {
++                                    features.finish_gate_sample(history);
++                                }
+                             }
+                         }
+                         #[cfg(all(feature = "mmap", target_os = "linux"))]
+--- a/examples/support/benchmark_worker.rs
++++ b/examples/support/benchmark_worker.rs
+@@ -153,6 +153,7 @@
+     opened_at: Instant,
+     storage_stats: fn(&S) -> Value,
+ ) -> Result<()> {
++    let latency_probe = std::env::var_os("GOL_BENCH_FIRST_MATCH").is_some();
+     let open_ns = opened_at.elapsed().as_nanos();
+     let start = Instant::now();
+     #[cfg(feature = "parallel")]
+@@ -306,6 +307,29 @@
+             );
+             continue;
+         }
++        #[cfg(feature = "parallel")]
++        if latency_probe {
++            assert!(operation == "iterate" && limit == Some(1));
++            let start = Instant::now();
++            let mut first_ns = None;
++            let mut take = |iter: &mut dyn Iterator<Item = Result<Feature<'_, S>>>| -> Result<_> {
++                let item = iter.next().transpose()?;
++                if item.is_some() { first_ns = Some(start.elapsed().as_nanos()); }
++                Ok(item.map(|f| f.id()))
++            };
++            let id = if let Some(pool) = &executor {
++                pool.with_query(&prepared, bounds, |iter| take(iter))??
++            } else if let Some(b) = bounds {
++                take(&mut prepared.in_bounds(b))?
++            } else {
++                take(&mut prepared.iter())?
++            };
++            let release_ns = start.elapsed().as_nanos();
++            let id = id.map(|id| format!("{:?}/{}", id.kind, id.id));
++            writeln!(output, "{}", json!({"name":name,"first_ns":first_ns,"release_ns":release_ns,
++                "id":id,"open_ns":open_ns,"pool_ns":executor_setup_ns,"setup_ns":setup_ns}))?;
++            continue;
++        }
+         let execute = || {
+             if operation == "count" {
+                 let serial_count = || match bounds {
+--- a/src/spatial/mapped_ahead/tests.rs
++++ b/src/spatial/mapped_ahead/tests.rs
+@@ -23,7 +23,7 @@
+     );
+     let mut cursor = Features::new(&mapped, None);
+     assert!(cursor.partition_fault_sample().is_some());
+-    cursor.hint_pending_tile(&|| panic!("residual directory work has no tile payload"));
++    cursor.hint_pending_tile(&|| panic!("residual directory work has no tile payload"), None);
+
+     let first = mapped.features().next().unwrap()?;
+     cursor.defer_tile(crate::spatial::DeferredTile {
+@@ -35,14 +35,17 @@
+         .map(|f| f.map(Feature::id))
+         .collect::<Result<Vec<_>>>()?;
+     assert!(!expected.is_empty());
+-    for active in [false, true] {
++    for (active, votes, expected_checks) in [(false, 0, false), (true, 0, false), (false, 255, true), (true, 255, true)] {
++        let history = std::sync::atomic::AtomicU8::new(votes);
+         let checks = std::cell::Cell::new(0);
+         let mut worker = cursor.fork_remaining();
+         worker.hint_pending_tile(&|| {
+             checks.set(checks.get() + 1);
+             active
+-        });
+-        if active {
++        }, Some(&history));
++        if !expected_checks {
++            assert_eq!(checks.get(), 0);
++        } else if active {
+             assert!(checks.get() > 1);
+         } else {
+             assert_eq!(checks.get(), 1);

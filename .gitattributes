@@ -1,0 +1,2 @@
+# Keep the pinned upstream whitespace in unified diff context.
+tools/stack_benchmark/fdw-postgres16.patch -whitespace

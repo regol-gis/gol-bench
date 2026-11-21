@@ -1,0 +1,51 @@
+--- a/src/source/mmap_read_ahead.rs
++++ b/src/source/mmap_read_ahead.rs
+@@ -137,9 +137,21 @@
+     advised: Option<(usize, usize)>,
+ }
+
++static STAGE: std::sync::atomic::AtomicU8 = std::sync::atomic::AtomicU8::new(0);
++
++pub fn set_benchmark_stage_policy(value: &str) -> bool {
++    let mode = match value {
++        "neither" => 0, "default" => 1, "root-gate" => 2, _ => return false,
++    };
++    STAGE.store(mode, Ordering::Release);
++    true
++}
++
+ pub(crate) fn control() -> &'static str {
+     static MODE: std::sync::OnceLock<String> = std::sync::OnceLock::new();
+-    MODE.get_or_init(|| std::env::var("GOL_BENCH_PREFETCH_CONTROL_V3").unwrap_or_default())
++    let mode = MODE.get_or_init(|| std::env::var("GOL_BENCH_PREFETCH_CONTROL_V3").unwrap_or_default());
++    if mode != "stage-crossover" { return mode; }
++    match STAGE.load(Ordering::Acquire) { 1 => "default", 2 => "root-gate", _ => "neither" }
+ }
+
+ impl<'a> MappedScan<'a> {
+--- a/src/source.rs
++++ b/src/source.rs
+@@ -480,6 +480,8 @@
+ mod mmap_read_ahead;
+ #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
+ pub(crate) use mmap_read_ahead::{control as prefetch_control, FaultSample};
++#[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++pub use mmap_read_ahead::set_benchmark_stage_policy;
+ #[cfg(all(feature = "mmap", target_os = "linux"))]
+ pub(crate) use mmap_read_ahead::{MappedScan, WorkerMap};
+
+--- a/examples/support/benchmark_worker.rs
++++ b/examples/support/benchmark_worker.rs
+@@ -184,6 +184,12 @@
+     let mut output = stdout.lock();
+     for spec in specs {
+         let name = spec["name"].as_str().expect("name");
++        #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++        if let Some(policy) = spec["benchmark_prefetch"].as_str() {
++            if !regol::source::set_benchmark_stage_policy(policy) {
++                return Err(io::Error::other("invalid benchmark stage policy").into());
++            }
++        }
+         if config.only.as_deref().is_some_and(|only| only != name) {
+             continue;
+         }

@@ -1,0 +1,17 @@
+{
+  "source_pbf_sha256": "02974f57ea5ecdfc825487ef22478ded5e86706412bb9313659b31a2cb21a379",
+  "layouts": {
+    "merged-standard": {
+      "bytes": 4131917824,
+      "layout_sha256": "6c38c04f72b06723c9f845b84be150a8d5bff873b331ed7b261e01d98f7d0363"
+    },
+    "fanout-8": {
+      "bytes": 4137848832,
+      "layout_sha256": "ef99322d118c39a0b66dc159d643bbcc008c7dfe83ab9f4cb8b3a0e5156d3f5e"
+    }
+  },
+  "session_overrides": {
+    "ascend/rust": "2eac298c9d4a36002ca463b9c17873bf01eb2e0cc4dc8ecf4ff978e647d52e8b",
+    "ascend/python": "2eac298c9d4a36002ca463b9c17873bf01eb2e0cc4dc8ecf4ff978e647d52e8b"
+  }
+}

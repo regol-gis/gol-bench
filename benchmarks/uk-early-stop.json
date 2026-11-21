@@ -1,0 +1,71 @@
+[
+  {
+    "name": "all_features_take_0",
+    "query": "*",
+    "limit": 0
+  },
+  {
+    "name": "all_features_take_1",
+    "query": "*",
+    "limit": 1
+  },
+  {
+    "name": "cafes_take_1",
+    "query": "na[amenity=cafe]",
+    "limit": 1
+  },
+  {
+    "name": "bridge_structure_take_1",
+    "query": "w[bridge:structure]",
+    "limit": 1
+  },
+  {
+    "name": "royal_name_prefix_take_1",
+    "query": "n[name=\"Royal*\"]",
+    "limit": 1
+  },
+  {
+    "name": "london_cafes_take_1",
+    "query": "na[amenity=cafe]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "limit": 1
+  },
+  {
+    "name": "soho_cafes_take_1",
+    "query": "na[amenity=cafe]",
+    "bbox_lonlat": [
+      -0.14,
+      51.51,
+      -0.13,
+      51.52
+    ],
+    "limit": 1
+  },
+  {
+    "name": "birmingham_roads_take_100",
+    "query": "w[highway]",
+    "bbox_lonlat": [
+      -1.98,
+      52.42,
+      -1.8,
+      52.54
+    ],
+    "limit": 100
+  },
+  {
+    "name": "london_empty_amenity_take_1",
+    "query": "na[amenity=gol_reader_nonexistent_amenity_2026]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "limit": 1
+  }
+]

@@ -1,0 +1,26 @@
+{
+  "openplanetdata": {
+    "Westray": {
+      "objects": {"node": 104857, "way": 4785, "relation": 13},
+      "fingerprint": "16c3f41c60cabcaf1f945626aa30f8c88da489c0d9d8c9e43a0e1b4f3609b6d6"
+    },
+    "Papa Westray": {
+      "objects": {"node": 71681, "way": 604, "relation": 11},
+      "fingerprint": "d5dc2c2765c6a97bc8920858588cad5c9e145e2da9e51ec3b21e3e4e1da86d13"
+    },
+    "Sanday": {
+      "objects": {"node": 92853, "way": 2343, "relation": 14},
+      "fingerprint": "a7ede695e41c8aa2477d73bc36d2a4f8cfa5e13a193d3c51ae4c203f0c299147"
+    }
+  },
+  "osm-extractor": {
+    "Leeds neighbourhood": {
+      "objects": {"node": 5012753, "way": 38065, "relation": 4144},
+      "fingerprint": "465de7ceb0d07fba9ea88d94a2dd7a3d9dee685d4c01ab0436786123471bb12f"
+    },
+    "Leeds": {
+      "objects": {"node": 6190689, "way": 280333, "relation": 6542},
+      "fingerprint": "adec82b9d64842c240226fdfbec1047554bf76b370e6dfacd4e285d992b704dd"
+    }
+  }
+}

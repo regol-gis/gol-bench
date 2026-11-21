@@ -1,0 +1,22 @@
+[
+  {
+    "name": "fast_roads_reversed",
+    "query": "w[maxspeed>=50][highway]"
+  },
+  {
+    "name": "roads_surface_access",
+    "query": "w[highway][surface][access!=private]"
+  },
+  {
+    "name": "named_cafes",
+    "query": "na[amenity=cafe][name]"
+  },
+  {
+    "name": "named_roads",
+    "query": "w[highway][name]"
+  },
+  {
+    "name": "royal_roads",
+    "query": "w[highway][name][name=\"Royal*\"]"
+  }
+]

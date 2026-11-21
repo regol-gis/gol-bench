@@ -1,0 +1,34 @@
+{
+  "source_url": "https://download.geofabrik.de/europe/united-kingdom-261115.osm.pbf",
+  "source_coverage": "Great Britain and Northern Ireland",
+  "source_timestamp": "2026-11-15T21:22:28Z",
+  "attribution": "OpenStreetMap contributors; extract processed by Geofabrik",
+  "data_license": "ODbL-1.0",
+  "pbf_bytes": 2287059675,
+  "pbf_md5": "a916b40762541c5d878925429c6cb8bf",
+  "pbf_md5_verified": true,
+  "pbf_sha256": "02974f57ea5ecdfc825487ef22478ded5e86706412bb9313659b31a2cb21a379",
+  "producer": "GOL Tool 2.0.0",
+  "producer_sha256": "4c0f4df89008397914702bbdee8866ca67d27c35e118dc2f8862b01e8c4b21e0",
+  "build": {
+    "command": [
+      "/tmp/gol-2.0.0/gol",
+      "build",
+      "tests/generated/uk-benchmark/united-kingdom.gol",
+      "tests/generated/uk-benchmark/united-kingdom-261115.osm.pbf",
+      "-w"
+    ],
+    "started": "2026-11-16T21:17:24.902730+00:00",
+    "seconds": 33.018308385973796,
+    "exit_status": 0,
+    "max_rss_kib": 20441240,
+    "user_seconds": 239.613517,
+    "system_seconds": 67.273418
+  },
+  "gol_bytes": 4152390952,
+  "gol_sha256": "47e289273cad6bacd5a8e2df69739a64ef27e2d104c6e460914b4bd1f2d94549",
+  "gol_info": "Tileset ID: 25f01fe5-059d-4b44-a0c8-5f79add55739\nTiles:      1,305\nSize:       3.9 GB\nRevision:   1086 \u2022 2026-11-15 21:22:28 (23 hours ago)\nUpdatable:  Yes (via Osmosis Server)\nLevels:     0/2/4/6/8/10/12\n            Hilbert-16  8 indexes (min. 300 features)\n            aerialway | building:part | healthcare | leisure  | place   | telecom\n            aeroway   | communication | highway    | man_made | power   | tourism\n            amenity   | craft         | historic   | military | railway | waterway\n            boundary  | emergency     | industrial | natural  | route   | \n            building  | geological    | landuse    | office   | shop    | \n",
+  "gol_check": "Checking united-kingdom.gol:00:00:00 No errors found\n",
+  "queryable_features": 47600836,
+  "notes": "Raw OSM and GOL data are ignored by Git. The build embeds a tileset ID; regenerated files need not have identical hashes."
+}

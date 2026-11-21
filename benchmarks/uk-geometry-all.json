@@ -1,0 +1,2818 @@
+[
+  {
+    "name": "q108_lake_district_geometry",
+    "selector_id": "q108",
+    "query": "w[highway][tunnel=yes]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q107_lake_district_geometry",
+    "selector_id": "q107",
+    "query": "w[highway][oneway=-1]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q116_cornwall_geometry",
+    "selector_id": "q116",
+    "query": "a[boundary=administrative][admin_level=4]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q024_norfolk_geometry",
+    "selector_id": "q024",
+    "query": "a[leisure=park]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q109_lake_district_geometry",
+    "selector_id": "q109",
+    "query": "w[highway][mtb:scale>=2]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q100_lake_district_geometry",
+    "selector_id": "q100",
+    "query": "w[power=line,minor_line]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q112_norfolk_geometry",
+    "selector_id": "q112",
+    "query": "r[route=train]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q041_norfolk_geometry",
+    "selector_id": "q041",
+    "query": "w[railway]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q027_norfolk_geometry",
+    "selector_id": "q027",
+    "query": "na[amenity=parking]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q119_cornwall_geometry",
+    "selector_id": "q119",
+    "query": "a[boundary=administrative][name=\"City of Edinburgh\"]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q126_norfolk_geometry",
+    "selector_id": "q126",
+    "query": "na[amenity=bicycle_parking][covered=yes]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q008_highlands_geometry",
+    "selector_id": "q008",
+    "query": "w[highway=motorway,trunk,primary]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q019_norfolk_geometry",
+    "selector_id": "q019",
+    "query": "w[highway][highway=motorway,primary]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q050_norfolk_geometry",
+    "selector_id": "q050",
+    "query": "n[entrance]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q042_cornwall_geometry",
+    "selector_id": "q042",
+    "query": "n[place=city,town,municipality]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q091_highlands_geometry",
+    "selector_id": "q091",
+    "query": "n[place=city,town,village,hamlet][name][population>=100000]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q013_highlands_geometry",
+    "selector_id": "q013",
+    "query": "n[place=city,town,village,hamlet][name][population>=1000000]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q001_highlands_geometry",
+    "selector_id": "q001",
+    "query": "n[place=continent,country,state,city]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q021_norfolk_geometry",
+    "selector_id": "q021",
+    "query": "na[amenity=cafe,coffee]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q127_norfolk_geometry",
+    "selector_id": "q127",
+    "query": "n[entrance][wheelchair=yes]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q064_lake_district_geometry",
+    "selector_id": "q064",
+    "query": "*[landuse=forest,orchard],*[natural=wood]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q020_norfolk_geometry",
+    "selector_id": "q020",
+    "query": "na[natural=water]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q102_lake_district_geometry",
+    "selector_id": "q102",
+    "query": "w[highway=cycleway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q083_norfolk_geometry",
+    "selector_id": "q083",
+    "query": "n[highway=street_lamp]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q070_lake_district_geometry",
+    "selector_id": "q070",
+    "query": "*[highway][highway!=sidewalk,cycleway,footway,pedestrian,path]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q032_norfolk_geometry",
+    "selector_id": "q032",
+    "query": "n[highway=crossing]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q076_norfolk_geometry",
+    "selector_id": "q076",
+    "query": "w[highway=footway,path,steps,pedestrian,cycleway][!indoor]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q106_lake_district_geometry",
+    "selector_id": "q106",
+    "query": "w[highway][oneway=yes]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q055_cornwall_geometry",
+    "selector_id": "q055",
+    "query": "*[name]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q087_highlands_geometry",
+    "selector_id": "q087",
+    "query": "n[natural=peak][ele>=914.4]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q031_norfolk_geometry",
+    "selector_id": "q031",
+    "query": "n[highway=traffic_signals]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q067_lake_district_geometry",
+    "selector_id": "q067",
+    "query": "*[landuse=commercial,construction,education,industrial,residential,retail,institutional,landfill,port,brownfield],*[area:highway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q005_highlands_geometry",
+    "selector_id": "q005",
+    "query": "a[natural=water,glacier]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q006_highlands_geometry",
+    "selector_id": "q006",
+    "query": "a[waterway=river]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q026_norfolk_geometry",
+    "selector_id": "q026",
+    "query": "na[amenity=hospital]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q037_norfolk_geometry",
+    "selector_id": "q037",
+    "query": "r[route=subway]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q043_norfolk_geometry",
+    "selector_id": "q043",
+    "query": "r[route=metro]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q016_lake_district_geometry",
+    "selector_id": "q016",
+    "query": "n[highway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q086_highlands_geometry",
+    "selector_id": "q086",
+    "query": "n[natural=peak][ele>=600]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q011_highlands_geometry",
+    "selector_id": "q011",
+    "query": "w[highway]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q124_norfolk_geometry",
+    "selector_id": "q124",
+    "query": "na[amenity=hospital][emergency=yes]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q061_lake_district_geometry",
+    "selector_id": "q061",
+    "query": "*[highway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q036_lake_district_geometry",
+    "selector_id": "q036",
+    "query": "w[highway=residential]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q125_norfolk_geometry",
+    "selector_id": "q125",
+    "query": "na[amenity=parking][fee=yes]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q059_norfolk_geometry",
+    "selector_id": "q059",
+    "query": "w[highway][sidewalk=both,left,right,yes]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q035_cornwall_geometry",
+    "selector_id": "q035",
+    "query": "a[boundary=administrative]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q084_norfolk_geometry",
+    "selector_id": "q084",
+    "query": "n[highway=street_lamp][lamp_type]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q009_highlands_geometry",
+    "selector_id": "q009",
+    "query": "w[highway=motorway,trunk]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q092_lake_district_geometry",
+    "selector_id": "q092",
+    "query": "a[natural=water]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q085_norfolk_geometry",
+    "selector_id": "q085",
+    "query": "n[highway=street_lamp][lit=yes]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q015_lake_district_geometry",
+    "selector_id": "q015",
+    "query": "w[highway][name]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q014_highlands_geometry",
+    "selector_id": "q014",
+    "query": "n[natural=peak,volcano,hill][ele]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q062_lake_district_geometry",
+    "selector_id": "q062",
+    "query": "*[highway!=sidewalk,cycleway,footway,pedestrian,path]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "isolated_predicate_diagnostic",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q098_lake_district_geometry",
+    "selector_id": "q098",
+    "query": "w[waterway=river,stream,canal]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q046_norfolk_geometry",
+    "selector_id": "q046",
+    "query": "w[highway=residential][name]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q110_lake_district_geometry",
+    "selector_id": "q110",
+    "query": "n[highway=traffic_signals,stop]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q029_norfolk_geometry",
+    "selector_id": "q029",
+    "query": "wa[natural=water,waterway]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q018_norfolk_geometry",
+    "selector_id": "q018",
+    "query": "w[highway][bridge=yes]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q128_norfolk_geometry",
+    "selector_id": "q128",
+    "query": "r[route=bus][network]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q082_norfolk_geometry",
+    "selector_id": "q082",
+    "query": "wa[public_transport=platform][!area]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q047_norfolk_geometry",
+    "selector_id": "q047",
+    "query": "na[amenity=cinema]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q053_cornwall_geometry",
+    "selector_id": "q053",
+    "query": "a[boundary=administrative][name]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q051_cornwall_geometry",
+    "selector_id": "q051",
+    "query": "wa[building=*]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q074_norfolk_geometry",
+    "selector_id": "q074",
+    "query": "n[highway=crossing][crossing=zebra]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q028_norfolk_geometry",
+    "selector_id": "q028",
+    "query": "na[amenity=bicycle_parking]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q066_lake_district_geometry",
+    "selector_id": "q066",
+    "query": "*[power=line,connection,minor_line]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q080_norfolk_geometry",
+    "selector_id": "q080",
+    "query": "n[public_transport=platform][!tactile_paving]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q068_lake_district_geometry",
+    "selector_id": "q068",
+    "query": "*[landuse=grass,farmland,farmyard,flowerbed,meadow,plant_nursery,vineyard,greenery,allotments,recreation_ground],*[leisure=park,dogpark,garden,nature_reserve,playground],*[natural=grassland,scrub]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q101_lake_district_geometry",
+    "selector_id": "q101",
+    "query": "n[power=tower,pole]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q007_highlands_geometry",
+    "selector_id": "q007",
+    "query": "n[natural=peak,volcano]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q039_norfolk_geometry",
+    "selector_id": "q039",
+    "query": "w[railway=tram]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q078_norfolk_geometry",
+    "selector_id": "q078",
+    "query": "n[public_transport=platform][!shelter]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q033_norfolk_geometry",
+    "selector_id": "q033",
+    "query": "nwa[highway]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q004_highlands_geometry",
+    "selector_id": "q004",
+    "query": "a[place=island]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q034_cornwall_geometry",
+    "selector_id": "q034",
+    "query": "na[place=neighbourhood,suburb,quarter]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q022_norfolk_geometry",
+    "selector_id": "q022",
+    "query": "na[amenity=restaurant][cuisine=thai]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q073_norfolk_geometry",
+    "selector_id": "q073",
+    "query": "n[highway=crossing][!crossing][crossing_ref!~\"(zebra|pelican|toucan|pegasus|puffin|tiger)\"]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q093_lake_district_geometry",
+    "selector_id": "q093",
+    "query": "a[natural=wood]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q099_lake_district_geometry",
+    "selector_id": "q099",
+    "query": "a[natural=water],w[waterway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q096_lake_district_geometry",
+    "selector_id": "q096",
+    "query": "a[leisure=nature_reserve]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q049_norfolk_geometry",
+    "selector_id": "q049",
+    "query": "na[amenity=pub]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q058_norfolk_geometry",
+    "selector_id": "q058",
+    "query": "w[footway=sidewalk]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q081_norfolk_geometry",
+    "selector_id": "q081",
+    "query": "wa[public_transport=platform],wa[highway=platform],wa[railway=platform]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q054_cornwall_geometry",
+    "selector_id": "q054",
+    "query": "n[place=suburb,quarter,neighbourhood,village,hamlet][name]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q040_norfolk_geometry",
+    "selector_id": "q040",
+    "query": "w[railway=light_rail]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q122_norfolk_geometry",
+    "selector_id": "q122",
+    "query": "na[amenity=pub][name]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q123_norfolk_geometry",
+    "selector_id": "q123",
+    "query": "na[amenity=school][!operator]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q057_norfolk_geometry",
+    "selector_id": "q057",
+    "query": "n[public_transport=platform]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q114_norfolk_geometry",
+    "selector_id": "q114",
+    "query": "r[route=foot,hiking]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q104_lake_district_geometry",
+    "selector_id": "q104",
+    "query": "w[highway][surface=asphalt]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q072_norfolk_geometry",
+    "selector_id": "q072",
+    "query": "n[highway=crossing][!crossing][crossing_ref~\"(pelican|toucan|pegasus|puffin|tiger)\"]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q063_lake_district_geometry",
+    "selector_id": "q063",
+    "query": "*[water],*[natural=water],*[waterway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q079_norfolk_geometry",
+    "selector_id": "q079",
+    "query": "n[public_transport=platform][!bench]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q089_highlands_geometry",
+    "selector_id": "q089",
+    "query": "n[natural=peak,volcano,hill][ele][name]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q048_norfolk_geometry",
+    "selector_id": "q048",
+    "query": "a[boundary=administrative][admin_level=8][name:en=Zurich]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "negative_control",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q113_norfolk_geometry",
+    "selector_id": "q113",
+    "query": "r[route=bicycle]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q012_cornwall_geometry",
+    "selector_id": "q012",
+    "query": "*",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q103_lake_district_geometry",
+    "selector_id": "q103",
+    "query": "w[highway=footway,path,track]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q117_cornwall_geometry",
+    "selector_id": "q117",
+    "query": "a[boundary=administrative][admin_level=6]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q115_norfolk_geometry",
+    "selector_id": "q115",
+    "query": "r[type=restriction]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q023_norfolk_geometry",
+    "selector_id": "q023",
+    "query": "na[amenity=restaurant,cafe,bar,pub]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q120_norfolk_geometry",
+    "selector_id": "q120",
+    "query": "na[amenity=restaurant][cuisine=indian]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q030_norfolk_geometry",
+    "selector_id": "q030",
+    "query": "a[building]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q095_lake_district_geometry",
+    "selector_id": "q095",
+    "query": "a[natural=wetland]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q056_norfolk_geometry",
+    "selector_id": "q056",
+    "query": "w[public_transport=platform], w[highway=platform], w[railway=platform]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q097_lake_district_geometry",
+    "selector_id": "q097",
+    "query": "a[landuse=farmland,meadow]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q111_norfolk_geometry",
+    "selector_id": "q111",
+    "query": "r[route=bus]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q002_highlands_geometry",
+    "selector_id": "q002",
+    "query": "n[place=continent,country,state,city,town]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q044_norfolk_geometry",
+    "selector_id": "q044",
+    "query": "r[route=tram]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q045_norfolk_geometry",
+    "selector_id": "q045",
+    "query": "r[route=light_rail]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q105_lake_district_geometry",
+    "selector_id": "q105",
+    "query": "w[highway][surface=gravel,unpaved,ground]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q121_norfolk_geometry",
+    "selector_id": "q121",
+    "query": "na[amenity=restaurant][cuisine=\"*fish_and_chips*\"]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q071_norfolk_geometry",
+    "selector_id": "q071",
+    "query": "n[highway=crossing][!crossing][crossing_ref=zebra]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q038_norfolk_geometry",
+    "selector_id": "q038",
+    "query": "w[railway=subway]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q065_lake_district_geometry",
+    "selector_id": "q065",
+    "query": "*[power=tower,catenary_mast,pole]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q017_norfolk_geometry",
+    "selector_id": "q017",
+    "query": "na[place=city][population>=250000]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q010_highlands_geometry",
+    "selector_id": "q010",
+    "query": "w[highway=motorway]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q025_norfolk_geometry",
+    "selector_id": "q025",
+    "query": "na[amenity=school]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q090_highlands_geometry",
+    "selector_id": "q090",
+    "query": "n[place=city,town,village,hamlet][name][population>=10000]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q075_norfolk_geometry",
+    "selector_id": "q075",
+    "query": "w[highway=primary,secondary,tertiary,unclassified,residential,living_street][name]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q069_lake_district_geometry",
+    "selector_id": "q069",
+    "query": "*[admin_level=8]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q094_lake_district_geometry",
+    "selector_id": "q094",
+    "query": "a[landuse=forest]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q118_cornwall_geometry",
+    "selector_id": "q118",
+    "query": "a[boundary=administrative][admin_level=8]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q003_highlands_geometry",
+    "selector_id": "q003",
+    "query": "wra[boundary=administrative,disputed]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q077_norfolk_geometry",
+    "selector_id": "q077",
+    "query": "w[highway=footway,path,cycleway][!surface]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q088_highlands_geometry",
+    "selector_id": "q088",
+    "query": "n[natural=peak][ele>=1000]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q052_cornwall_geometry",
+    "selector_id": "q052",
+    "query": "nw[name=*]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "region": "cornwall",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ]
+  },
+  {
+    "name": "q060_lake_district_geometry",
+    "selector_id": "q060",
+    "query": "*[railway=rail]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  }
+]

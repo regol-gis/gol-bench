@@ -1,0 +1,530 @@
+[
+  {
+    "name": "q001_london_iterate",
+    "selector_id": "q001",
+    "query": "n[place=continent,country,state,city]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "region": "london",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ]
+  },
+  {
+    "name": "q020_manchester_iterate",
+    "selector_id": "q020",
+    "query": "na[natural=water]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "region": "manchester",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ]
+  },
+  {
+    "name": "q035_edinburgh_iterate",
+    "selector_id": "q035",
+    "query": "a[boundary=administrative]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q056_uk_iterate",
+    "selector_id": "q056",
+    "query": "w[public_transport=platform], w[highway=platform], w[railway=platform]",
+    "region": "whole_file",
+    "operation": "iterate",
+    "semantics": "whole_file",
+    "status": "proposed_unrun",
+    "role": "candidate_selector"
+  },
+  {
+    "name": "q075_cardiff_iterate",
+    "selector_id": "q075",
+    "query": "w[highway=primary,secondary,tertiary,unclassified,residential,living_street][name]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "region": "cardiff",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ]
+  },
+  {
+    "name": "q094_edinburgh_iterate",
+    "selector_id": "q094",
+    "query": "a[landuse=forest]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q111_norfolk_iterate",
+    "selector_id": "q111",
+    "query": "r[route=bus]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q128_norfolk_iterate",
+    "selector_id": "q128",
+    "query": "r[route=bus][network]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "iterate",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q001_london_tags",
+    "selector_id": "q001",
+    "query": "n[place=continent,country,state,city]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "region": "london",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ]
+  },
+  {
+    "name": "q019_manchester_tags",
+    "selector_id": "q019",
+    "query": "w[highway][highway=motorway,primary]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "region": "manchester",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ]
+  },
+  {
+    "name": "q035_edinburgh_tags",
+    "selector_id": "q035",
+    "query": "a[boundary=administrative]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q055_edinburgh_tags",
+    "selector_id": "q055",
+    "query": "*[name]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q075_cardiff_tags",
+    "selector_id": "q075",
+    "query": "w[highway=primary,secondary,tertiary,unclassified,residential,living_street][name]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "region": "cardiff",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ]
+  },
+  {
+    "name": "q094_edinburgh_tags",
+    "selector_id": "q094",
+    "query": "a[landuse=forest]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "region": "edinburgh",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ]
+  },
+  {
+    "name": "q111_london_tags",
+    "selector_id": "q111",
+    "query": "r[route=bus]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "region": "london",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ]
+  },
+  {
+    "name": "q128_london_tags",
+    "selector_id": "q128",
+    "query": "r[route=bus][network]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "region": "london",
+    "operation": "tags",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ]
+  },
+  {
+    "name": "q003_highlands_geometry",
+    "selector_id": "q003",
+    "query": "wra[boundary=administrative,disputed]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "region": "highlands",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ]
+  },
+  {
+    "name": "q023_norfolk_geometry",
+    "selector_id": "q023",
+    "query": "na[amenity=restaurant,cafe,bar,pub]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q039_norfolk_geometry",
+    "selector_id": "q039",
+    "query": "w[railway=tram]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q061_lake_district_geometry",
+    "selector_id": "q061",
+    "query": "*[highway]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q078_norfolk_geometry",
+    "selector_id": "q078",
+    "query": "n[public_transport=platform][!shelter]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q095_lake_district_geometry",
+    "selector_id": "q095",
+    "query": "a[natural=wetland]",
+    "bbox_lonlat": [
+      -3.35,
+      54.3,
+      -2.8,
+      54.7
+    ],
+    "region": "lake_district",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      -39967057,
+      774559779,
+      -33405301,
+      782777808
+    ]
+  },
+  {
+    "name": "q111_norfolk_geometry",
+    "selector_id": "q111",
+    "query": "r[route=bus]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "q128_norfolk_geometry",
+    "selector_id": "q128",
+    "query": "r[route=bus][network]",
+    "bbox_lonlat": [
+      0.5,
+      52.5,
+      1.0,
+      52.9
+    ],
+    "region": "norfolk",
+    "operation": "geometry",
+    "semantics": "stored_bbox_candidates",
+    "status": "proposed_unrun",
+    "role": "candidate_selector",
+    "bounds": [
+      5965232,
+      738534910,
+      11930465,
+      746410026
+    ]
+  },
+  {
+    "name": "all_features",
+    "query": "*"
+  },
+  {
+    "name": "all_nodes",
+    "query": "n"
+  },
+  {
+    "name": "all_ways",
+    "query": "w"
+  }
+]

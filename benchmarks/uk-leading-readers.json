@@ -1,0 +1,145 @@
+[
+  {
+    "name": "cafes",
+    "query": "na[amenity=cafe]"
+  },
+  {
+    "name": "london_cafes",
+    "query": "na[amenity=cafe]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ]
+  },
+  {
+    "name": "all_features",
+    "query": "*"
+  },
+  {
+    "name": "q022_manchester_iterate",
+    "query": "na[amenity=restaurant][cuisine=thai]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q074_cardiff_iterate",
+    "query": "n[highway=crossing][crossing=zebra]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q046_london_iterate",
+    "query": "w[highway=residential][name]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q126_manchester_iterate",
+    "query": "na[amenity=bicycle_parking][covered=yes]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q124_manchester_iterate",
+    "query": "na[amenity=hospital][emergency=yes]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q036_birmingham_iterate",
+    "query": "w[highway=residential]",
+    "bbox_lonlat": [
+      -1.98,
+      52.42,
+      -1.8,
+      52.54
+    ],
+    "bounds": [
+      -23622320,
+      736968499,
+      -21474836,
+      739319184
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q122_manchester_iterate",
+    "query": "na[amenity=pub][name]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  }
+]

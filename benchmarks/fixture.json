@@ -1,0 +1,26 @@
+[
+  {
+    "name": "all",
+    "query": "*",
+    "operation": "iterate",
+    "role": "candidate_selector"
+  },
+  {
+    "name": "nodes",
+    "query": "n",
+    "operation": "iterate",
+    "role": "candidate_selector"
+  },
+  {
+    "name": "ways",
+    "query": "w",
+    "operation": "iterate",
+    "role": "candidate_selector"
+  },
+  {
+    "name": "relations",
+    "query": "r",
+    "operation": "iterate",
+    "role": "candidate_selector"
+  }
+]

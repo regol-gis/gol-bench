@@ -1,0 +1,366 @@
+--- a/src/source.rs
++++ b/src/source.rs
+@@ -451,6 +451,15 @@
+     }
+
+     #[cfg(target_os = "linux")]
++    pub(crate) fn hint_leaf_range(&self, start: u64, len: u64) -> bool {
++        let (Ok(start), Ok(len)) = (usize::try_from(start), usize::try_from(len)) else {
++            return false;
++        };
++        start.checked_add(len).is_some_and(|end| end <= self.map.len())
++            && self.map.advise_range(memmap2::Advice::WillNeed, start, len).is_ok()
++    }
++
++    #[cfg(target_os = "linux")]
+     pub(crate) fn file(&self) -> &File {
+         &self.file
+     }
+@@ -479,7 +488,7 @@
+ #[cfg(all(feature = "mmap", target_os = "linux"))]
+ mod mmap_read_ahead;
+ #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
+-pub(crate) use mmap_read_ahead::FaultSample;
++pub(crate) use mmap_read_ahead::{control as prefetch_control, FaultSample};
+ #[cfg(all(feature = "mmap", target_os = "linux"))]
+ pub(crate) use mmap_read_ahead::{MappedScan, WorkerMap};
+
+--- a/src/source/mmap_read_ahead.rs
++++ b/src/source/mmap_read_ahead.rs
+@@ -137,7 +137,7 @@
+     advised: Option<(usize, usize)>,
+ }
+
+-fn control() -> &'static str {
++pub(crate) fn control() -> &'static str {
+     static MODE: std::sync::OnceLock<String> = std::sync::OnceLock::new();
+     MODE.get_or_init(|| std::env::var("GOL_BENCH_PREFETCH_CONTROL_V3").unwrap_or_default())
+ }
+@@ -154,7 +154,7 @@
+     fn with_policy(source: &'a MappedFile, allow_sequential: bool) -> Self {
+         Self {
+             source,
+-            allow_sequential: allow_sequential && !matches!(control(), "no-sequential" | "neither"),
++            allow_sequential: allow_sequential && !matches!(control(), "no-sequential" | "neither" | "leaf-window"),
+             next_sample: 0,
+             previous: None,
+             sequential: false,
+@@ -208,7 +208,7 @@
+     }
+
+     pub(crate) fn enable_helpers(&mut self) {
+-        self.helpers_enabled = !matches!(control(), "no-helpers" | "neither");
++        self.helpers_enabled = !matches!(control(), "no-helpers" | "neither" | "leaf-window");
+     }
+
+     #[inline]
+--- a/src/spatial.rs
++++ b/src/spatial.rs
+@@ -228,6 +228,8 @@
+
+ #[cfg(all(feature = "mmap", target_os = "linux"))]
+ mod mapped_ahead;
++#[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++mod leaf_window;
+
+ /// Streaming spatial traversal. Uses memory proportional to tree depth, not
+ /// result count. An error terminates the iterator.
+@@ -237,6 +239,8 @@
+     tags: ReadWindow<'a, S>,
+     strings: ReadWindow<'a, S>,
+     work: Vec<Work>,
++    #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++    leaf_window: Option<Box<leaf_window::LeafWindow>>,
+     leaf: Option<(u64, bool)>,
+     bounds: Bounds,
+     prune: bool,
+@@ -287,6 +291,8 @@
+             },
+             #[cfg(all(feature = "mmap", target_os = "linux"))]
+             mapped_ahead: None,
++            #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++            leaf_window: None,
+         }
+     }
+     pub(crate) fn steps(&self) -> u64 {
+@@ -596,6 +602,8 @@
+             read_ahead: None,
+             #[cfg(all(feature = "mmap", target_os = "linux"))]
+             mapped_ahead: None,
++            #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++            leaf_window: None,
+         }
+     }
+     #[cfg(feature = "parallel")]
+@@ -674,6 +682,12 @@
+         }
+         if let Some(target) = target {
+             if word & 2 != 0 {
++                #[cfg(all(feature = "mmap", feature = "parallel", target_os = "linux"))]
++                if let Some(window) = &mut self.leaf_window {
++                    if let Some(source) = self.library.source.mapped_file() {
++                        window.visit(source, self.tile.start(), self.tile.end(), target);
++                    }
++                }
+                 // The child is next in traversal order, including after a pause.
+                 self.leaf = Some((target, node));
+             } else {
+--- a/src/spatial/mapped_ahead.rs
++++ b/src/spatial/mapped_ahead.rs
+@@ -515,7 +515,7 @@
+ #[cfg(feature = "parallel")]
+ impl<S: Source> Features<'_, S> {
+     pub(crate) fn partition_fault_sample(&self) -> Option<crate::source::FaultSample> {
+-        if self.prune || self.library.source.mapped_file().is_none() {
++        if self.library.source.mapped_file().is_none() || (self.prune && crate::source::prefetch_control() != "leaf-window") {
+             return None;
+         }
+         crate::source::FaultSample::now()
+@@ -523,7 +523,11 @@
+
+     /// Split partitions may start partway through a tile. Only hint whole,
+     /// deferred payloads whose header the worker is about to traverse.
+-    pub(crate) fn hint_pending_tile(&self, live: &impl Fn() -> bool) {
++    pub(crate) fn hint_pending_tile(&mut self, live: &impl Fn() -> bool) {
++        if crate::source::prefetch_control() == "leaf-window" {
++            self.leaf_window.get_or_insert_with(|| Box::new(super::leaf_window::LeafWindow::new()));
++            return;
++        }
+         let [Work::Payload { start, .. }] = self.work.as_slice() else {
+             return;
+         };
+--- /dev/null
++++ b/src/spatial/leaf_window.rs
+@@ -0,0 +1,156 @@
++//! Experimental admission of small, forward hints after a mapped worker stalls.
++use crate::source::MappedFile;
++use std::time::Instant;
++
++const PAGE: u64 = 4096;
++const PILOT: u64 = 4;
++const MAX_WINDOW: u64 = 16;
++const TILE_LIMIT: u64 = 64;
++
++pub(super) struct LeafWindow {
++    tile: u64,
++    last: Option<u64>,
++    run: u64,
++    started: Instant,
++    baseline_ns: u128,
++    width: u64,
++    until: u64,
++    issued: u64,
++    trace: bool,
++    observed: u64,
++    adjacent: u64,
++    requests: u64,
++    requested_pages: u64,
++    used_pages: u64,
++}
++
++impl LeafWindow {
++    pub(super) fn new() -> Self {
++        Self {
++            tile: u64::MAX,
++            last: None,
++            run: 0,
++            started: Instant::now(),
++            baseline_ns: 0,
++            width: 0,
++            until: 0,
++            issued: 0,
++            trace: std::env::var_os("GOL_BENCH_WINDOW_TRACE").is_some(),
++            observed: 0,
++            adjacent: 0,
++            requests: 0,
++            requested_pages: 0,
++            used_pages: 0,
++        }
++    }
++
++    pub(super) fn visit(&mut self, source: &MappedFile, tile: u64, end: u64, p: u64) {
++        if p < tile || p >= end {
++            return;
++        }
++        let page = p / PAGE;
++        if self.tile != tile {
++            self.tile = tile;
++            self.last = None;
++            self.issued = 0;
++        }
++        if self.last == Some(page) {
++            return;
++        }
++        let adjacent = self
++            .last
++            .replace(page)
++            .is_some_and(|previous| previous + 1 == page);
++        if self.trace {
++            self.observed += 1;
++            self.adjacent += u64::from(adjacent);
++        }
++        if !adjacent {
++            self.run = 0;
++            self.width = 0;
++            return;
++        }
++        if self.issued >= TILE_LIMIT && self.width == 0 {
++            return;
++        }
++        if self.width != 0 {
++            if self.trace {
++                self.used_pages += 1;
++            }
++            if page < self.until {
++                return;
++            }
++            // Compare per-page progress in the trial window with the preceding
++            // unhinted run. A slower trial returns to a fresh demand pilot.
++            let ns = self.started.elapsed().as_nanos() / u128::from(self.width);
++            if ns >= self.baseline_ns {
++                self.width = 0;
++                self.run = 0;
++                return;
++            }
++            self.width = (self.width * 2).min(MAX_WINDOW);
++        } else {
++            if self.run == 0 {
++                self.started = Instant::now();
++            }
++            self.run += 1;
++            if self.run <= PILOT {
++                return;
++            }
++            self.baseline_ns = self.started.elapsed().as_nanos() / u128::from(PILOT);
++            self.width = PILOT;
++        }
++        let start = (page + 1) * PAGE;
++        let length =
++            (self.width.min(TILE_LIMIT - self.issued) * PAGE).min(end.saturating_sub(start));
++        if length == 0 || !source.hint_leaf_range(start, length) {
++            self.run = 0;
++            self.width = 0;
++            return;
++        }
++        self.width = length.div_ceil(PAGE);
++        self.until = page + self.width;
++        self.issued += self.width;
++        self.started = Instant::now();
++        if self.trace {
++            self.requests += 1;
++            self.requested_pages += self.width;
++        }
++    }
++}
++
++impl Drop for LeafWindow {
++    fn drop(&mut self) {
++        if self.trace {
++            eprintln!(
++                "LEAF_WINDOW {} {} {} {} {}",
++                self.observed, self.adjacent, self.requests, self.requested_pages, self.used_pages
++            );
++        }
++    }
++}
++
++#[cfg(test)]
++mod tests {
++    use super::*;
++    use crate::source::mapped_scan_test_support::mapped_fixture;
++
++    #[test]
++    fn hints_stay_in_tile_and_stop_at_a_gap_or_byte_limit() -> crate::Result<()> {
++        let bytes = vec![0; (PAGE * 400) as usize];
++        let source = mapped_fixture(&bytes)?;
++        let mut window = LeafWindow::new();
++        for page in 0..6 {
++            window.visit(&source, 0, PAGE * 7, page * PAGE);
++        }
++        assert_eq!((window.width, window.until, window.issued), (1, 6, 1));
++        window.visit(&source, 0, PAGE * 7, PAGE * 3);
++        assert_eq!(window.width, 0);
++        for page in 10..400 {
++            window.visit(&source, PAGE * 10, PAGE * 400, page * PAGE);
++            assert!(window.issued <= TILE_LIMIT && window.width <= MAX_WINDOW);
++        }
++        assert_eq!(window.issued, TILE_LIMIT);
++        Ok(())
++    }
++}
+--- a/examples/support/benchmark_worker.rs
++++ b/examples/support/benchmark_worker.rs
+@@ -153,6 +153,7 @@
+     opened_at: Instant,
+     storage_stats: fn(&S) -> Value,
+ ) -> Result<()> {
++    let latency_probe = std::env::var_os("GOL_BENCH_FIRST_MATCH").is_some();
+     let open_ns = opened_at.elapsed().as_nanos();
+     let start = Instant::now();
+     #[cfg(feature = "parallel")]
+@@ -306,6 +307,29 @@
+             );
+             continue;
+         }
++        #[cfg(feature = "parallel")]
++        if latency_probe {
++            assert!(operation == "iterate" && limit == Some(1));
++            let start = Instant::now();
++            let mut first_ns = None;
++            let mut take = |iter: &mut dyn Iterator<Item = Result<Feature<'_, S>>>| -> Result<_> {
++                let item = iter.next().transpose()?;
++                if item.is_some() { first_ns = Some(start.elapsed().as_nanos()); }
++                Ok(item.map(|f| f.id()))
++            };
++            let id = if let Some(pool) = &executor {
++                pool.with_query(&prepared, bounds, |iter| take(iter))??
++            } else if let Some(b) = bounds {
++                take(&mut prepared.in_bounds(b))?
++            } else {
++                take(&mut prepared.iter())?
++            };
++            let release_ns = start.elapsed().as_nanos();
++            let id = id.map(|id| format!("{:?}/{}", id.kind, id.id));
++            writeln!(output, "{}", json!({"name":name,"first_ns":first_ns,"release_ns":release_ns,
++                "id":id,"open_ns":open_ns,"pool_ns":executor_setup_ns,"setup_ns":setup_ns}))?;
++            continue;
++        }
+         let execute = || {
+             if operation == "count" {
+                 let serial_count = || match bounds {
+--- a/src/spatial/mapped_ahead/tests.rs
++++ b/src/spatial/mapped_ahead/tests.rs
+@@ -16,11 +16,8 @@
+             .partition_fault_sample()
+             .is_none()
+     );
+-    assert!(
+-        Features::new(&mapped, Some(Bounds::WORLD))
+-            .partition_fault_sample()
+-            .is_none()
+-    );
++    let selective = crate::source::prefetch_control() == "leaf-window";
++    assert_eq!(Features::new(&mapped, Some(Bounds::WORLD)).partition_fault_sample().is_some(), selective);
+     let mut cursor = Features::new(&mapped, None);
+     assert!(cursor.partition_fault_sample().is_some());
+     cursor.hint_pending_tile(&|| panic!("residual directory work has no tile payload"));
+@@ -42,7 +39,9 @@
+             checks.set(checks.get() + 1);
+             active
+         });
+-        if active {
++        if selective {
++            assert_eq!(checks.get(), 0);
++        } else if active {
+             assert!(checks.get() > 1);
+         } else {
+             assert_eq!(checks.get(), 1);
+--- a/src/source/mmap_read_ahead/test_support.rs
++++ b/src/source/mmap_read_ahead/test_support.rs
+@@ -37,4 +37,6 @@
+
+ pub(crate) fn force_helpers(scan: &mut MappedScan<'_>) {
++    // Force the helper path even when the experimental policy disables automatic admission.
++    scan.helpers_enabled = true;
+     scan.helper_faults_observed = true;
+ }

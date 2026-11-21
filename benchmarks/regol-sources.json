@@ -1,0 +1,12 @@
+{
+  "current": {
+    "repository": "https://github.com/regol-gis/regol.git",
+    "revision": "49fa7aa0d1074285648c75e325c4e24455d98806",
+    "ref": "v0.2.0"
+  },
+  "cli-current": {
+    "repository": "https://github.com/regol-gis/regol.git",
+    "revision": "49fa7aa0d1074285648c75e325c4e24455d98806",
+    "ref": "v0.2.0"
+  }
+}

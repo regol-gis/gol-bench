@@ -1,0 +1,537 @@
+[
+  {
+    "name": "uk_cafe_tags",
+    "query": "na[amenity=cafe]",
+    "operation": "tags"
+  },
+  {
+    "name": "pubs",
+    "query": "na[amenity=pub]"
+  },
+  {
+    "name": "q087_edinburgh_iterate",
+    "query": "n[natural=peak][ele>=914.4]",
+    "bbox_lonlat": [
+      -3.3,
+      55.9,
+      -3.1,
+      55.99
+    ],
+    "bounds": [
+      -39370534,
+      807928741,
+      -36984441,
+      809846178
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "amenity_presence",
+    "query": "n[amenity]"
+  },
+  {
+    "name": "q022_manchester_iterate",
+    "query": "na[amenity=restaurant][cuisine=thai]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q017_manchester_iterate",
+    "query": "na[place=city][population>=250000]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "cafes",
+    "query": "na[amenity=cafe]"
+  },
+  {
+    "name": "q076_cardiff_iterate",
+    "query": "w[highway=footway,path,steps,pedestrian,cycleway][!indoor]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q119_cornwall_iterate",
+    "query": "a[boundary=administrative][name=\"City of Edinburgh\"]",
+    "bbox_lonlat": [
+      -5.6,
+      50.02,
+      -5.2,
+      50.3
+    ],
+    "bounds": [
+      -66810602,
+      691239220,
+      -62038416,
+      696453556
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "london_cafes",
+    "query": "na[amenity=cafe]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ]
+  },
+  {
+    "name": "q074_cardiff_iterate",
+    "query": "n[highway=crossing][crossing=zebra]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q046_london_iterate",
+    "query": "w[highway=residential][name]",
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ],
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q004_highlands_iterate",
+    "query": "a[place=island]",
+    "bbox_lonlat": [
+      -5.5,
+      57.0,
+      -4.5,
+      57.6
+    ],
+    "bounds": [
+      -65617556,
+      831676657,
+      -53687091,
+      844927186
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q078_cardiff_iterate",
+    "query": "n[public_transport=platform][!shelter]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "bus_routes",
+    "query": "r[type=route][route=bus]"
+  },
+  {
+    "name": "q057_cardiff_iterate",
+    "query": "n[public_transport=platform]",
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "royal_name_prefix",
+    "query": "n[name=\"Royal*\"]"
+  },
+  {
+    "name": "soho_cafes",
+    "query": "na[amenity=cafe]",
+    "bbox_lonlat": [
+      -0.14,
+      51.51,
+      -0.13,
+      51.52
+    ],
+    "bounds": [
+      -1670265,
+      719347242,
+      -1550960,
+      719538954
+    ]
+  },
+  {
+    "name": "cafes_take_1",
+    "query": "na[amenity=cafe]",
+    "limit": 1
+  },
+  {
+    "name": "q103_birmingham_iterate",
+    "query": "w[highway=footway,path,track]",
+    "bbox_lonlat": [
+      -1.98,
+      52.42,
+      -1.8,
+      52.54
+    ],
+    "bounds": [
+      -23622320,
+      736968499,
+      -21474836,
+      739319184
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "uk_missing_local_key",
+    "query": "n[gol_reader_missing_test_key]"
+  },
+  {
+    "name": "q025_manchester_iterate",
+    "query": "na[amenity=school]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q126_manchester_iterate",
+    "query": "na[amenity=bicycle_parking][covered=yes]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q121_manchester_iterate",
+    "query": "na[amenity=restaurant][cuisine=\"*fish_and_chips*\"]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q015_birmingham_iterate",
+    "query": "w[highway][name]",
+    "bbox_lonlat": [
+      -1.98,
+      52.42,
+      -1.8,
+      52.54
+    ],
+    "bounds": [
+      -23622320,
+      736968499,
+      -21474836,
+      739319184
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q020_manchester_iterate",
+    "query": "na[natural=water]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "all_nodes",
+    "query": "n"
+  },
+  {
+    "name": "q124_manchester_iterate",
+    "query": "na[amenity=hospital][emergency=yes]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q108_birmingham_iterate",
+    "query": "w[highway][tunnel=yes]",
+    "bbox_lonlat": [
+      -1.98,
+      52.42,
+      -1.8,
+      52.54
+    ],
+    "bounds": [
+      -23622320,
+      736968499,
+      -21474836,
+      739319184
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q036_birmingham_iterate",
+    "query": "w[highway=residential]",
+    "bbox_lonlat": [
+      -1.98,
+      52.42,
+      -1.8,
+      52.54
+    ],
+    "bounds": [
+      -23622320,
+      736968499,
+      -21474836,
+      739319184
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q122_manchester_iterate",
+    "query": "na[amenity=pub][name]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q047_manchester_iterate",
+    "query": "na[amenity=cinema]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q070_birmingham_iterate",
+    "query": "*[highway][highway!=sidewalk,cycleway,footway,pedestrian,path]",
+    "bbox_lonlat": [
+      -1.98,
+      52.42,
+      -1.8,
+      52.54
+    ],
+    "bounds": [
+      -23622320,
+      736968499,
+      -21474836,
+      739319184
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q026_manchester_iterate",
+    "query": "na[amenity=hospital]",
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q048_manchester_iterate",
+    "query": "a[boundary=administrative][admin_level=8][name:en=Zurich]",
+    "bounds": [
+      -27678678,
+      756757124,
+      -25769804,
+      759162853
+    ],
+    "bbox_lonlat": [
+      -2.32,
+      53.42,
+      -2.16,
+      53.54
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "q072_cardiff_iterate",
+    "query": "n[highway=crossing][!crossing][crossing_ref~\"(pelican|toucan|pegasus|puffin|tiger)\"]",
+    "bounds": [
+      -38774010,
+      718006430,
+      -36984441,
+      719730709
+    ],
+    "bbox_lonlat": [
+      -3.25,
+      51.44,
+      -3.1,
+      51.53
+    ],
+    "operation": "iterate"
+  },
+  {
+    "name": "uk_residential_dense",
+    "query": "w[highway=residential]"
+  },
+  {
+    "name": "london_buildings",
+    "query": "a[building=yes]",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ],
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ]
+  },
+  {
+    "name": "cafe_name",
+    "query": "na[amenity=cafe][name]"
+  },
+  {
+    "name": "london_cafe_name",
+    "query": "na[amenity=cafe][name]",
+    "bounds": [
+      -2386093,
+      718772356,
+      238609,
+      720690115
+    ],
+    "bbox_lonlat": [
+      -0.2,
+      51.48,
+      0.02,
+      51.58
+    ]
+  }
+]

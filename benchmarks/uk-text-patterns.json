@@ -1,0 +1,26 @@
+[
+  {
+    "name": "royal_name_exact",
+    "query": "n[name=\"Royal\"]"
+  },
+  {
+    "name": "arms_name_suffix",
+    "query": "n[name=\"* Arms\"]"
+  },
+  {
+    "name": "royal_name_contains",
+    "query": "n[name=\"*Royal*\"]"
+  },
+  {
+    "name": "road_name_suffix",
+    "query": "w[highway][name=\"* Road\"]"
+  },
+  {
+    "name": "without_royal_name",
+    "query": "n[name!=\"*Royal*\"]"
+  },
+  {
+    "name": "royal_or_arms_name",
+    "query": "n[name=\"Royal*\",\"* Arms\"]"
+  }
+]

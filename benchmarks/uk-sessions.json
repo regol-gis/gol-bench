@@ -1,0 +1,237 @@
+[
+  {
+    "name": "session_london_pan",
+    "steps": [
+      {
+        "name": "london_pan_0_roads",
+        "query": "w[highway]",
+        "bbox_lonlat": [
+          -0.2,
+          51.5,
+          -0.14,
+          51.55
+        ],
+        "operation": "geometry"
+      },
+      {
+        "name": "london_pan_0_poi",
+        "query": "na[amenity]",
+        "bbox_lonlat": [
+          -0.2,
+          51.5,
+          -0.14,
+          51.55
+        ],
+        "operation": "tags"
+      },
+      {
+        "name": "london_pan_1_roads",
+        "query": "w[highway]",
+        "bbox_lonlat": [
+          -0.16,
+          51.5,
+          -0.1,
+          51.55
+        ],
+        "operation": "geometry"
+      },
+      {
+        "name": "london_pan_1_poi",
+        "query": "na[amenity]",
+        "bbox_lonlat": [
+          -0.16,
+          51.5,
+          -0.1,
+          51.55
+        ],
+        "operation": "tags"
+      },
+      {
+        "name": "london_pan_2_roads",
+        "query": "w[highway]",
+        "bbox_lonlat": [
+          -0.12,
+          51.5,
+          -0.06,
+          51.55
+        ],
+        "operation": "geometry"
+      },
+      {
+        "name": "london_pan_2_poi",
+        "query": "na[amenity]",
+        "bbox_lonlat": [
+          -0.12,
+          51.5,
+          -0.06,
+          51.55
+        ],
+        "operation": "tags"
+      },
+      {
+        "name": "london_pan_3_roads",
+        "query": "w[highway]",
+        "bbox_lonlat": [
+          -0.08,
+          51.5,
+          -0.02,
+          51.55
+        ],
+        "operation": "geometry"
+      },
+      {
+        "name": "london_pan_3_poi",
+        "query": "na[amenity]",
+        "bbox_lonlat": [
+          -0.08,
+          51.5,
+          -0.02,
+          51.55
+        ],
+        "operation": "tags"
+      }
+    ]
+  },
+  {
+    "name": "session_urban_inspection",
+    "steps": [
+      {
+        "name": "london_cafes",
+        "query": "na[amenity=cafe]",
+        "bbox_lonlat": [
+          -0.2,
+          51.48,
+          0.02,
+          51.58
+        ],
+        "limit": 100
+      },
+      {
+        "name": "soho_cafes",
+        "query": "na[amenity=cafe]",
+        "bbox_lonlat": [
+          -0.14,
+          51.51,
+          -0.13,
+          51.52
+        ],
+        "operation": "tags"
+      },
+      {
+        "name": "soho_cafe_geometry",
+        "query": "n[amenity=cafe]",
+        "bbox_lonlat": [
+          -0.14,
+          51.51,
+          -0.13,
+          51.52
+        ],
+        "operation": "geometry"
+      },
+      {
+        "name": "london_cafe_parents",
+        "query": "na[amenity=cafe]",
+        "bbox_lonlat": [
+          -0.2,
+          51.48,
+          0.02,
+          51.58
+        ],
+        "operation": "parents"
+      },
+      {
+        "name": "london_empty_amenity",
+        "query": "na[amenity=gol_reader_nonexistent_amenity_2026]",
+        "bbox_lonlat": [
+          -0.2,
+          51.48,
+          0.02,
+          51.58
+        ],
+        "limit": 1
+      },
+      {
+        "name": "soho_building_geometry",
+        "query": "a[building]",
+        "bbox_lonlat": [
+          -0.14,
+          51.51,
+          -0.13,
+          51.52
+        ],
+        "operation": "geometry"
+      }
+    ]
+  },
+  {
+    "name": "session_uk_extraction",
+    "steps": [
+      {
+        "name": "birmingham_road_coordinates",
+        "query": "w[highway]",
+        "bbox_lonlat": [
+          -1.98,
+          52.42,
+          -1.8,
+          52.54
+        ],
+        "operation": "coordinates"
+      },
+      {
+        "name": "manchester_road_coordinates",
+        "query": "w[highway]",
+        "bbox_lonlat": [
+          -2.32,
+          53.42,
+          -2.16,
+          53.54
+        ],
+        "operation": "coordinates"
+      },
+      {
+        "name": "edinburgh_amenities",
+        "query": "na[amenity]",
+        "bbox_lonlat": [
+          -3.3,
+          55.9,
+          -3.1,
+          55.99
+        ],
+        "operation": "tags"
+      },
+      {
+        "name": "cardiff_roads",
+        "query": "w[highway]",
+        "bbox_lonlat": [
+          -3.25,
+          51.44,
+          -3.1,
+          51.53
+        ],
+        "operation": "geometry"
+      },
+      {
+        "name": "belfast_amenities",
+        "query": "na[amenity]",
+        "bbox_lonlat": [
+          -6.0,
+          54.55,
+          -5.85,
+          54.65
+        ],
+        "operation": "tags"
+      },
+      {
+        "name": "highlands_path_geometry",
+        "query": "w[highway=path,track,footway]",
+        "bbox_lonlat": [
+          -5.5,
+          57,
+          -4.5,
+          57.6
+        ],
+        "operation": "geometry"
+      }
+    ]
+  }
+]

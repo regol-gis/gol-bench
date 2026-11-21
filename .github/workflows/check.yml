@@ -1,0 +1,22 @@
+name: Check harness
+on:
+  push:
+    branches: [main]
+    paths-ignore: ['**/*.md']
+  pull_request:
+    paths-ignore: ['**/*.md']
+
+permissions:
+  contents: read
+
+jobs:
+  unit-tests:
+    name: Harness unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - name: Run Python harness unit tests
+        run: python3 -m unittest discover -s tools -p 'test_*.py'
