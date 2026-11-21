@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#faf7f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1717" media="(prefers-color-scheme: dark)">
+
+  <title>regol Benchmarks — Continuous GOL 2.0 Performance History</title>
+  <meta name="description" content="Continuous, verified OpenStreetMap GOL 2.0 benchmarks comparing regol PBF builds, query scaling, CLI exports, and UK application workflows over time.">
+  <link rel="canonical" href="https://bench.regol.org/">
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("regol-theme");
+        if (saved === "light" || saved === "dark") {
+          document.documentElement.setAttribute("data-theme", saved);
+        }
+      } catch (e) {}
+    })();
+  </script>
+  <link rel="stylesheet" href="assets/uPlot.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="https://regol.org" aria-label="regol home">
+        <img class="brand-wordmark brand-wordmark-light" src="assets/regol-wordmark-light.png" alt="regol" width="199" height="60">
+        <img class="brand-wordmark brand-wordmark-dark" src="assets/regol-wordmark-dark.png" alt="regol" width="199" height="60">
+      </a>
+
+      <div class="header-controls">
+        <nav id="site-nav" class="site-nav" aria-label="Primary">
+          <a href="#latest">Latest</a>
+          <a href="#history">History</a>
+          <a href="#compare">Compare</a>
+          <a href="#methodology">Methodology</a>
+          <a href="https://regol.org">regol.org</a>
+          <a href="https://github.com/regol-gis/gol-bench" rel="noopener">GitHub</a>
+        </nav>
+
+        <button type="button" class="icon-btn theme-toggle" id="theme-toggle" aria-label="Switch color theme (currently automatic)" title="Color theme: System">
+          <svg class="theme-icon theme-icon-auto" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="9"/>
+            <path d="M12 3a9 9 0 0 0 0 18z" fill="currentColor" stroke="none"/>
+          </svg>
+          <svg class="theme-icon theme-icon-light" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="theme-icon theme-icon-dark" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
+          </svg>
+        </button>
+
+        <button type="button" class="icon-btn nav-toggle" id="nav-toggle" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="site-nav">
+          <svg class="menu-icon-open" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
+          <svg class="menu-icon-close" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M6 6l12 12M18 6L6 18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="intro" id="top">
+      <div class="container">
+        <h1>regol Benchmarks</h1>
+        <p class="lead">
+          Continuous, verified GeoDesk GOL 2.0 benchmarks run on dedicated bare-metal Linux hardware against public Geofabrik OpenStreetMap extracts. Every plotted measurement is verified for identical feature outputs across engines.
+        </p>
+        <div class="status-bar" id="status-bar" aria-live="polite">
+          Loading benchmark history…
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest comparison -->
+    <section class="band band-alt" id="latest">
+      <div class="container">
+        <div class="section-top">
+          <div>
+            <h2>Latest results</h2>
+            <p class="section-desc" id="latest-subtitle">Median wall-clock time across independent rounds (lower is faster). Dots show individual samples.</p>
+          </div>
+          <div class="suite-tabs" role="tablist" aria-label="Benchmark suites" id="latest-tabs">
+            <button type="button" class="suite-tab is-active" role="tab" aria-selected="true" data-suite="writers">Writers</button>
+            <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="scale">Scale</button>
+            <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="cli">CLI exports</button>
+            <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="applications">UK applications</button>
+          </div>
+        </div>
+
+        <div class="panel" id="latest-chart-wrap">
+          <div class="chart-legend" id="latest-legend"></div>
+          <div class="bar-chart" id="latest-chart"></div>
+        </div>
+
+        <div class="table-wrap" id="latest-table-wrap">
+          <table class="data-table" id="latest-table"></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- History over commits -->
+    <section class="band" id="history">
+      <div class="container">
+        <div class="section-top">
+          <div>
+            <h2>History over commits</h2>
+            <p class="section-desc">Track median timings across <code>regol</code> commits and releases. Drag horizontally on the chart to zoom; double-click to reset.</p>
+          </div>
+        </div>
+
+        <div class="controls-bar">
+          <label class="control">
+            <span>Suite</span>
+            <select id="hist-suite">
+              <option value="writers">Writers (PBF → GOL)</option>
+              <option value="scale">Scale (viewport histories)</option>
+              <option value="cli">CLI exports (Leeds bbox)</option>
+              <option value="applications">UK applications</option>
+            </select>
+          </label>
+          <label class="control control-wide">
+            <span>Workload</span>
+            <select id="hist-case"></select>
+          </label>
+          <label class="control">
+            <span>Metric</span>
+            <select id="hist-metric">
+              <option value="ms">Median time (ms)</option>
+              <option value="pct">Relative to first run (%)</option>
+              <option value="ratio">Speedup vs reference (×)</option>
+            </select>
+          </label>
+          <label class="control">
+            <span>Y axis</span>
+            <select id="hist-scale">
+              <option value="linear">Linear</option>
+              <option value="log">Log</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="panel history-panel">
+          <div class="history-inspector" id="hist-inspector">Hover over a data point to inspect commit details.</div>
+          <div id="hist-plot" class="plot-host"></div>
+          <p class="plot-note" id="hist-note"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Commit comparison -->
+    <section class="band band-alt" id="compare">
+      <div class="container">
+        <div class="section-top">
+          <div>
+            <h2>Compare two runs</h2>
+            <p class="section-desc">Compare median timings between any two recorded commits or releases.</p>
+          </div>
+          <div class="compare-pickers">
+            <label class="control">
+              <span>Base</span>
+              <select id="cmp-base"></select>
+            </label>
+            <label class="control">
+              <span>Target</span>
+              <select id="cmp-target"></select>
+            </label>
+          </div>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table" id="compare-table"></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- Methodology -->
+    <section class="band" id="methodology">
+      <div class="container">
+        <h2>Methodology &amp; hardware</h2>
+        <div class="method-grid">
+          <div class="panel">
+            <h3>Runner environment</h3>
+            <dl class="kv-list" id="env-list"></dl>
+          </div>
+          <div class="panel">
+            <h3>Verification &amp; reproducibility</h3>
+            <ul class="method-list">
+              <li>Every timed workload is checked in a separate verification pass outside the timer; unverified results are excluded.</li>
+              <li>Inputs come from public, checksum-verified Geofabrik OpenStreetMap PBF snapshots (Monaco, Liechtenstein, Bremen, Ghana, and United Kingdom).</li>
+              <li>Processes are pinned with Linux <code>taskset</code>, arms are rotated in balanced Williams order, and warm runs verify full page residency.</li>
+              <li>Harness source and replay instructions live at <a href="https://github.com/regol-gis/gol-bench" rel="noopener">github.com/regol-gis/gol-bench</a>.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="assets/regol-mark.png" alt="" width="40" height="40" aria-hidden="true">
+          <div>
+            <strong>regol</strong>
+            <p>Continuous GOL 2.0 benchmarks for the pure-Rust regol engine.</p>
+          </div>
+        </div>
+        <div class="footer-links-group">
+          <ul class="footer-links">
+            <li><a href="https://regol.org">regol.org</a></li>
+            <li><a href="https://github.com/regol-gis/regol" rel="noopener">regol on GitHub</a></li>
+            <li><a href="https://github.com/regol-gis/gol-bench" rel="noopener">gol-bench on GitHub</a></li>
+            <li><a href="https://docs.rs/regol" rel="noopener">docs.rs/regol</a></li>
+          </ul>
+          <ul class="footer-links">
+            <li><a href="data/manifest.json">manifest.json</a></li>
+            <li><a href="data/latest.json">latest.json</a></li>
+            <li><a href="data/history.json">history.json</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-legal">
+        <p>OpenStreetMap<sup>&reg;</sup> data © OpenStreetMap contributors (ODbL 1.0). regol is an independent Apache-2.0 Rust implementation compatible with the GeoDesk GOL 2.0 format, not affiliated with or endorsed by Clarisma, GeoDesk, or the OpenStreetMap Foundation.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/uPlot.iife.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
