@@ -154,18 +154,29 @@ def setup_workers(regol_dir: Path, commit: str, jobs: int) -> dict:
         py, "-c",
         "import importlib.metadata as m, json; print(json.dumps({k: m.version(k) for k in ('geodesk', 'shapely')}))",
     ], capture=True))
+    gol_current = sdk / "gol-current/gol"
+    gol_legacy = sdk / "gol-legacy/gol"
+    gol_current_ok = False
+    if gol_current.is_file():
+        probe = subprocess.run([gol_current, "--version"], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        gol_current_ok = probe.returncode == 0
+    active_gol = gol_current if gol_current_ok else gol_legacy
+    active_gol_version = "2.5.3" if gol_current_ok else "2.0.0"
     return {
         "sdk": sdk,
         "python": py,
-        "gol_tool": sdk / "gol-current/gol",
-        "gol_legacy": sdk / "gol-legacy/gol",
+        "gol_tool": active_gol,
+        "gol_version": active_gol_version,
+        "gol_supports_pbf": gol_current_ok,
+        "writer_ref_engine": "geodesk-current" if gol_current_ok else "geodesk",
+        "gol_legacy": gol_legacy,
         "regol_worker": ROOT / "target/release/examples/query_benchmark",
         "regol_mmap": ROOT / "target/release/examples/query_benchmark_mmap",
         "regol_cli": ROOT / "target/release/regol",
         "competitors": {
             "geodesk_python": py_ver["geodesk"],
             "shapely": py_ver["shapely"],
-            "gol_tool": "2.5.3",
+            "gol_tool": active_gol_version,
             "gol_tool_legacy": "2.0.0",
         },
     }
@@ -220,25 +231,27 @@ def prepare_datasets(dataset_dir: Path, pbf_dir: Path, workers: dict) -> dict:
 
 def run_writers(scratch: Path, datasets: dict, workers: dict, cores_list: list[int], rounds: int) -> list[dict]:
     rows = []
+    ref_eng = workers["writer_ref_engine"]
     for ds in ("monaco", "bremen", "ghana"):
         out_dir = scratch / f"writers-{ds}"
         run([
             sys.executable, ROOT / "tools/build_compare.py",
             datasets[ds]["pbf"],
             "--reference-gol", datasets[ds]["gol"],
-            "--engines", "regol", "geodesk-current",
+            "--engines", "regol", ref_eng,
             "--cores", *map(str, cores_list),
             "--rounds", str(rounds),
             "--cache", "warm",
             "--verification", "tags",
             "--discard-outputs",
             "--writer", workers["regol_cli"],
+            "--gol-tool", workers["gol_legacy"],
             "--gol-tool-current", workers["gol_tool"],
             "--python", workers["python"],
             "--spec", ROOT / "benchmarks/writer-features.json",
             "--output", out_dir,
         ])
-        summary = json.loads((out_dir / "summary.json").read_text())
+        summary = json.loads((out_dir / "build-summary.json").read_text())
         by_width: dict[int, dict] = {}
         for group in summary["groups"]:
             width = group["cores"]
@@ -256,6 +269,8 @@ def run_writers(scratch: Path, datasets: dict, workers: dict, cores_list: list[i
                 "key": f"{ds}-{width}c",
                 "dataset": ds,
                 "cores": width,
+                "ref_engine": ref_eng,
+                "ref_label": f"GOL Tool {workers['gol_version']}",
                 "engines": by_width[width],
             })
     return rows
@@ -307,12 +322,14 @@ def run_scale(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list
 
 def run_cli(scratch: Path, datasets: dict, workers: dict, samples: int, cores: int) -> list[dict]:
     out_file = scratch / "cli-leeds.json"
+    formats = ["count", "csv", "geojson", "geojsonl", "xml", "pbf"] if workers["gol_supports_pbf"] else ["count", "csv", "geojson", "geojsonl", "xml"]
     run([
         sys.executable, ROOT / "tools/benchmark_cli.py",
         datasets["uk"]["gol"],
         "--query", "n[amenity=cafe]",
         "--query", "w[highway]",
         "--bbox=-1.57,53.785,-1.51,53.815",
+        "--formats", *formats,
         "--samples", str(samples),
         "--cores", str(cores),
         "--regol", workers["regol_cli"],
@@ -352,10 +369,11 @@ def run_cli(scratch: Path, datasets: dict, workers: dict, samples: int, cores: i
 
 def run_applications(scratch: Path, datasets: dict, workers: dict, samples: int) -> list[dict]:
     out_file = scratch / "applications.json"
+    engine_mode = "all" if workers["gol_supports_pbf"] else "readers"
     run([
         sys.executable, ROOT / "tools/benchmark_application_sessions.py",
         datasets["uk"]["gol"],
-        "--engine", "all",
+        "--engine", engine_mode,
         "--cores", "1",
         "--samples", str(samples),
         "--rust", workers["regol_worker"],
@@ -439,9 +457,11 @@ def rebuild_aggregates(data_dir: Path, manifest: dict):
             "machine_id": meta["machine_id"],
             "rustc": meta.get("rustc"),
         }
+        gol_label = f"GOL Tool {meta.get('competitors', {}).get('gol_tool', '2.0.0')}"
         for row in payload.get("writers", []):
             reg = row["engines"].get("regol", {})
-            ref = row["engines"].get("geodesk-current", {})
+            ref_key = row.get("ref_engine") or ("geodesk-current" if "geodesk-current" in row["engines"] else "geodesk")
+            ref = row["engines"].get(ref_key, {})
             history["writers"].setdefault(row["key"], []).append({
                 **base,
                 "dataset": row["dataset"],
@@ -454,7 +474,7 @@ def rebuild_aggregates(data_dir: Path, manifest: dict):
                 "ref_rss_mib": ref.get("peak_rss_mib"),
                 "regol_mib": reg.get("output_mib"),
                 "ref_mib": ref.get("output_mib"),
-                "ref_label": "GOL Tool 2.5.3",
+                "ref_label": row.get("ref_label", gol_label),
                 "verified": bool(reg.get("verified") and ref.get("verified")),
             })
         for row in payload.get("scale", []):
@@ -486,14 +506,14 @@ def rebuild_aggregates(data_dir: Path, manifest: dict):
                 "ref_ms": ref.get("median_ms"),
                 "regol_rounds": reg.get("rounds_ms", []),
                 "ref_rounds": ref.get("rounds_ms", []),
-                "ref_label": "GOL Tool 2.5.3",
+                "ref_label": gol_label,
                 "verified": bool(row.get("verified")),
             })
         for row in payload.get("applications", []):
             if row["kind"] == "cli":
                 reg = row["engines"].get("regol-cli", {})
                 ref = row["engines"].get("gol-tool", {})
-                ref_label = "GOL Tool 2.5.3"
+                ref_label = gol_label
             else:
                 reg = row["engines"].get("regol", {})
                 ref = row["engines"].get("python", {})
