@@ -426,6 +426,8 @@
       if (!p) return;
       var tag = p.tag ? ' (' + esc(p.tag) + ')' : '';
       var ratio = generators ? fmtSaving(p.saved_pct) : fmtRatio(p.regol_ms, p.ref_ms);
+      var coverage = generators ? " · " + (p.verified ? p.cases + " verified" :
+        (p.differences.length ? "Mismatch in " + esc(p.differences.join(", ")) : "No matched cases")) : "";
       var javaPart = "";
       if (p.java_ms != null) {
         var jRatio = fmtRatio(p.regol_ms, p.java_ms);
@@ -437,7 +439,7 @@
         esc(measuredLabel) + ' <strong>' + fmtMs(p.regol_ms) + '</strong> · ' +
         esc(refLabel) + ': <strong>' + fmtMs(p.ref_ms) + '</strong> ' +
         '(<span class="' + ratio.cls + '">' + esc(ratio.text) + '</span>)' +
-        javaPart + ' · ' +
+        javaPart + coverage + ' · ' +
         esc(p.rustc || "");
     }
     showPoint(points.length - 1);
@@ -547,7 +549,7 @@
     var baseSel = document.getElementById("cmp-base");
     var targetSel = document.getElementById("cmp-target");
     var opts = runs.map(function (r, idx) {
-      var label = (r.tag || r.short_commit) + " (" + r.timestamp.slice(0, 10) + ")";
+      var label = (r.tag || r.short_commit) + " (" + r.timestamp.slice(0, 16).replace("T", " ") + " UTC)";
       return '<option value="' + idx + '">' + esc(label) + '</option>';
     }).join("");
     baseSel.innerHTML = opts;
