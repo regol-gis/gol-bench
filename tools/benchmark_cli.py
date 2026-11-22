@@ -1,5 +1,6 @@
 """Compare fresh CLI counts and exports on identical selections and CPU budgets."""
 from contextlib import nullcontext
+from decimal import Decimal
 from itertools import product
 import argparse
 import csv
@@ -35,7 +36,7 @@ def features(rows):
         yield [row['id'], row['geometry'], row['properties']]
 
 
-def signature(path, fmt, keys):
+def signature(path, fmt, keys, *, osm_reference=False):
     if fmt == 'count':
         value = path.read_text().strip()
         if not value.isascii() or not value.isdecimal():
@@ -45,25 +46,40 @@ def signature(path, fmt, keys):
         counts, fingerprint = export_signature(path, allow_empty=True)
         return {'objects': counts, 'fingerprint': fingerprint}
     with path.open(encoding='utf-8', newline='') as stream:
+        parse_float = Decimal if osm_reference else float
         if fmt == 'csv':
             csv.field_size_limit(sys.maxsize)
             rows = csv.reader(stream, strict=True)
             if next(rows, None) != keys:
                 raise ValueError('CSV columns differ from the requested fields')
         elif fmt == 'geojsonl':
-            rows = features(json.loads(line) for line in stream)
+            rows = features(json.loads(line, parse_float=parse_float) for line in stream)
         else:
-            collection = json.load(stream)
+            collection = json.load(stream, parse_float=parse_float)
             if collection['type'] != 'FeatureCollection' or not isinstance(collection['features'], list):
                 raise ValueError('expected a GeoJSON FeatureCollection')
             rows = features(collection['features'])
-        count, total = 0, 0
+        count, total, osm_total = 0, 0, 0
         for row in rows:
             if fmt == 'csv' and len(row) != len(keys):
                 raise ValueError('CSV row has the wrong number of columns')
-            total += record_hash(row)
+            digest = record_hash(row, default=float)
+            total += digest
+            if osm_reference:
+                ident, geometry, properties = row
+                if any(not isinstance(v, str) for v in properties.values()):
+                    if not all(type(v) in (int, Decimal, str) for v in properties.values()):
+                        raise ValueError('expected string or numeric OSM tag values')
+                    # Decimal preserves the scale of a tag such as 3.250. Geometry
+                    # uses the same numeric fingerprint as the strict comparison.
+                    tags = {k: str(v) for k, v in properties.items()}
+                    digest = record_hash([ident, geometry, tags], default=float)
+                osm_total += digest
             count += 1
-        return {'selected': count, 'fingerprint': f'{total % (1 << 256):064x}'}
+        result = {'selected': count, 'fingerprint': f'{total % (1 << 256):064x}'}
+        if osm_reference:
+            result['osm_tags_fingerprint'] = f'{osm_total % (1 << 256):064x}'
+        return result
 
 
 def compare(rows, samples):
@@ -73,7 +89,10 @@ def compare(rows, samples):
         return '; '.join(errors)
     if len(rows) != 2 or any(len(row['runs']) != samples for row in rows):
         return 'incomplete rounds'
-    if rows[0]['signature'] != rows[1]['signature']:
+    expected = rows[1]['signature']
+    if 'osm_tags_fingerprint' in expected:
+        expected = dict(selected=expected['selected'], fingerprint=expected['osm_tags_fingerprint'])
+    if rows[0]['signature'] != expected:
         return 'decoded output differs between CLIs'
     return None
 
@@ -85,6 +104,11 @@ def campaign(args):
     inputs = {label: identify(path) for label, path in paths.items()}
     warm = {label: FileCache(path) for label, path in paths.items()} if args.native_file else {}
     binaries = {'Regol': args.regol.resolve(strict=True), 'GOL Tool': args.gol_tool.resolve(strict=True)}
+    # Earlier Regol revisions use stored GOL types by default. Probe outside the
+    # timed runs and compare each revision against its declared export contract.
+    osm_geojson = any(fmt in ('geojson', 'geojsonl') for fmt in args.formats) and '--typed-tags' in (
+        subprocess.check_output([binaries['Regol'], '--help'], text=True, timeout=args.timeout)
+    )
     available = sorted(os.sched_getaffinity(0))
     if args.cores > len(available):
         raise ValueError('CPU budget exceeds available affinity')
@@ -130,7 +154,9 @@ def campaign(args):
                             try:
                                 with warm[producer].warm_mapping() if warm else nullcontext():
                                     elapsed, size = write_cli_output(row['command'], out, timeout=args.timeout)
-                                checked = signature(out, fmt, args.keys)
+                                checked = signature(out, fmt, args.keys, osm_reference=(
+                                    osm_geojson and name == 'GOL Tool' and fmt in ('geojson', 'geojsonl')
+                                ))
                                 if row.setdefault('signature', checked) != checked:
                                     raise ValueError('decoded output changed between rounds')
                                 row['runs'].append(dict(wall_ns=elapsed, bytes=size))
@@ -141,7 +167,7 @@ def campaign(args):
                             finally:
                                 out.unlink(missing_ok=True)
                 for group in groups.values():
-                    rows = list(group['arms'].values())
+                    rows = [group['arms']['Regol'], group['arms']['GOL Tool']]
                     reason = compare(rows, args.samples)
                     group['verified'] = reason is None
                     if reason:

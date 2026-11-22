@@ -29,6 +29,38 @@ class CLIOutputsTests(unittest.TestCase):
             collection.write_text(json.dumps(dict(type='FeatureCollection', features=rows)))
             self.assertNotEqual(signature(collection, 'geojson', []), signature(lines, 'geojsonl', []))
 
+    def test_geojson_tag_contracts_preserve_spelling_geometry_and_writer_differences(self):
+        feature = ('{"type":"Feature","id":"N1","geometry":{"type":"Point","coordinates":[1.25,2]},'
+                   '"properties":{"height":3.250,"layer":-2,"ref":"0012","name":"Café"}}')
+        osm = feature.replace(':3.250', ':"3.250"').replace(':-2', ':"-2"')
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'output'
+            for fmt in ('geojson', 'geojsonl'):
+                def read(row, **kwargs):
+                    path.write_text('{"type":"FeatureCollection","features":[' + row + ']}'
+                                    if fmt == 'geojson' else row + '\n', encoding='utf-8')
+                    return signature(path, fmt, [], **kwargs)
+
+                def check(actual, expected):
+                    return compare([dict(signature=sig, runs=[{}]) for sig in (actual, expected)], 1)
+
+                with self.subTest(format=fmt):
+                    strict = read(feature)
+                    reference = read(feature, osm_reference=True)
+                    self.assertEqual(strict['fingerprint'], reference['fingerprint'])
+                    self.assertIsNone(check(strict, strict))  # Earlier Regol, stored types.
+                    self.assertIsNone(check(read(osm), reference))
+                    # A second writer stored the same height as text. The GOL Tool
+                    # outputs still differ, while the OSM string projections agree.
+                    second = read(feature.replace(':3.250', ':"3.250"'), osm_reference=True)
+                    self.assertNotEqual(second['fingerprint'], reference['fingerprint'])
+                    self.assertEqual(second['osm_tags_fingerprint'], reference['osm_tags_fingerprint'])
+                    for wrong in (feature, osm.replace('"3.250"', '"3.25"'), osm.replace('0012', '12'),
+                                  osm.replace('1.25,2', '"1.25",2'), osm.replace('N1', 'N2')):
+                        self.assertIn('differs', check(read(wrong), reference))
+                    with self.assertRaisesRegex(ValueError, 'tag values'):
+                        read(feature.replace(':3.250', ':true'), osm_reference=True)
+
     def test_cli_chart_excludes_mismatch_and_incomplete_arms(self):
         good = dict(signature={'selected':10}, runs=[dict(wall_ns=123, bytes=12)])
         bad = dict(signature={'selected':11}, runs=good['runs'])

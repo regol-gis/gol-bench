@@ -156,9 +156,9 @@ def write_cli_output(cmd, output, timeout=120):
     return elapsed, output.stat().st_size
 
 
-def record_hash(row):
+def record_hash(row, *, default=None):
     encoded = json.dumps(row, ensure_ascii=False, separators=(",", ":"), sort_keys=True,
-                         allow_nan=False).encode()
+                         allow_nan=False, default=default).encode()
     return int.from_bytes(hashlib.sha256(encoded).digest(), "big")
 
 

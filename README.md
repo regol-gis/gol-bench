@@ -59,6 +59,14 @@ file. The file-generator series uses cases matched across both files and records
 exclusions under `generator_evidence`. Workflow content differences suppress the
 affected timing comparison. CLI workflows compare decoded OSM exports.
 
+The CLI benchmark times each tool's default GeoJSON and GeoJSONL output. Regol
+versions offering `--typed-tags` write OSM tags as strings by default. For these
+versions, same-file conformance compares Regol with the GOL Tool properties
+rendered as strings, preserving decimal scale. Feature IDs and geometries use
+the usual strict comparison. Earlier Regol versions compare against GOL Tool's
+stored tag types. Comparisons between file generators retain each CLI's actual
+output types.
+
 Tagged releases also compare the two generators on fresh-process Leeds counts
 and exports, with a four-arm rotation of file and CLI. Cold UK cafés include
 file open, query preparation and the first scan. Before each cold process the
