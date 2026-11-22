@@ -60,6 +60,36 @@
         "ref_mib": 0.95,
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "monaco",
+        "cores": 1,
+        "regol_ms": 78.11,
+        "ref_ms": 930.53,
+        "regol_rounds": [
+          78.11,
+          71.89,
+          78.39
+        ],
+        "ref_rounds": [
+          931.77,
+          926.58,
+          930.53
+        ],
+        "regol_rss_mib": 31.29,
+        "ref_rss_mib": 588.97,
+        "regol_mib": 0.93,
+        "ref_mib": 0.95,
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
       }
     ],
     "monaco-4c": [
@@ -118,6 +148,36 @@
         ],
         "regol_rss_mib": 31.19,
         "ref_rss_mib": 586.5,
+        "regol_mib": 0.93,
+        "ref_mib": 0.95,
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "monaco",
+        "cores": 4,
+        "regol_ms": 74.9,
+        "ref_ms": 827.36,
+        "regol_rounds": [
+          75.84,
+          72.05,
+          74.9
+        ],
+        "ref_rounds": [
+          793.01,
+          827.36,
+          860.24
+        ],
+        "regol_rss_mib": 31.29,
+        "ref_rss_mib": 588.55,
         "regol_mib": 0.93,
         "ref_mib": 0.95,
         "ref_label": "GOL Tool 2.0.0",
@@ -184,6 +244,36 @@
         "ref_mib": 37.09,
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "bremen",
+        "cores": 1,
+        "regol_ms": 1538.92,
+        "ref_ms": 5222.12,
+        "regol_rounds": [
+          1599.75,
+          1534.7,
+          1538.92
+        ],
+        "ref_rounds": [
+          5222.12,
+          5212.57,
+          5279.78
+        ],
+        "regol_rss_mib": 160.14,
+        "ref_rss_mib": 1121.82,
+        "regol_mib": 36.24,
+        "ref_mib": 37.09,
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
       }
     ],
     "bremen-4c": [
@@ -242,6 +332,36 @@
         ],
         "regol_rss_mib": 219.74,
         "ref_rss_mib": 1121.01,
+        "regol_mib": 36.24,
+        "ref_mib": 37.09,
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "bremen",
+        "cores": 4,
+        "regol_ms": 810.58,
+        "ref_ms": 2795.08,
+        "regol_rounds": [
+          802.01,
+          810.58,
+          880.54
+        ],
+        "ref_rounds": [
+          2758.97,
+          2795.08,
+          2797.57
+        ],
+        "regol_rss_mib": 217.8,
+        "ref_rss_mib": 1119.58,
         "regol_mib": 36.24,
         "ref_mib": 37.09,
         "ref_label": "GOL Tool 2.0.0",
@@ -308,6 +428,36 @@
         "ref_mib": 196.79,
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "ghana",
+        "cores": 1,
+        "regol_ms": 8817.47,
+        "ref_ms": 17145.87,
+        "regol_rounds": [
+          8791.4,
+          8817.47,
+          8927.85
+        ],
+        "ref_rounds": [
+          18556.81,
+          16959.56,
+          17145.87
+        ],
+        "regol_rss_mib": 913.09,
+        "ref_rss_mib": 1563.68,
+        "regol_mib": 196.09,
+        "ref_mib": 196.79,
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
       }
     ],
     "ghana-4c": [
@@ -366,6 +516,36 @@
         ],
         "regol_rss_mib": 912.32,
         "ref_rss_mib": 1566.12,
+        "regol_mib": 196.09,
+        "ref_mib": 196.79,
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "ghana",
+        "cores": 4,
+        "regol_ms": 4095.87,
+        "ref_ms": 7049.38,
+        "regol_rounds": [
+          5240.34,
+          4095.87,
+          4095.66
+        ],
+        "ref_rounds": [
+          6987.4,
+          7049.38,
+          7352.48
+        ],
+        "regol_rss_mib": 914.37,
+        "ref_rss_mib": 1586.42,
         "regol_mib": 196.09,
         "ref_mib": 196.79,
         "ref_label": "GOL Tool 2.0.0",
@@ -452,6 +632,45 @@
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "monaco",
+        "gol_mib": 0.96,
+        "cores": 1,
+        "regol_ms": 0.466,
+        "ref_ms": 0.648,
+        "java_ms": 52.172,
+        "regol_rounds": [
+          0.886,
+          0.45,
+          0.498,
+          0.466,
+          0.404
+        ],
+        "ref_rounds": [
+          0.648,
+          0.642,
+          0.648,
+          0.666,
+          0.647
+        ],
+        "java_rounds": [
+          61.556,
+          55.256,
+          52.172,
+          51.639,
+          48.715
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
       }
     ],
     "liechtenstein-1c-warm": [
@@ -529,6 +748,45 @@
           48.777,
           57.6,
           64.9
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "liechtenstein",
+        "gol_mib": 5.28,
+        "cores": 1,
+        "regol_ms": 0.264,
+        "ref_ms": 0.622,
+        "java_ms": 63.864,
+        "regol_rounds": [
+          0.263,
+          0.264,
+          0.267,
+          0.266,
+          0.23
+        ],
+        "ref_rounds": [
+          0.666,
+          0.622,
+          0.618,
+          0.673,
+          0.621
+        ],
+        "java_rounds": [
+          68.93,
+          63.864,
+          55.147,
+          71.454,
+          51.915
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
@@ -612,6 +870,45 @@
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "bremen",
+        "gol_mib": 37.09,
+        "cores": 1,
+        "regol_ms": 0.572,
+        "ref_ms": 0.956,
+        "java_ms": 62.131,
+        "regol_rounds": [
+          0.807,
+          0.572,
+          0.564,
+          0.609,
+          0.502
+        ],
+        "ref_rounds": [
+          1.0,
+          0.956,
+          0.915,
+          0.941,
+          0.956
+        ],
+        "java_rounds": [
+          62.131,
+          53.844,
+          72.644,
+          59.539,
+          76.792
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
       }
     ],
     "ghana-1c-warm": [
@@ -689,6 +986,45 @@
           69.229,
           60.36,
           68.634
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "ghana",
+        "gol_mib": 196.09,
+        "cores": 1,
+        "regol_ms": 0.492,
+        "ref_ms": 1.516,
+        "java_ms": 74.554,
+        "regol_rounds": [
+          0.768,
+          0.478,
+          0.528,
+          0.492,
+          0.441
+        ],
+        "ref_rounds": [
+          1.492,
+          1.528,
+          1.512,
+          1.516,
+          1.674
+        ],
+        "java_rounds": [
+          80.026,
+          68.448,
+          86.202,
+          64.203,
+          74.554
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
@@ -772,6 +1108,45 @@
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "uk",
+        "gol_mib": 3632.25,
+        "cores": 1,
+        "regol_ms": 1.722,
+        "ref_ms": 1.947,
+        "java_ms": 84.186,
+        "regol_rounds": [
+          2.001,
+          1.717,
+          1.136,
+          1.722,
+          2.15
+        ],
+        "ref_rounds": [
+          2.339,
+          2.092,
+          1.941,
+          1.947,
+          1.941
+        ],
+        "java_rounds": [
+          86.715,
+          84.186,
+          83.769,
+          89.118,
+          74.879
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
       }
     ]
   },
@@ -839,6 +1214,39 @@
           4.02,
           3.02,
           2.94
+        ],
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "uk (Leeds bbox)",
+        "query": "n[amenity=cafe]",
+        "format": "count",
+        "cores": 2,
+        "selected": 213,
+        "regol_ms": 2.82,
+        "ref_ms": 3.19,
+        "regol_rounds": [
+          4.13,
+          2.87,
+          2.82,
+          2.66,
+          2.64
+        ],
+        "ref_rounds": [
+          3.23,
+          4.43,
+          2.88,
+          2.95,
+          3.19
         ],
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
@@ -910,6 +1318,39 @@
         ],
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "uk (Leeds bbox)",
+        "query": "n[amenity=cafe]",
+        "format": "csv",
+        "cores": 2,
+        "selected": 213,
+        "regol_ms": 2.68,
+        "ref_ms": 3.0,
+        "regol_rounds": [
+          2.76,
+          2.68,
+          2.62,
+          2.66,
+          3.12
+        ],
+        "ref_rounds": [
+          2.96,
+          4.15,
+          3.0,
+          3.3,
+          2.93
+        ],
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
       }
     ],
     "leeds-cafes-geojson": [
@@ -975,6 +1416,39 @@
           3.3,
           3.17,
           3.39
+        ],
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "uk (Leeds bbox)",
+        "query": "n[amenity=cafe]",
+        "format": "geojson",
+        "cores": 2,
+        "selected": 213,
+        "regol_ms": 2.96,
+        "ref_ms": 3.24,
+        "regol_rounds": [
+          2.85,
+          2.99,
+          4.07,
+          2.96,
+          2.86
+        ],
+        "ref_rounds": [
+          3.27,
+          3.17,
+          3.33,
+          3.16,
+          3.24
         ],
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
@@ -1046,6 +1520,39 @@
         ],
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "uk (Leeds bbox)",
+        "query": "n[amenity=cafe]",
+        "format": "geojsonl",
+        "cores": 2,
+        "selected": 213,
+        "regol_ms": 2.92,
+        "ref_ms": 3.21,
+        "regol_rounds": [
+          2.92,
+          2.89,
+          3.15,
+          2.84,
+          3.04
+        ],
+        "ref_rounds": [
+          3.17,
+          3.18,
+          3.46,
+          3.21,
+          3.26
+        ],
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
       }
     ],
     "leeds-roads-count": [
@@ -1111,6 +1618,39 @@
           5.15,
           3.3,
           5.55
+        ],
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "uk (Leeds bbox)",
+        "query": "w[highway]",
+        "format": "count",
+        "cores": 2,
+        "selected": 11189,
+        "regol_ms": 3.08,
+        "ref_ms": 4.65,
+        "regol_rounds": [
+          3.03,
+          3.72,
+          2.86,
+          4.18,
+          3.08
+        ],
+        "ref_rounds": [
+          5.28,
+          3.04,
+          4.65,
+          3.25,
+          5.34
         ],
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
@@ -1182,6 +1722,39 @@
         ],
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "uk (Leeds bbox)",
+        "query": "w[highway]",
+        "format": "csv",
+        "cores": 2,
+        "selected": 11189,
+        "regol_ms": 3.99,
+        "ref_ms": 6.13,
+        "regol_rounds": [
+          3.78,
+          3.99,
+          6.61,
+          3.81,
+          5.81
+        ],
+        "ref_rounds": [
+          6.12,
+          6.13,
+          6.15,
+          4.25,
+          6.86
+        ],
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
       }
     ],
     "leeds-roads-geojson": [
@@ -1247,6 +1820,39 @@
           16.17,
           16.72,
           17.54
+        ],
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "uk (Leeds bbox)",
+        "query": "w[highway]",
+        "format": "geojson",
+        "cores": 2,
+        "selected": 11189,
+        "regol_ms": 12.38,
+        "ref_ms": 17.03,
+        "regol_rounds": [
+          12.27,
+          12.38,
+          12.21,
+          13.12,
+          12.65
+        ],
+        "ref_rounds": [
+          17.45,
+          20.15,
+          15.05,
+          17.03,
+          15.63
         ],
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
@@ -1318,6 +1924,39 @@
         ],
         "ref_label": "GOL Tool 2.0.0",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "dataset": "uk (Leeds bbox)",
+        "query": "w[highway]",
+        "format": "geojsonl",
+        "cores": 2,
+        "selected": 11189,
+        "regol_ms": 10.05,
+        "ref_ms": 17.11,
+        "regol_rounds": [
+          10.05,
+          12.56,
+          9.83,
+          12.36,
+          9.86
+        ],
+        "ref_rounds": [
+          17.11,
+          19.13,
+          16.45,
+          17.38,
+          16.51
+        ],
+        "ref_label": "GOL Tool 2.0.0",
+        "verified": true
       }
     ]
   },
@@ -1375,6 +2014,34 @@
           66.5,
           66.95,
           66.73
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "id": "osm2world",
+        "label": "osm2world",
+        "kind": "reader",
+        "cores": 1,
+        "regol_ms": 28.92,
+        "ref_ms": 65.56,
+        "regol_rounds": [
+          28.92,
+          28.9,
+          30.06
+        ],
+        "ref_rounds": [
+          65.56,
+          64.64,
+          65.88
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
@@ -1436,6 +2103,34 @@
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "id": "ascend",
+        "label": "ascend",
+        "kind": "reader",
+        "cores": 1,
+        "regol_ms": 125.26,
+        "ref_ms": 655.3,
+        "regol_rounds": [
+          125.26,
+          127.48,
+          125.09
+        ],
+        "ref_rounds": [
+          656.46,
+          645.22,
+          655.3
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
       }
     ],
     "openplanetdata-reader": [
@@ -1491,6 +2186,34 @@
           2.83,
           2.84,
           2.79
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "id": "openplanetdata",
+        "label": "openplanetdata",
+        "kind": "reader",
+        "cores": 1,
+        "regol_ms": 1.04,
+        "ref_ms": 2.83,
+        "regol_rounds": [
+          1.04,
+          1.04,
+          1.08
+        ],
+        "ref_rounds": [
+          2.79,
+          2.86,
+          2.83
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
@@ -1552,6 +2275,34 @@
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "id": "cesium",
+        "label": "cesium",
+        "kind": "reader",
+        "cores": 1,
+        "regol_ms": 1.37,
+        "ref_ms": 5.88,
+        "regol_rounds": [
+          1.37,
+          1.37,
+          1.36
+        ],
+        "ref_rounds": [
+          5.87,
+          5.88,
+          5.95
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
       }
     ],
     "osm-extractor-reader": [
@@ -1607,6 +2358,34 @@
           17.83,
           18.12,
           17.84
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "id": "osm-extractor",
+        "label": "osm-extractor",
+        "kind": "reader",
+        "cores": 1,
+        "regol_ms": 5.99,
+        "ref_ms": 17.78,
+        "regol_rounds": [
+          5.86,
+          6.22,
+          5.99
+        ],
+        "ref_rounds": [
+          18.19,
+          17.62,
+          17.78
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
@@ -1668,6 +2447,34 @@
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "id": "world2pixel",
+        "label": "world2pixel",
+        "kind": "reader",
+        "cores": 1,
+        "regol_ms": 1.87,
+        "ref_ms": 8.79,
+        "regol_rounds": [
+          1.87,
+          1.9,
+          1.86
+        ],
+        "ref_rounds": [
+          8.79,
+          8.8,
+          8.77
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
       }
     ],
     "next-higher-reader": [
@@ -1726,6 +2533,34 @@
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "id": "next-higher",
+        "label": "next-higher",
+        "kind": "reader",
+        "cores": 1,
+        "regol_ms": 116.6,
+        "ref_ms": 283.25,
+        "regol_rounds": [
+          116.53,
+          116.6,
+          117.01
+        ],
+        "ref_rounds": [
+          283.25,
+          281.63,
+          283.64
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
       }
     ],
     "campsbourne-reader": [
@@ -1780,6 +2615,34 @@
         "ref_rounds": [
           1.06,
           1.07,
+          1.06
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "id": "campsbourne",
+        "label": "campsbourne",
+        "kind": "reader",
+        "cores": 1,
+        "regol_ms": 0.49,
+        "ref_ms": 1.06,
+        "regol_rounds": [
+          0.49,
+          0.46,
+          0.49
+        ],
+        "ref_rounds": [
+          1.09,
+          1.05,
           1.06
         ],
         "ref_label": "GeoDesk Python",
@@ -1842,6 +2705,34 @@
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "id": "varna",
+        "label": "varna",
+        "kind": "reader",
+        "cores": 1,
+        "regol_ms": 26.0,
+        "ref_ms": 59.83,
+        "regol_rounds": [
+          26.05,
+          26.0,
+          25.95
+        ],
+        "ref_rounds": [
+          60.31,
+          59.83,
+          59.79
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
       }
     ],
     "hillbomb-reader": [
@@ -1897,6 +2788,34 @@
           5.97,
           6.16,
           6.14
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "id": "hillbomb",
+        "label": "hillbomb",
+        "kind": "reader",
+        "cores": 1,
+        "regol_ms": 1.18,
+        "ref_ms": 5.95,
+        "regol_rounds": [
+          1.31,
+          1.15,
+          1.18
+        ],
+        "ref_rounds": [
+          5.95,
+          5.95,
+          6.04
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
@@ -1972,6 +2891,40 @@
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "cohort": "iterate",
+        "label": "Identity streams",
+        "cases": 224,
+        "cores": 1,
+        "regol_ms": 955.75,
+        "ref_ms": 1432.67,
+        "java_ms": 2426.49,
+        "regol_rounds": [
+          946.84,
+          964.92,
+          955.75
+        ],
+        "ref_rounds": [
+          1432.67,
+          1437.14,
+          1422.71
+        ],
+        "java_rounds": [
+          2480.53,
+          2426.49,
+          2290.52
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
       }
     ],
     "uk-corpus-tags": [
@@ -2039,6 +2992,40 @@
           953.13,
           784.7,
           754.41
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "cohort": "tags",
+        "label": "Tag decoding",
+        "cases": 110,
+        "cores": 1,
+        "regol_ms": 289.64,
+        "ref_ms": 685.31,
+        "java_ms": 804.85,
+        "regol_rounds": [
+          292.66,
+          288.16,
+          289.64
+        ],
+        "ref_rounds": [
+          685.31,
+          687.89,
+          677.88
+        ],
+        "java_rounds": [
+          838.79,
+          780.71,
+          804.85
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
@@ -2112,6 +3099,40 @@
         ],
         "ref_label": "GeoDesk Python",
         "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "cohort": "geometry",
+        "label": "Geometry assembly",
+        "cases": 100,
+        "cores": 1,
+        "regol_ms": 195.8,
+        "ref_ms": 456.0,
+        "java_ms": 900.11,
+        "regol_rounds": [
+          195.65,
+          198.4,
+          195.8
+        ],
+        "ref_rounds": [
+          456.0,
+          451.49,
+          465.65
+        ],
+        "java_rounds": [
+          906.93,
+          900.11,
+          884.27
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
       }
     ],
     "uk-corpus-total": [
@@ -2179,6 +3200,40 @@
           5660.25,
           4056.51,
           3999.5
+        ],
+        "ref_label": "GeoDesk Python",
+        "verified": true
+      },
+      {
+        "run_id": "2026-11-22T161650Z-b1d04f2",
+        "timestamp": "2026-11-22T16:16:50.759464Z",
+        "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+        "short_commit": "b1d04f2",
+        "tag": null,
+        "regol_version": "0.2.1",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "cohort": "total",
+        "label": "All matched cohorts",
+        "cases": 434,
+        "cores": 1,
+        "regol_ms": 1441.19,
+        "ref_ms": 2573.98,
+        "java_ms": 4107.32,
+        "regol_rounds": [
+          1435.15,
+          1451.48,
+          1441.19
+        ],
+        "ref_rounds": [
+          2573.98,
+          2576.52,
+          2566.23
+        ],
+        "java_rounds": [
+          4226.25,
+          4107.32,
+          3979.64
         ],
         "ref_label": "GeoDesk Python",
         "verified": true

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-22T13:47:09.507387Z",
+  "updated_at": "2026-11-22T16:16:50.759464Z",
   "machines": {
     "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g": {
       "id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
@@ -55,6 +55,27 @@
         "java_runtime": "openjdk version \"25.0.5\" 2026-10-20"
       },
       "file": "data/runs/2026-11-22T134709Z-c33a155.json"
+    },
+    {
+      "id": "2026-11-22T161650Z-b1d04f2",
+      "timestamp": "2026-11-22T16:16:50.759464Z",
+      "commit": "b1d04f204450f2bc6ae19584d18466ca092c3d9d",
+      "short_commit": "b1d04f2",
+      "commit_date": "2026-11-22T16:09:58Z",
+      "commit_subject": "Avoid dynamic dispatch on unbounded scans and inline Tags::new",
+      "tag": null,
+      "regol_version": "0.2.1",
+      "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+      "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+      "competitors": {
+        "geodesk_python": "2.3.1",
+        "shapely": "2.2.0",
+        "gol_tool": "2.0.0",
+        "gol_tool_legacy": "2.0.0",
+        "geodesk_java": "2.1.0",
+        "java_runtime": "openjdk version \"25.0.5\" 2026-10-20"
+      },
+      "file": "data/runs/2026-11-22T161650Z-b1d04f2.json"
     }
   ]
 }
