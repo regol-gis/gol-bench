@@ -438,9 +438,79 @@ def run_applications(scratch: Path, datasets: dict, workers: dict, samples: int)
     return rows
 
 
+def run_corpus(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list[dict]:
+    out_dir = scratch / "corpus"
+    run([
+        sys.executable, ROOT / "tools/campaign.py",
+        "--library", f"geodesk={datasets['uk']['gol']}",
+        "--engines", "regol", "python",
+        "--cores", "1",
+        "--rounds", str(rounds),
+        "--cache", "warm",
+        "--rust", workers["regol_mmap"],
+        "--python", workers["python"],
+        "--spec", ROOT / "benchmarks/uk-corpus-queries.json",
+        "--output", out_dir,
+    ])
+    summary = json.loads((out_dir / "summary.json").read_text())
+    labels = {
+        "iterate": "Identity streams",
+        "tags": "Tag decoding",
+        "geometry": "Geometry assembly",
+    }
+    rows = []
+    tot_regol: dict[str, float] = {}
+    tot_python: dict[str, float] = {}
+    total_cases = 0
+    for op in ("iterate", "tags", "geometry"):
+        cohort = summary["cohorts"][op]
+        n_cases = len(cohort["cases"])
+        total_cases += n_cases
+        pns = cohort["prepare_and_scan_ms"]
+        r_arm = pns["geodesk/regol/1"]
+        p_arm = pns["geodesk/python/1"]
+        r_rounds = [round(r_arm["rounds"][k], 2) for k in sorted(r_arm["rounds"], key=int)]
+        p_rounds = [round(p_arm["rounds"][k], 2) for k in sorted(p_arm["rounds"], key=int)]
+        for k, v in r_arm["rounds"].items():
+            tot_regol[k] = tot_regol.get(k, 0.0) + v
+        for k, v in p_arm["rounds"].items():
+            tot_python[k] = tot_python.get(k, 0.0) + v
+        rows.append({
+            "key": f"uk-corpus-{op}",
+            "cohort": op,
+            "label": labels[op],
+            "cases": n_cases,
+            "total_spec_cases": 524,
+            "cores": 1,
+            "cache": "warm",
+            "verified": True,
+            "engines": {
+                "regol": {"median_ms": round(r_arm["median"], 2), "rounds_ms": r_rounds},
+                "python": {"median_ms": round(p_arm["median"], 2), "rounds_ms": p_rounds},
+            },
+        })
+    r_tot_rounds = [round(tot_regol[k], 2) for k in sorted(tot_regol, key=int)]
+    p_tot_rounds = [round(tot_python[k], 2) for k in sorted(tot_python, key=int)]
+    rows.append({
+        "key": "uk-corpus-total",
+        "cohort": "total",
+        "label": "All matched cohorts",
+        "cases": total_cases,
+        "total_spec_cases": 524,
+        "cores": 1,
+        "cache": "warm",
+        "verified": True,
+        "engines": {
+            "regol": {"median_ms": round(statistics.median(r_tot_rounds), 2), "rounds_ms": r_tot_rounds},
+            "python": {"median_ms": round(statistics.median(p_tot_rounds), 2), "rounds_ms": p_tot_rounds},
+        },
+    })
+    return rows
+
+
 def rebuild_aggregates(data_dir: Path, manifest: dict):
     runs_dir = data_dir / "runs"
-    history = {"writers": {}, "scale": {}, "cli": {}, "applications": {}}
+    history = {"writers": {}, "scale": {}, "cli": {}, "applications": {}, "corpus": {}}
     latest_run = None
     for meta in manifest["runs"]:
         run_path = data_dir.parent / meta["file"]
@@ -532,6 +602,22 @@ def rebuild_aggregates(data_dir: Path, manifest: dict):
                 "ref_label": ref_label,
                 "verified": bool(row.get("verified")),
             })
+        for row in payload.get("corpus", []):
+            reg = row["engines"].get("regol", {})
+            ref = row["engines"].get("python", {})
+            history["corpus"].setdefault(row["key"], []).append({
+                **base,
+                "cohort": row["cohort"],
+                "label": row["label"],
+                "cases": row["cases"],
+                "cores": row["cores"],
+                "regol_ms": reg.get("median_ms"),
+                "ref_ms": ref.get("median_ms"),
+                "regol_rounds": reg.get("rounds_ms", []),
+                "ref_rounds": ref.get("rounds_ms", []),
+                "ref_label": "GeoDesk Python",
+                "verified": bool(row.get("verified")),
+            })
 
     (data_dir / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     (data_dir / "history.json").write_text(json.dumps(history, indent=2) + "\n")
@@ -545,8 +631,8 @@ def main():
     parser.add_argument("--pages-dir", type=Path, required=True, help="Local checkout of the gh-pages branch")
     parser.add_argument("--ref", default="origin/main", help="Git ref in regol-gis/regol to benchmark")
     parser.add_argument("--jobs", type=int, default=min(4, os.cpu_count() or 2))
-    parser.add_argument("--suites", nargs="+", default=["writers", "scale", "cli", "applications"],
-                        choices=["writers", "scale", "cli", "applications"])
+    parser.add_argument("--suites", nargs="+", default=["writers", "scale", "cli", "applications", "corpus"],
+                        choices=["writers", "scale", "cli", "applications", "corpus"])
     parser.add_argument("--force", action="store_true", help="Run even if this commit is already recorded")
     parser.add_argument("--push", action="store_true", help="Commit and push updated data to gh-pages")
     args = parser.parse_args()
@@ -616,6 +702,7 @@ def main():
             "scale": [],
             "cli": [],
             "applications": [],
+            "corpus": [],
         }
 
         if "writers" in args.suites:
@@ -626,6 +713,8 @@ def main():
             payload["cli"] = run_cli(scratch, datasets, workers, samples=5, cores=min(2, machine["cores"]))
         if "applications" in args.suites:
             payload["applications"] = run_applications(scratch, datasets, workers, samples=3)
+        if "corpus" in args.suites:
+            payload["corpus"] = run_corpus(scratch, datasets, workers, rounds=3)
 
     (pages / run_rel).write_text(json.dumps(payload, indent=2) + "\n")
 
