@@ -1,6 +1,37 @@
 {
   "schema_version": 1,
-  "updated_at": null,
-  "machines": {},
-  "runs": []
+  "updated_at": "2026-11-22T10:36:16.705670Z",
+  "machines": {
+    "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g": {
+      "id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+      "label": "Intel(R) Xeon(R) CPU E3-1245 V2 @ 3.40GHz (4C/8T) \u00b7 31 GiB RAM \u00b7 HDD (7200 RPM)",
+      "cpu": "Intel(R) Xeon(R) CPU E3-1245 V2 @ 3.40GHz",
+      "cores": 4,
+      "threads": 8,
+      "ram_gib": 31,
+      "storage": "HDD (7200 RPM)",
+      "os": "Linux 7.2.12+deb14-amd64 (x86_64)"
+    }
+  },
+  "runs": [
+    {
+      "id": "2026-11-22T103616Z-49fa7aa",
+      "timestamp": "2026-11-22T10:36:16.705670Z",
+      "commit": "49fa7aa06e9c4abc33c1a5b6a531bed056e289bc",
+      "short_commit": "49fa7aa",
+      "commit_date": "2026-11-21T22:50:50Z",
+      "commit_subject": "Initial public release of regol 0.2.0",
+      "tag": "v0.2.0",
+      "regol_version": "0.2.0",
+      "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+      "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+      "competitors": {
+        "geodesk_python": "2.3.1",
+        "shapely": "2.2.0",
+        "gol_tool": "2.0.0",
+        "gol_tool_legacy": "2.0.0"
+      },
+      "file": "data/runs/2026-11-22T103616Z-49fa7aa.json"
+    }
+  ]
 }
