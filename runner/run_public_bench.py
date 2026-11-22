@@ -144,6 +144,9 @@ def setup_workers(regol_dir: Path, commit: str, jobs: int) -> dict:
         comps.append("gol-tool")
     if not (sdk / "gol-legacy/gol").is_file():
         comps.append("gol-tool-legacy")
+    has_java_tools = bool(shutil.which("java") and shutil.which("javac"))
+    if has_java_tools and not (sdk / "classes/CorpusJava.class").is_file():
+        comps.append("java")
     run([
         sys.executable, ROOT / "tools/setup_engines.py",
         *comps, "--source", regol_dir, "--revision", commit,
@@ -154,6 +157,11 @@ def setup_workers(regol_dir: Path, commit: str, jobs: int) -> dict:
         py, "-c",
         "import importlib.metadata as m, json; print(json.dumps({k: m.version(k) for k in ('geodesk', 'shapely')}))",
     ], capture=True))
+    java_ok = has_java_tools and (sdk / "classes/CorpusJava.class").is_file()
+    java_runtime = None
+    if java_ok:
+        out = subprocess.check_output(["java", "-version"], stderr=subprocess.STDOUT, text=True)
+        java_runtime = out.splitlines()[0].strip()
     gol_current = sdk / "gol-current/gol"
     gol_legacy = sdk / "gol-legacy/gol"
     gol_current_ok = False
@@ -162,9 +170,19 @@ def setup_workers(regol_dir: Path, commit: str, jobs: int) -> dict:
         gol_current_ok = probe.returncode == 0
     active_gol = gol_current if gol_current_ok else gol_legacy
     active_gol_version = "2.5.3" if gol_current_ok else "2.0.0"
+    competitors = {
+        "geodesk_python": py_ver["geodesk"],
+        "shapely": py_ver["shapely"],
+        "gol_tool": active_gol_version,
+        "gol_tool_legacy": "2.0.0",
+    }
+    if java_ok:
+        competitors["geodesk_java"] = "2.1.0"
+        competitors["java_runtime"] = java_runtime
     return {
         "sdk": sdk,
         "python": py,
+        "has_java": java_ok,
         "gol_tool": active_gol,
         "gol_version": active_gol_version,
         "gol_supports_pbf": gol_current_ok,
@@ -173,12 +191,7 @@ def setup_workers(regol_dir: Path, commit: str, jobs: int) -> dict:
         "regol_worker": ROOT / "target/release/examples/query_benchmark",
         "regol_mmap": ROOT / "target/release/examples/query_benchmark_mmap",
         "regol_cli": ROOT / "target/release/regol",
-        "competitors": {
-            "geodesk_python": py_ver["geodesk"],
-            "shapely": py_ver["shapely"],
-            "gol_tool": active_gol_version,
-            "gol_tool_legacy": "2.0.0",
-        },
+        "competitors": competitors,
     }
 
 
@@ -279,9 +292,10 @@ def run_writers(scratch: Path, datasets: dict, workers: dict, cores_list: list[i
 
 def run_scale(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list[dict]:
     out_dir = scratch / "scale"
+    engines = ["regol", "python", "java"] if workers.get("has_java") else ["regol", "python"]
     cmd = [
         sys.executable, ROOT / "tools/scale.py",
-        "--engines", "regol", "python",
+        "--engines", *engines,
         "--cores", "1",
         "--rounds", str(rounds),
         "--cache", "warm",
@@ -300,22 +314,29 @@ def run_scale(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list
         summary = entry["prepare_and_scan"]
         reg = summary.get("regol/1") or {}
         py = summary.get("python/1") or {}
+        eng_map = {
+            "regol": {
+                "median_ms": round(reg["median_ms"], 3),
+                "rounds_ms": [round(v, 3) for v in reg["rounds_ms"]],
+            },
+            "python": {
+                "median_ms": round(py["median_ms"], 3),
+                "rounds_ms": [round(v, 3) for v in py["rounds_ms"]],
+            },
+        }
+        if "java/1" in summary:
+            jv = summary["java/1"]
+            eng_map["java"] = {
+                "median_ms": round(jv["median_ms"], 3),
+                "rounds_ms": [round(v, 3) for v in jv["rounds_ms"]],
+            }
         rows.append({
             "key": f"{ds}-1c-warm",
             "dataset": ds,
             "gol_mib": round(datasets[ds]["gol_bytes"] / (1024.0 * 1024.0), 2),
             "cores": 1,
             "cache": "warm",
-            "engines": {
-                "regol": {
-                    "median_ms": round(reg["median_ms"], 3),
-                    "rounds_ms": [round(v, 3) for v in reg["rounds_ms"]],
-                },
-                "python": {
-                    "median_ms": round(py["median_ms"], 3),
-                    "rounds_ms": [round(v, 3) for v in py["rounds_ms"]],
-                },
-            },
+            "engines": eng_map,
             "verified": True,
         })
     return rows
@@ -440,10 +461,11 @@ def run_applications(scratch: Path, datasets: dict, workers: dict, samples: int)
 
 def run_corpus(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list[dict]:
     out_dir = scratch / "corpus"
+    engines = ["regol", "python", "java"] if workers.get("has_java") else ["regol", "python"]
     run([
         sys.executable, ROOT / "tools/campaign.py",
         "--library", f"geodesk={datasets['uk']['gol']}",
-        "--engines", "regol", "python",
+        "--engines", *engines,
         "--cores", "1",
         "--rounds", str(rounds),
         "--cache", "warm",
@@ -461,6 +483,8 @@ def run_corpus(scratch: Path, datasets: dict, workers: dict, rounds: int) -> lis
     rows = []
     tot_regol: dict[str, float] = {}
     tot_python: dict[str, float] = {}
+    tot_java: dict[str, float] = {}
+    has_java_out = False
     total_cases = 0
     for op in ("iterate", "tags", "geometry"):
         cohort = summary["cohorts"][op]
@@ -475,6 +499,17 @@ def run_corpus(scratch: Path, datasets: dict, workers: dict, rounds: int) -> lis
             tot_regol[k] = tot_regol.get(k, 0.0) + v
         for k, v in p_arm["rounds"].items():
             tot_python[k] = tot_python.get(k, 0.0) + v
+        eng_map = {
+            "regol": {"median_ms": round(r_arm["median"], 2), "rounds_ms": r_rounds},
+            "python": {"median_ms": round(p_arm["median"], 2), "rounds_ms": p_rounds},
+        }
+        if "geodesk/java/1" in pns:
+            has_java_out = True
+            j_arm = pns["geodesk/java/1"]
+            j_rounds = [round(j_arm["rounds"][k], 2) for k in sorted(j_arm["rounds"], key=int)]
+            for k, v in j_arm["rounds"].items():
+                tot_java[k] = tot_java.get(k, 0.0) + v
+            eng_map["java"] = {"median_ms": round(j_arm["median"], 2), "rounds_ms": j_rounds}
         rows.append({
             "key": f"uk-corpus-{op}",
             "cohort": op,
@@ -484,13 +519,17 @@ def run_corpus(scratch: Path, datasets: dict, workers: dict, rounds: int) -> lis
             "cores": 1,
             "cache": "warm",
             "verified": True,
-            "engines": {
-                "regol": {"median_ms": round(r_arm["median"], 2), "rounds_ms": r_rounds},
-                "python": {"median_ms": round(p_arm["median"], 2), "rounds_ms": p_rounds},
-            },
+            "engines": eng_map,
         })
     r_tot_rounds = [round(tot_regol[k], 2) for k in sorted(tot_regol, key=int)]
     p_tot_rounds = [round(tot_python[k], 2) for k in sorted(tot_python, key=int)]
+    tot_eng = {
+        "regol": {"median_ms": round(statistics.median(r_tot_rounds), 2), "rounds_ms": r_tot_rounds},
+        "python": {"median_ms": round(statistics.median(p_tot_rounds), 2), "rounds_ms": p_tot_rounds},
+    }
+    if has_java_out and tot_java:
+        j_tot_rounds = [round(tot_java[k], 2) for k in sorted(tot_java, key=int)]
+        tot_eng["java"] = {"median_ms": round(statistics.median(j_tot_rounds), 2), "rounds_ms": j_tot_rounds}
     rows.append({
         "key": "uk-corpus-total",
         "cohort": "total",
@@ -500,10 +539,7 @@ def run_corpus(scratch: Path, datasets: dict, workers: dict, rounds: int) -> lis
         "cores": 1,
         "cache": "warm",
         "verified": True,
-        "engines": {
-            "regol": {"median_ms": round(statistics.median(r_tot_rounds), 2), "rounds_ms": r_tot_rounds},
-            "python": {"median_ms": round(statistics.median(p_tot_rounds), 2), "rounds_ms": p_tot_rounds},
-        },
+        "engines": tot_eng,
     })
     return rows
 
@@ -551,6 +587,7 @@ def rebuild_aggregates(data_dir: Path, manifest: dict):
         for row in payload.get("scale", []):
             reg = row["engines"].get("regol", {})
             ref = row["engines"].get("python", {})
+            jv = row["engines"].get("java", {})
             history["scale"].setdefault(row["key"], []).append({
                 **base,
                 "dataset": row["dataset"],
@@ -558,8 +595,10 @@ def rebuild_aggregates(data_dir: Path, manifest: dict):
                 "cores": row["cores"],
                 "regol_ms": reg.get("median_ms"),
                 "ref_ms": ref.get("median_ms"),
+                "java_ms": jv.get("median_ms"),
                 "regol_rounds": reg.get("rounds_ms", []),
                 "ref_rounds": ref.get("rounds_ms", []),
+                "java_rounds": jv.get("rounds_ms", []),
                 "ref_label": "GeoDesk Python",
                 "verified": bool(row.get("verified")),
             })
@@ -605,6 +644,7 @@ def rebuild_aggregates(data_dir: Path, manifest: dict):
         for row in payload.get("corpus", []):
             reg = row["engines"].get("regol", {})
             ref = row["engines"].get("python", {})
+            jv = row["engines"].get("java", {})
             history["corpus"].setdefault(row["key"], []).append({
                 **base,
                 "cohort": row["cohort"],
@@ -613,8 +653,10 @@ def rebuild_aggregates(data_dir: Path, manifest: dict):
                 "cores": row["cores"],
                 "regol_ms": reg.get("median_ms"),
                 "ref_ms": ref.get("median_ms"),
+                "java_ms": jv.get("median_ms"),
                 "regol_rounds": reg.get("rounds_ms", []),
                 "ref_rounds": ref.get("rounds_ms", []),
+                "java_rounds": jv.get("rounds_ms", []),
                 "ref_label": "GeoDesk Python",
                 "verified": bool(row.get("verified")),
             })
