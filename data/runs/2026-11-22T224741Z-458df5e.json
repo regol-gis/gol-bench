@@ -1,0 +1,2699 @@
+{
+  "id": "2026-11-22T224741Z-458df5e",
+  "timestamp": "2026-11-22T22:47:41.268020Z",
+  "commit": "458df5e09baa163fcec75369403a1208de6c11bd",
+  "short_commit": "458df5e",
+  "commit_date": "2026-11-22T22:13:47Z",
+  "commit_subject": "Gate mmap read-ahead on observed fault size and wait time",
+  "tag": null,
+  "regol_version": "0.2.2",
+  "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+  "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+  "machine": {
+    "id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+    "label": "Intel(R) Xeon(R) CPU E3-1245 V2 @ 3.40GHz (4C/8T) \u00b7 31 GiB RAM \u00b7 HDD (7200 RPM)",
+    "cpu": "Intel(R) Xeon(R) CPU E3-1245 V2 @ 3.40GHz",
+    "cores": 4,
+    "threads": 8,
+    "ram_gib": 31,
+    "storage": "HDD (7200 RPM)",
+    "os": "Linux 7.2.12+deb14-amd64 (x86_64)"
+  },
+  "competitors": {
+    "geodesk_python": "2.3.1",
+    "shapely": "2.2.0",
+    "gol_tool": "2.0.0",
+    "gol_tool_legacy": "2.0.0",
+    "geodesk_java": "2.1.0",
+    "java_runtime": "openjdk version \"25.0.5\" 2026-10-20"
+  },
+  "datasets": {
+    "monaco": {
+      "gol_bytes": 1003520,
+      "gol_sha256": "40aa0d924505496ec0d5ed101dc70dc6a989e882d884cfcaea07ebfe8bdc8cc0",
+      "pbf_sha256": "2c0debd7676c0d0d80ec534251cb004a6797441d14512cb83d01fe1ad81363bf"
+    },
+    "liechtenstein": {
+      "gol_bytes": 5537792,
+      "gol_sha256": "b6adbbc7779a32419a6fa78324d6f26fe5c8108db44dd3912a10165f13aa681b",
+      "pbf_sha256": "38c281920dcf599754a1e58f399b88c35d18b40dff932bd4dd926aa1a79cda76"
+    },
+    "bremen": {
+      "gol_bytes": 38895616,
+      "gol_sha256": "c54d28dbf54e7c40de5e609a007938e286756423788e04a9fc667bdcf3ca2d5a",
+      "pbf_sha256": "f53e7d31150ddb34a6464282ec58422c1dd8f16a7f69f7dee060d44a8fac9b51"
+    },
+    "ghana": {
+      "gol_bytes": 205615104,
+      "gol_sha256": "829cd079229c05f83f82837b7a13cd0e07b9fefdaa7b9f07e3abee43efa1c9b2",
+      "pbf_sha256": "64a00500ad5f8670ec23eee0099a4c696f0f14c9892b373744cdce7423a4c8f6"
+    },
+    "uk": {
+      "gol_bytes": 3808686080,
+      "gol_sha256": "56cb7135cc147c4bbea662aab0fa751131a7768ffa2cc1f2fc744ded55f4cfab",
+      "pbf_sha256": "2ac3b0550d7c8e0666f6a45f06b419dfbc3cda55469ae352349c78b577294a33",
+      "generators": {
+        "regol": {
+          "producer": "regol",
+          "revision": "458df5e09baa163fcec75369403a1208de6c11bd",
+          "settings": [],
+          "pbf_sha256": "2ac3b0550d7c8e0666f6a45f06b419dfbc3cda55469ae352349c78b577294a33",
+          "bytes": 3789455360,
+          "sha256": "d677464fd5f06992b1086c7b83df492faf0ef7a131d65ace6c66f5d4fa8f0350"
+        },
+        "geodesk": {
+          "producer": "GOL Tool",
+          "revision": "2.0.0",
+          "settings": [
+            "-w"
+          ],
+          "page_alignment_bytes": 4096,
+          "pbf_sha256": "2ac3b0550d7c8e0666f6a45f06b419dfbc3cda55469ae352349c78b577294a33",
+          "bytes": 3808686080,
+          "sha256": "56cb7135cc147c4bbea662aab0fa751131a7768ffa2cc1f2fc744ded55f4cfab"
+        }
+      }
+    }
+  },
+  "writers": [
+    {
+      "key": "monaco-1c",
+      "dataset": "monaco",
+      "cores": 1,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 77.55,
+          "wall_ms_rounds": [
+            77.55,
+            78.13,
+            76.07
+          ],
+          "peak_rss_mib": 31.5,
+          "output_mib": 0.93,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 982.22,
+          "wall_ms_rounds": [
+            1105.95,
+            982.22,
+            977.72
+          ],
+          "peak_rss_mib": 588.52,
+          "output_mib": 0.95,
+          "verified": true
+        }
+      }
+    },
+    {
+      "key": "monaco-4c",
+      "dataset": "monaco",
+      "cores": 4,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 72.76,
+          "wall_ms_rounds": [
+            74.53,
+            72.76,
+            67.16
+          ],
+          "peak_rss_mib": 31.5,
+          "output_mib": 0.93,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 871.57,
+          "wall_ms_rounds": [
+            862.53,
+            871.57,
+            889.82
+          ],
+          "peak_rss_mib": 586.63,
+          "output_mib": 0.95,
+          "verified": true
+        }
+      }
+    },
+    {
+      "key": "bremen-1c",
+      "dataset": "bremen",
+      "cores": 1,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 1524.63,
+          "wall_ms_rounds": [
+            1514.18,
+            1524.63,
+            1580.39
+          ],
+          "peak_rss_mib": 178.5,
+          "output_mib": 36.24,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 5322.07,
+          "wall_ms_rounds": [
+            5322.07,
+            5342.67,
+            5321.1
+          ],
+          "peak_rss_mib": 1124.98,
+          "output_mib": 37.09,
+          "verified": true
+        }
+      }
+    },
+    {
+      "key": "bremen-4c",
+      "dataset": "bremen",
+      "cores": 4,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 820.78,
+          "wall_ms_rounds": [
+            853.22,
+            820.78,
+            809.94
+          ],
+          "peak_rss_mib": 219.42,
+          "output_mib": 36.24,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 2823.12,
+          "wall_ms_rounds": [
+            2827.04,
+            2823.12,
+            2800.95
+          ],
+          "peak_rss_mib": 1120.18,
+          "output_mib": 37.09,
+          "verified": true
+        }
+      }
+    },
+    {
+      "key": "ghana-1c",
+      "dataset": "ghana",
+      "cores": 1,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 8756.1,
+          "wall_ms_rounds": [
+            8756.1,
+            8736.27,
+            9207.57
+          ],
+          "peak_rss_mib": 910.24,
+          "output_mib": 196.09,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 16983.51,
+          "wall_ms_rounds": [
+            16983.51,
+            16864.71,
+            17146.76
+          ],
+          "peak_rss_mib": 1671.63,
+          "output_mib": 196.79,
+          "verified": true
+        }
+      }
+    },
+    {
+      "key": "ghana-4c",
+      "dataset": "ghana",
+      "cores": 4,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 4307.22,
+          "wall_ms_rounds": [
+            4462.57,
+            4052.21,
+            4307.22
+          ],
+          "peak_rss_mib": 913.0,
+          "output_mib": 196.09,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 7008.63,
+          "wall_ms_rounds": [
+            6935.32,
+            7008.63,
+            7240.32
+          ],
+          "peak_rss_mib": 1487.3,
+          "output_mib": 196.79,
+          "verified": true
+        }
+      }
+    }
+  ],
+  "scale": [
+    {
+      "key": "monaco-1c-warm",
+      "dataset": "monaco",
+      "gol_mib": 0.96,
+      "cores": 1,
+      "cache": "warm",
+      "engines": {
+        "regol": {
+          "median_ms": 0.415,
+          "rounds_ms": [
+            0.531,
+            0.416,
+            0.406,
+            0.415,
+            0.381
+          ]
+        },
+        "python": {
+          "median_ms": 0.615,
+          "rounds_ms": [
+            0.657,
+            0.61,
+            0.615,
+            0.706,
+            0.611
+          ]
+        },
+        "java": {
+          "median_ms": 54.298,
+          "rounds_ms": [
+            54.298,
+            50.492,
+            48.095,
+            59.721,
+            66.913
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "key": "liechtenstein-1c-warm",
+      "dataset": "liechtenstein",
+      "gol_mib": 5.28,
+      "cores": 1,
+      "cache": "warm",
+      "engines": {
+        "regol": {
+          "median_ms": 0.274,
+          "rounds_ms": [
+            0.397,
+            0.274,
+            0.28,
+            0.273,
+            0.23
+          ]
+        },
+        "python": {
+          "median_ms": 0.636,
+          "rounds_ms": [
+            0.636,
+            0.635,
+            0.641,
+            0.635,
+            0.638
+          ]
+        },
+        "java": {
+          "median_ms": 59.252,
+          "rounds_ms": [
+            59.252,
+            51.866,
+            70.589,
+            57.437,
+            61.895
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "key": "bremen-1c-warm",
+      "dataset": "bremen",
+      "gol_mib": 37.09,
+      "cores": 1,
+      "cache": "warm",
+      "engines": {
+        "regol": {
+          "median_ms": 0.568,
+          "rounds_ms": [
+            0.846,
+            0.574,
+            0.568,
+            0.558,
+            0.522
+          ]
+        },
+        "python": {
+          "median_ms": 0.985,
+          "rounds_ms": [
+            0.985,
+            0.963,
+            1.021,
+            1.038,
+            0.959
+          ]
+        },
+        "java": {
+          "median_ms": 57.95,
+          "rounds_ms": [
+            67.381,
+            53.922,
+            70.482,
+            53.1,
+            57.95
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "key": "ghana-1c-warm",
+      "dataset": "ghana",
+      "gol_mib": 196.09,
+      "cores": 1,
+      "cache": "warm",
+      "engines": {
+        "regol": {
+          "median_ms": 0.418,
+          "rounds_ms": [
+            0.609,
+            0.418,
+            0.538,
+            0.413,
+            0.398
+          ]
+        },
+        "python": {
+          "median_ms": 1.448,
+          "rounds_ms": [
+            1.442,
+            1.461,
+            1.482,
+            1.448,
+            1.438
+          ]
+        },
+        "java": {
+          "median_ms": 63.339,
+          "rounds_ms": [
+            56.542,
+            63.339,
+            67.088,
+            67.867,
+            57.954
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "key": "uk-1c-warm",
+      "dataset": "uk",
+      "gol_mib": 3632.25,
+      "cores": 1,
+      "cache": "warm",
+      "engines": {
+        "regol": {
+          "median_ms": 1.727,
+          "rounds_ms": [
+            2.079,
+            1.727,
+            1.705,
+            2.138,
+            1.628
+          ]
+        },
+        "python": {
+          "median_ms": 2.016,
+          "rounds_ms": [
+            2.016,
+            1.998,
+            1.997,
+            2.029,
+            2.073
+          ]
+        },
+        "java": {
+          "median_ms": 82.778,
+          "rounds_ms": [
+            92.606,
+            92.319,
+            82.778,
+            74.011,
+            79.967
+          ]
+        }
+      },
+      "verified": true
+    }
+  ],
+  "cli": [
+    {
+      "key": "leeds-cafes-count",
+      "dataset": "uk (Leeds bbox)",
+      "query": "n[amenity=cafe]",
+      "format": "count",
+      "cores": 2,
+      "selected": 213,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 4.75,
+          "rounds_ms": [
+            5.21,
+            4.16,
+            4.29,
+            5.4
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 4.99,
+          "rounds_ms": [
+            4.82,
+            5.02,
+            4.97,
+            5.75
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-cafes-csv",
+      "dataset": "uk (Leeds bbox)",
+      "query": "n[amenity=cafe]",
+      "format": "csv",
+      "cores": 2,
+      "selected": 213,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 5.1,
+          "rounds_ms": [
+            5.41,
+            5.48,
+            4.46,
+            4.79
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 5.66,
+          "rounds_ms": [
+            5.54,
+            6.09,
+            5.78,
+            4.1
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-cafes-geojson",
+      "dataset": "uk (Leeds bbox)",
+      "query": "n[amenity=cafe]",
+      "format": "geojson",
+      "cores": 2,
+      "selected": 213,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 5.31,
+          "rounds_ms": [
+            5.92,
+            4.7,
+            6.37,
+            4.68
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 6.0,
+          "rounds_ms": [
+            6.23,
+            5.89,
+            5.07,
+            6.12
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-cafes-geojsonl",
+      "dataset": "uk (Leeds bbox)",
+      "query": "n[amenity=cafe]",
+      "format": "geojsonl",
+      "cores": 2,
+      "selected": 213,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 5.57,
+          "rounds_ms": [
+            5.85,
+            5.29,
+            4.09,
+            5.89
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 5.3,
+          "rounds_ms": [
+            4.95,
+            5.91,
+            5.62,
+            4.98
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-roads-count",
+      "dataset": "uk (Leeds bbox)",
+      "query": "w[highway]",
+      "format": "count",
+      "cores": 2,
+      "selected": 11189,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 5.39,
+          "rounds_ms": [
+            5.53,
+            5.6,
+            3.39,
+            5.26
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 4.91,
+          "rounds_ms": [
+            5.16,
+            4.74,
+            5.08,
+            3.58
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-roads-csv",
+      "dataset": "uk (Leeds bbox)",
+      "query": "w[highway]",
+      "format": "csv",
+      "cores": 2,
+      "selected": 11189,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 6.44,
+          "rounds_ms": [
+            6.34,
+            6.58,
+            6.53,
+            5.96
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 6.38,
+          "rounds_ms": [
+            6.43,
+            6.24,
+            6.85,
+            6.33
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-roads-geojson",
+      "dataset": "uk (Leeds bbox)",
+      "query": "w[highway]",
+      "format": "geojson",
+      "cores": 2,
+      "selected": 11189,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 12.95,
+          "rounds_ms": [
+            13.03,
+            12.87,
+            13.73,
+            12.51
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 17.77,
+          "rounds_ms": [
+            17.82,
+            20.03,
+            17.71,
+            17.31
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-roads-geojsonl",
+      "dataset": "uk (Leeds bbox)",
+      "query": "w[highway]",
+      "format": "geojsonl",
+      "cores": 2,
+      "selected": 11189,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 12.82,
+          "rounds_ms": [
+            13.37,
+            12.93,
+            12.71,
+            12.71
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 19.23,
+          "rounds_ms": [
+            19.4,
+            19.57,
+            17.45,
+            19.06
+          ],
+          "error": null
+        }
+      }
+    }
+  ],
+  "applications": [
+    {
+      "key": "osm2world-reader",
+      "id": "osm2world",
+      "label": "osm2world",
+      "interface": "Java",
+      "kind": "reader",
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 27.54,
+          "rounds_ms": [
+            27.77,
+            27.31,
+            27.22,
+            28.02
+          ]
+        },
+        "python": {
+          "median_ms": 64.12,
+          "rounds_ms": [
+            64.62,
+            63.59,
+            63.96,
+            64.28
+          ]
+        }
+      }
+    },
+    {
+      "key": "ascend-reader",
+      "id": "ascend",
+      "label": "ascend",
+      "interface": "C++",
+      "kind": "reader",
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 125.97,
+          "rounds_ms": [
+            126.46,
+            124.75,
+            125.48,
+            129.34
+          ]
+        },
+        "python": {
+          "median_ms": 652.94,
+          "rounds_ms": [
+            658.43,
+            647.44,
+            659.56,
+            643.46
+          ]
+        }
+      }
+    },
+    {
+      "key": "openplanetdata-reader",
+      "id": "openplanetdata",
+      "label": "openplanetdata",
+      "interface": "Airflow \u2192 gol CLI",
+      "kind": "reader",
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 1.1,
+          "rounds_ms": [
+            1.11,
+            1.07,
+            1.1,
+            1.1
+          ]
+        },
+        "python": {
+          "median_ms": 2.89,
+          "rounds_ms": [
+            2.94,
+            2.87,
+            2.87,
+            2.91
+          ]
+        }
+      }
+    },
+    {
+      "key": "cesium-reader",
+      "id": "cesium",
+      "label": "cesium",
+      "interface": "C++ / Unreal",
+      "kind": "reader",
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 1.55,
+          "rounds_ms": [
+            1.53,
+            1.52,
+            1.58,
+            1.58
+          ]
+        },
+        "python": {
+          "median_ms": 6.07,
+          "rounds_ms": [
+            6.1,
+            7.53,
+            5.99,
+            6.05
+          ]
+        }
+      }
+    },
+    {
+      "key": "osm-extractor-reader",
+      "id": "osm-extractor",
+      "label": "osm-extractor",
+      "interface": "Node.js \u2192 gol CLI",
+      "kind": "reader",
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 6.18,
+          "rounds_ms": [
+            6.0,
+            6.07,
+            6.28,
+            6.29
+          ]
+        },
+        "python": {
+          "median_ms": 18.06,
+          "rounds_ms": [
+            18.44,
+            17.98,
+            17.91,
+            18.14
+          ]
+        }
+      }
+    },
+    {
+      "key": "world2pixel-reader",
+      "id": "world2pixel",
+      "label": "world2pixel",
+      "interface": "C++",
+      "kind": "reader",
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 1.92,
+          "rounds_ms": [
+            1.92,
+            1.84,
+            1.93,
+            1.92
+          ]
+        },
+        "python": {
+          "median_ms": 9.21,
+          "rounds_ms": [
+            9.2,
+            9.13,
+            9.67,
+            9.22
+          ]
+        }
+      }
+    },
+    {
+      "key": "next-higher-reader",
+      "id": "next-higher",
+      "label": "next-higher",
+      "interface": "Java",
+      "kind": "reader",
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 119.34,
+          "rounds_ms": [
+            119.06,
+            119.62,
+            119.05,
+            122.97
+          ]
+        },
+        "python": {
+          "median_ms": 283.69,
+          "rounds_ms": [
+            283.93,
+            283.45,
+            285.05,
+            282.46
+          ]
+        }
+      }
+    },
+    {
+      "key": "campsbourne-reader",
+      "id": "campsbourne",
+      "label": "campsbourne",
+      "interface": "Python notebook",
+      "kind": "reader",
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 0.55,
+          "rounds_ms": [
+            0.55,
+            0.65,
+            0.54,
+            0.48
+          ]
+        },
+        "python": {
+          "median_ms": 1.08,
+          "rounds_ms": [
+            1.17,
+            1.08,
+            1.07,
+            1.07
+          ]
+        }
+      }
+    },
+    {
+      "key": "varna-reader",
+      "id": "varna",
+      "label": "varna",
+      "interface": "C++",
+      "kind": "reader",
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 26.31,
+          "rounds_ms": [
+            27.18,
+            25.92,
+            26.23,
+            26.39
+          ]
+        },
+        "python": {
+          "median_ms": 60.46,
+          "rounds_ms": [
+            58.85,
+            62.97,
+            61.23,
+            59.69
+          ]
+        }
+      }
+    },
+    {
+      "key": "hillbomb-reader",
+      "id": "hillbomb",
+      "label": "hillbomb",
+      "interface": "Python",
+      "kind": "reader",
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 1.2,
+          "rounds_ms": [
+            1.21,
+            1.2,
+            1.2,
+            1.22
+          ]
+        },
+        "python": {
+          "median_ms": 6.05,
+          "rounds_ms": [
+            5.93,
+            6.08,
+            6.12,
+            6.02
+          ]
+        }
+      }
+    }
+  ],
+  "corpus": [
+    {
+      "key": "uk-corpus-iterate",
+      "cohort": "iterate",
+      "label": "Identity streams",
+      "cases": 224,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "java": {
+          "median_ms": 2327.32,
+          "rounds_ms": [
+            2354.49,
+            2390.56,
+            2261.98,
+            2300.16,
+            2282.41,
+            2512.23
+          ]
+        },
+        "python": {
+          "median_ms": 1428.05,
+          "rounds_ms": [
+            1430.24,
+            1429.82,
+            1426.18,
+            1425.26,
+            1426.29,
+            1449.42
+          ]
+        },
+        "regol": {
+          "median_ms": 953.24,
+          "rounds_ms": [
+            957.23,
+            943.62,
+            954.66,
+            950.73,
+            951.81,
+            955.31
+          ]
+        }
+      }
+    },
+    {
+      "key": "uk-corpus-tags",
+      "cohort": "tags",
+      "label": "Tag decoding",
+      "cases": 110,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "java": {
+          "median_ms": 759.69,
+          "rounds_ms": [
+            766.25,
+            780.53,
+            837.05,
+            753.14,
+            680.65,
+            751.39
+          ]
+        },
+        "python": {
+          "median_ms": 681.58,
+          "rounds_ms": [
+            681.03,
+            679.99,
+            679.28,
+            696.94,
+            690.95,
+            682.13
+          ]
+        },
+        "regol": {
+          "median_ms": 288.22,
+          "rounds_ms": [
+            288.04,
+            290.04,
+            293.87,
+            286.5,
+            288.38,
+            288.07
+          ]
+        }
+      }
+    },
+    {
+      "key": "uk-corpus-geometry",
+      "cohort": "geometry",
+      "label": "Geometry assembly",
+      "cases": 100,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "java": {
+          "median_ms": 890.88,
+          "rounds_ms": [
+            891.89,
+            889.87,
+            869.5,
+            853.15,
+            985.95,
+            901.14
+          ]
+        },
+        "python": {
+          "median_ms": 460.64,
+          "rounds_ms": [
+            443.26,
+            456.51,
+            473.37,
+            457.31,
+            463.97,
+            483.8
+          ]
+        },
+        "regol": {
+          "median_ms": 197.66,
+          "rounds_ms": [
+            198.1,
+            197.73,
+            197.59,
+            195.92,
+            196.93,
+            198.67
+          ]
+        }
+      }
+    },
+    {
+      "key": "uk-corpus-total",
+      "cohort": "total",
+      "label": "All matched cohorts",
+      "cases": 434,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "java": {
+          "median_ms": 3990.58,
+          "rounds_ms": [
+            4012.62,
+            4060.96,
+            3968.53,
+            3906.45,
+            3949.0,
+            4164.76
+          ]
+        },
+        "python": {
+          "median_ms": 2579.17,
+          "rounds_ms": [
+            2554.52,
+            2566.31,
+            2578.83,
+            2579.52,
+            2581.21,
+            2615.35
+          ]
+        },
+        "regol": {
+          "median_ms": 1439.59,
+          "rounds_ms": [
+            1443.37,
+            1431.39,
+            1446.11,
+            1433.15,
+            1437.12,
+            1442.06
+          ]
+        }
+      }
+    }
+  ],
+  "generators": [
+    {
+      "key": "osm2world-reader/regol",
+      "label": "osm2world",
+      "reader": "regol",
+      "cases": 12,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 27.537743499999998,
+      "regol_ms": 30.9032375,
+      "saved_pct": -12.406960560628066,
+      "geodesk_rounds_ms": [
+        27.765375,
+        27.310112,
+        27.222927,
+        28.015999
+      ],
+      "regol_rounds_ms": [
+        30.995034,
+        32.158049,
+        30.811441,
+        30.777199
+      ]
+    },
+    {
+      "key": "osm2world-reader/python",
+      "label": "osm2world",
+      "reader": "python",
+      "cases": 12,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 64.118508,
+      "regol_ms": 69.5237915,
+      "saved_pct": -8.745875111287106,
+      "geodesk_rounds_ms": [
+        64.621776,
+        63.589147,
+        63.958316,
+        64.2787
+      ],
+      "regol_rounds_ms": [
+        71.762079,
+        69.466532,
+        69.076973,
+        69.581051
+      ]
+    },
+    {
+      "key": "ascend-reader/regol",
+      "label": "ascend",
+      "reader": "regol",
+      "cases": 10,
+      "verified": false,
+      "differences": [
+        "0-places"
+      ],
+      "geodesk_ms": null,
+      "regol_ms": null,
+      "saved_pct": null,
+      "geodesk_rounds_ms": [
+        126.464509,
+        124.753614,
+        125.477193,
+        129.33668
+      ],
+      "regol_rounds_ms": [
+        114.577198,
+        116.158281,
+        114.909746,
+        115.092888
+      ]
+    },
+    {
+      "key": "ascend-reader/python",
+      "label": "ascend",
+      "reader": "python",
+      "cases": 10,
+      "verified": false,
+      "differences": [
+        "0-places"
+      ],
+      "geodesk_ms": null,
+      "regol_ms": null,
+      "saved_pct": null,
+      "geodesk_rounds_ms": [
+        658.429594,
+        647.441596,
+        659.564768,
+        643.460737
+      ],
+      "regol_rounds_ms": [
+        644.674119,
+        624.499074,
+        635.400564,
+        635.121972
+      ]
+    },
+    {
+      "key": "openplanetdata-reader/regol",
+      "label": "openplanetdata",
+      "reader": "regol",
+      "cases": 6,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 1.100095,
+      "regol_ms": 2.5873939999999997,
+      "saved_pct": -135.1947419433517,
+      "geodesk_rounds_ms": [
+        1.109038,
+        1.066112,
+        1.097468,
+        1.102722
+      ],
+      "regol_rounds_ms": [
+        2.53021,
+        2.636649,
+        2.569321,
+        2.605467
+      ]
+    },
+    {
+      "key": "openplanetdata-reader/python",
+      "label": "openplanetdata",
+      "reader": "python",
+      "cases": 6,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 2.8929275,
+      "regol_ms": 5.1990005,
+      "saved_pct": -79.92978403016511,
+      "geodesk_rounds_ms": [
+        2.935954,
+        2.866729,
+        2.874056,
+        2.911799
+      ],
+      "regol_rounds_ms": [
+        5.858968,
+        5.113063,
+        4.987453,
+        5.284938
+      ]
+    },
+    {
+      "key": "cesium-reader/regol",
+      "label": "cesium",
+      "reader": "regol",
+      "cases": 9,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 1.5540224999999999,
+      "regol_ms": 3.327686,
+      "saved_pct": -114.86956105360724,
+      "geodesk_rounds_ms": [
+        1.528241,
+        1.515246,
+        1.582261,
+        1.579804
+      ],
+      "regol_rounds_ms": [
+        3.37227,
+        3.315568,
+        3.323166,
+        3.332206
+      ]
+    },
+    {
+      "key": "cesium-reader/python",
+      "label": "cesium",
+      "reader": "python",
+      "cases": 9,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 6.073378,
+      "regol_ms": 8.5904275,
+      "saved_pct": -42.13596113381968,
+      "geodesk_rounds_ms": [
+        6.100142,
+        7.53146,
+        5.988149,
+        6.046614
+      ],
+      "regol_rounds_ms": [
+        8.618554,
+        8.546044,
+        8.562301,
+        8.668147
+      ]
+    },
+    {
+      "key": "osm-extractor-reader/regol",
+      "label": "osm-extractor",
+      "reader": "regol",
+      "cases": 4,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 6.1750185,
+      "regol_ms": 6.866706,
+      "saved_pct": -12.125608108376928,
+      "geodesk_rounds_ms": [
+        6.003626,
+        6.066129,
+        6.283908,
+        6.294081
+      ],
+      "regol_rounds_ms": [
+        6.773884,
+        6.758962,
+        7.217537,
+        6.959528
+      ]
+    },
+    {
+      "key": "osm-extractor-reader/python",
+      "label": "osm-extractor",
+      "reader": "python",
+      "cases": 4,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 18.062748499999998,
+      "regol_ms": 19.330966500000002,
+      "saved_pct": -7.241921754526981,
+      "geodesk_rounds_ms": [
+        18.439006,
+        17.98487,
+        17.913368,
+        18.140627
+      ],
+      "regol_rounds_ms": [
+        19.170933,
+        19.764453,
+        19.452164,
+        19.209769
+      ]
+    },
+    {
+      "key": "world2pixel-reader/regol",
+      "label": "world2pixel",
+      "reader": "regol",
+      "cases": 145,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 1.9199225,
+      "regol_ms": 2.634028,
+      "saved_pct": -39.904681920068825,
+      "geodesk_rounds_ms": [
+        1.922655,
+        1.839857,
+        1.930515,
+        1.91719
+      ],
+      "regol_rounds_ms": [
+        3.125642,
+        2.650765,
+        2.617291,
+        2.602295
+      ]
+    },
+    {
+      "key": "world2pixel-reader/python",
+      "label": "world2pixel",
+      "reader": "python",
+      "cases": 145,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 9.2081075,
+      "regol_ms": 16.1487485,
+      "saved_pct": -75.61513349122467,
+      "geodesk_rounds_ms": [
+        9.196601,
+        9.130703,
+        9.665182,
+        9.219614
+      ],
+      "regol_rounds_ms": [
+        16.13526,
+        16.162237,
+        16.021794,
+        16.206439
+      ]
+    },
+    {
+      "key": "next-higher-reader/regol",
+      "label": "next-higher",
+      "reader": "regol",
+      "cases": 6,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 119.3420845,
+      "regol_ms": 88.546858,
+      "saved_pct": 25.919552424274443,
+      "geodesk_rounds_ms": [
+        119.064918,
+        119.619251,
+        119.048807,
+        122.966568
+      ],
+      "regol_rounds_ms": [
+        88.868226,
+        88.317006,
+        88.487941,
+        88.605775
+      ]
+    },
+    {
+      "key": "next-higher-reader/python",
+      "label": "next-higher",
+      "reader": "python",
+      "cases": 6,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 283.68805050000003,
+      "regol_ms": 262.063096,
+      "saved_pct": 7.5622253747991035,
+      "geodesk_rounds_ms": [
+        283.927702,
+        283.448399,
+        285.053298,
+        282.459718
+      ],
+      "regol_rounds_ms": [
+        259.517976,
+        263.304243,
+        263.777002,
+        260.821949
+      ]
+    },
+    {
+      "key": "campsbourne-reader/regol",
+      "label": "campsbourne",
+      "reader": "regol",
+      "cases": 4,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 0.5456135,
+      "regol_ms": 1.0964765,
+      "saved_pct": -103.20189530878744,
+      "geodesk_rounds_ms": [
+        0.551192,
+        0.649227,
+        0.540035,
+        0.482634
+      ],
+      "regol_rounds_ms": [
+        1.134461,
+        1.101147,
+        1.083225,
+        1.091806
+      ]
+    },
+    {
+      "key": "campsbourne-reader/python",
+      "label": "campsbourne",
+      "reader": "python",
+      "cases": 4,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 1.0758755,
+      "regol_ms": 1.9843165000000003,
+      "saved_pct": -84.90707269140353,
+      "geodesk_rounds_ms": [
+        1.168915,
+        1.078998,
+        1.072753,
+        1.067197
+      ],
+      "regol_rounds_ms": [
+        1.938914,
+        2.010381,
+        2.139113,
+        1.958252
+      ]
+    },
+    {
+      "key": "varna-reader/regol",
+      "label": "varna",
+      "reader": "regol",
+      "cases": 3,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 26.310438,
+      "regol_ms": 16.083461,
+      "saved_pct": 38.787783448141724,
+      "geodesk_rounds_ms": [
+        27.184405,
+        25.922362,
+        26.229552,
+        26.391324
+      ],
+      "regol_rounds_ms": [
+        16.064272,
+        16.077739,
+        16.089183,
+        16.121015
+      ]
+    },
+    {
+      "key": "varna-reader/python",
+      "label": "varna",
+      "reader": "python",
+      "cases": 3,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 60.458154500000006,
+      "regol_ms": 58.3727755,
+      "saved_pct": 2.2336111761182833,
+      "geodesk_rounds_ms": [
+        58.845443,
+        62.968543,
+        61.229128,
+        59.687181
+      ],
+      "regol_rounds_ms": [
+        58.244579,
+        57.80889,
+        59.71074,
+        58.500972
+      ]
+    },
+    {
+      "key": "hillbomb-reader/regol",
+      "label": "hillbomb",
+      "reader": "regol",
+      "cases": 7,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 1.204891,
+      "regol_ms": 1.7472335,
+      "saved_pct": -44.921442451623115,
+      "geodesk_rounds_ms": [
+        1.209625,
+        1.200157,
+        1.196581,
+        1.218772
+      ],
+      "regol_rounds_ms": [
+        1.738962,
+        1.756533,
+        1.747995,
+        1.746472
+      ]
+    },
+    {
+      "key": "hillbomb-reader/python",
+      "label": "hillbomb",
+      "reader": "python",
+      "cases": 7,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 6.051507,
+      "regol_ms": 7.0527435,
+      "saved_pct": -17.29945318533711,
+      "geodesk_rounds_ms": [
+        5.934498,
+        6.07865,
+        6.124288,
+        6.024364
+      ],
+      "regol_rounds_ms": [
+        7.021347,
+        7.082831,
+        7.022656,
+        7.113515
+      ]
+    },
+    {
+      "key": "uk-corpus-iterate/java",
+      "label": "Identity streams",
+      "reader": "java",
+      "cases": 224,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 2327.323394,
+      "regol_ms": 1950.13078,
+      "saved_pct": 19.30235074520332,
+      "geodesk_rounds_ms": [
+        2354.487391,
+        2390.564254,
+        2261.978354,
+        2300.159397,
+        2282.406353,
+        2512.230114
+      ],
+      "regol_rounds_ms": [
+        1939.176698,
+        1837.922445,
+        1961.084862,
+        1808.169082,
+        1974.496829,
+        1985.526288
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-iterate/python",
+      "label": "Identity streams",
+      "reader": "python",
+      "cases": 224,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 1428.0529325,
+      "regol_ms": 1286.6583495,
+      "saved_pct": 10.11610639915636,
+      "geodesk_rounds_ms": [
+        1430.23832,
+        1429.817252,
+        1426.181182,
+        1425.260802,
+        1426.288613,
+        1449.419064
+      ],
+      "regol_rounds_ms": [
+        1289.398057,
+        1281.332382,
+        1286.068097,
+        1287.248602,
+        1268.177191,
+        1290.825635
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-iterate/regol",
+      "label": "Identity streams",
+      "reader": "regol",
+      "cases": 224,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 953.2359305,
+      "regol_ms": 785.691449,
+      "saved_pct": 17.213057406012737,
+      "geodesk_rounds_ms": [
+        957.233477,
+        943.616139,
+        954.65771,
+        950.734104,
+        951.814151,
+        955.314392
+      ],
+      "regol_rounds_ms": [
+        786.737825,
+        784.531674,
+        780.877709,
+        784.645073,
+        790.419229,
+        795.251746
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-tags/java",
+      "label": "Tag decoding",
+      "reader": "java",
+      "cases": 96,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 451.64267,
+      "regol_ms": 430.5942645,
+      "saved_pct": 1.7193263420719196,
+      "geodesk_rounds_ms": [
+        469.218722,
+        459.884876,
+        445.857071,
+        451.151826,
+        398.884268,
+        452.133514
+      ],
+      "regol_rounds_ms": [
+        531.994682,
+        453.097747,
+        437.105697,
+        390.845687,
+        413.873653,
+        424.082832
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-tags/python",
+      "label": "Tag decoding",
+      "reader": "python",
+      "cases": 96,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 196.7207335,
+      "regol_ms": 195.78463349999998,
+      "saved_pct": 0.5101656655090825,
+      "geodesk_rounds_ms": [
+        196.292365,
+        195.377391,
+        193.836268,
+        198.613702,
+        198.06732,
+        197.149102
+      ],
+      "regol_rounds_ms": [
+        194.306588,
+        195.360415,
+        203.406895,
+        195.696281,
+        195.872986,
+        202.080416
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-tags/regol",
+      "label": "Tag decoding",
+      "reader": "regol",
+      "cases": 96,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 119.2373325,
+      "regol_ms": 110.9948805,
+      "saved_pct": 6.82278706755402,
+      "geodesk_rounds_ms": [
+        119.24295,
+        119.231715,
+        120.993914,
+        118.60276,
+        119.170119,
+        120.397979
+      ],
+      "regol_rounds_ms": [
+        110.576465,
+        111.057105,
+        110.842286,
+        110.932656,
+        111.079059,
+        113.029229
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-geometry/java",
+      "label": "Geometry assembly",
+      "reader": "java",
+      "cases": 100,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 890.8789079999999,
+      "regol_ms": 958.1637945,
+      "saved_pct": -8.804992413911293,
+      "geodesk_rounds_ms": [
+        891.88952,
+        889.868296,
+        869.49858,
+        853.147467,
+        985.946167,
+        901.138054
+      ],
+      "regol_rounds_ms": [
+        1020.653706,
+        997.229665,
+        830.388722,
+        961.001332,
+        955.326257,
+        951.107279
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-geometry/python",
+      "label": "Geometry assembly",
+      "reader": "python",
+      "cases": 100,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 460.64243799999997,
+      "regol_ms": 452.929554,
+      "saved_pct": 2.5075355598558224,
+      "geodesk_rounds_ms": [
+        443.259036,
+        456.508525,
+        473.370953,
+        457.313477,
+        463.971399,
+        483.796344
+      ],
+      "regol_rounds_ms": [
+        450.680823,
+        459.226336,
+        461.783897,
+        445.572886,
+        448.041847,
+        455.178285
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-geometry/regol",
+      "label": "Geometry assembly",
+      "reader": "regol",
+      "cases": 100,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 197.66128550000002,
+      "regol_ms": 192.3383655,
+      "saved_pct": 2.5305620523325634,
+      "geodesk_rounds_ms": [
+        198.097735,
+        197.734879,
+        197.587692,
+        195.918882,
+        196.929773,
+        198.673401
+      ],
+      "regol_rounds_ms": [
+        190.940414,
+        192.562327,
+        191.339481,
+        192.631266,
+        192.114404,
+        194.098875
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-total/java",
+      "label": "All matched cohorts",
+      "reader": "java",
+      "cases": 420,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 3691.4162105,
+      "regol_ms": 3315.973298,
+      "saved_pct": 10.91767720984468,
+      "geodesk_rounds_ms": [
+        3715.595633,
+        3740.317426,
+        3577.3340049999997,
+        3604.4586899999995,
+        3667.236788,
+        3865.501682
+      ],
+      "regol_rounds_ms": [
+        3491.825086,
+        3288.249857,
+        3228.5792810000003,
+        3160.016101,
+        3343.696739,
+        3360.716399
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-total/python",
+      "label": "All matched cohorts",
+      "reader": "python",
+      "cases": 420,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 2085.01525,
+      "regol_ms": 1935.1523005,
+      "saved_pct": 7.169418875041028,
+      "geodesk_rounds_ms": [
+        2069.789721,
+        2081.703168,
+        2093.388403,
+        2081.187981,
+        2088.327332,
+        2130.36451
+      ],
+      "regol_rounds_ms": [
+        1934.385468,
+        1935.919133,
+        1951.2588890000002,
+        1928.5177689999998,
+        1912.092024,
+        1948.084336
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-corpus-total/regol",
+      "label": "All matched cohorts",
+      "reader": "regol",
+      "cases": 420,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 1270.5766795,
+      "regol_ms": 1088.2318495,
+      "saved_pct": 13.870028430590438,
+      "geodesk_rounds_ms": [
+        1274.5741620000001,
+        1260.582733,
+        1273.239316,
+        1265.255746,
+        1267.914043,
+        1274.385772
+      ],
+      "regol_rounds_ms": [
+        1088.254704,
+        1088.151106,
+        1083.059476,
+        1088.208995,
+        1093.612692,
+        1102.37985
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-cafes/java",
+      "label": "UK-wide caf\u00e9s",
+      "reader": "java",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 266.61853399999995,
+      "regol_ms": 243.088574,
+      "saved_pct": 9.641749824780817,
+      "geodesk_rounds_ms": [
+        264.628272,
+        264.158832,
+        268.608796,
+        274.555173,
+        262.010221,
+        271.231872
+      ],
+      "regol_rounds_ms": [
+        230.681684,
+        242.71165,
+        232.388712,
+        249.717912,
+        256.221815,
+        243.465498
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-cafes/python",
+      "label": "UK-wide caf\u00e9s",
+      "reader": "python",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 43.029211000000004,
+      "regol_ms": 33.515943,
+      "saved_pct": 21.15905166578664,
+      "geodesk_rounds_ms": [
+        42.324508,
+        43.27375,
+        36.478818,
+        42.784672,
+        43.283922,
+        43.388817
+      ],
+      "regol_rounds_ms": [
+        33.454356,
+        34.030209,
+        33.57753,
+        33.450996,
+        37.385221,
+        33.239921
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-cafes/regol",
+      "label": "UK-wide caf\u00e9s",
+      "reader": "regol",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 49.1084845,
+      "regol_ms": 32.53515,
+      "saved_pct": 32.89826625355296,
+      "geodesk_rounds_ms": [
+        42.226771,
+        49.404541,
+        49.076423,
+        49.140546,
+        47.497056,
+        49.682389
+      ],
+      "regol_rounds_ms": [
+        31.970123,
+        32.863311,
+        32.188674,
+        33.260612,
+        32.334723,
+        32.735577
+      ],
+      "cache": "warm",
+      "cores": 1,
+      "unit": "queries"
+    }
+  ],
+  "generator_evidence": {
+    "corpus": {
+      "spec_sha256": "eca26efaff3163c3a50593fcb3c60f3fe89c91072ecb1ffa97c3fa464489fba7",
+      "cohort_cases": {
+        "iterate": [
+          "q001_london_iterate",
+          "q002_london_iterate",
+          "q003_highlands_iterate",
+          "q003_london_iterate",
+          "q004_highlands_iterate",
+          "q004_london_iterate",
+          "q005_highlands_iterate",
+          "q005_london_iterate",
+          "q007_highlands_iterate",
+          "q007_london_iterate",
+          "q008_highlands_iterate",
+          "q008_london_iterate",
+          "q009_highlands_iterate",
+          "q009_london_iterate",
+          "q011_highlands_iterate",
+          "q011_london_iterate",
+          "q012_belfast_iterate",
+          "q012_cornwall_iterate",
+          "q014_edinburgh_iterate",
+          "q014_highlands_iterate",
+          "q014_uk_iterate",
+          "q015_birmingham_iterate",
+          "q015_lake_district_iterate",
+          "q016_birmingham_iterate",
+          "q016_lake_district_iterate",
+          "q017_manchester_iterate",
+          "q017_uk_iterate",
+          "q018_manchester_iterate",
+          "q018_norfolk_iterate",
+          "q019_manchester_iterate",
+          "q019_norfolk_iterate",
+          "q020_manchester_iterate",
+          "q020_norfolk_iterate",
+          "q021_manchester_iterate",
+          "q021_norfolk_iterate",
+          "q022_manchester_iterate",
+          "q022_norfolk_iterate",
+          "q022_uk_iterate",
+          "q023_manchester_iterate",
+          "q023_norfolk_iterate",
+          "q024_manchester_iterate",
+          "q024_norfolk_iterate",
+          "q025_manchester_iterate",
+          "q025_norfolk_iterate",
+          "q026_manchester_iterate",
+          "q026_norfolk_iterate",
+          "q027_manchester_iterate",
+          "q027_norfolk_iterate",
+          "q028_manchester_iterate",
+          "q028_norfolk_iterate",
+          "q029_manchester_iterate",
+          "q029_norfolk_iterate",
+          "q030_manchester_iterate",
+          "q030_norfolk_iterate",
+          "q031_manchester_iterate",
+          "q031_norfolk_iterate",
+          "q032_manchester_iterate",
+          "q032_norfolk_iterate",
+          "q033_manchester_iterate",
+          "q033_norfolk_iterate",
+          "q034_cornwall_iterate",
+          "q034_edinburgh_iterate",
+          "q035_cornwall_iterate",
+          "q035_edinburgh_iterate",
+          "q036_birmingham_iterate",
+          "q036_lake_district_iterate",
+          "q037_london_iterate",
+          "q037_uk_iterate",
+          "q038_london_iterate",
+          "q039_london_iterate",
+          "q039_norfolk_iterate",
+          "q040_london_iterate",
+          "q041_london_iterate",
+          "q041_norfolk_iterate",
+          "q042_cornwall_iterate",
+          "q042_edinburgh_iterate",
+          "q045_london_iterate",
+          "q046_london_iterate",
+          "q046_norfolk_iterate",
+          "q047_manchester_iterate",
+          "q047_norfolk_iterate",
+          "q049_manchester_iterate",
+          "q049_norfolk_iterate",
+          "q050_manchester_iterate",
+          "q050_norfolk_iterate",
+          "q053_cornwall_iterate",
+          "q053_edinburgh_iterate",
+          "q053_uk_iterate",
+          "q054_cornwall_iterate",
+          "q054_edinburgh_iterate",
+          "q054_uk_iterate",
+          "q055_cornwall_iterate",
+          "q055_edinburgh_iterate",
+          "q056_cardiff_iterate",
+          "q056_norfolk_iterate",
+          "q056_uk_iterate",
+          "q057_cardiff_iterate",
+          "q057_norfolk_iterate",
+          "q058_cardiff_iterate",
+          "q058_norfolk_iterate",
+          "q059_cardiff_iterate",
+          "q059_norfolk_iterate",
+          "q060_edinburgh_iterate",
+          "q060_lake_district_iterate",
+          "q061_edinburgh_iterate",
+          "q061_lake_district_iterate",
+          "q063_edinburgh_iterate",
+          "q063_lake_district_iterate",
+          "q064_edinburgh_iterate",
+          "q064_lake_district_iterate",
+          "q065_edinburgh_iterate",
+          "q065_lake_district_iterate",
+          "q065_uk_iterate",
+          "q066_edinburgh_iterate",
+          "q066_lake_district_iterate",
+          "q067_edinburgh_iterate",
+          "q067_lake_district_iterate",
+          "q068_edinburgh_iterate",
+          "q068_lake_district_iterate",
+          "q070_birmingham_iterate",
+          "q070_lake_district_iterate",
+          "q071_norfolk_iterate",
+          "q073_cardiff_iterate",
+          "q073_norfolk_iterate",
+          "q074_cardiff_iterate",
+          "q074_norfolk_iterate",
+          "q075_cardiff_iterate",
+          "q075_norfolk_iterate",
+          "q076_cardiff_iterate",
+          "q076_norfolk_iterate",
+          "q077_cardiff_iterate",
+          "q077_norfolk_iterate",
+          "q078_cardiff_iterate",
+          "q078_norfolk_iterate",
+          "q079_cardiff_iterate",
+          "q079_norfolk_iterate",
+          "q080_cardiff_iterate",
+          "q080_norfolk_iterate",
+          "q081_cardiff_iterate",
+          "q081_norfolk_iterate",
+          "q082_cardiff_iterate",
+          "q082_norfolk_iterate",
+          "q083_belfast_iterate",
+          "q083_norfolk_iterate",
+          "q083_uk_iterate",
+          "q084_belfast_iterate",
+          "q084_norfolk_iterate",
+          "q086_highlands_iterate",
+          "q087_highlands_iterate",
+          "q088_highlands_iterate",
+          "q089_edinburgh_iterate",
+          "q089_highlands_iterate",
+          "q090_edinburgh_iterate",
+          "q091_edinburgh_iterate",
+          "q092_edinburgh_iterate",
+          "q092_lake_district_iterate",
+          "q093_edinburgh_iterate",
+          "q093_lake_district_iterate",
+          "q094_edinburgh_iterate",
+          "q094_lake_district_iterate",
+          "q095_edinburgh_iterate",
+          "q095_lake_district_iterate",
+          "q096_edinburgh_iterate",
+          "q096_lake_district_iterate",
+          "q097_edinburgh_iterate",
+          "q097_lake_district_iterate",
+          "q098_edinburgh_iterate",
+          "q098_lake_district_iterate",
+          "q099_edinburgh_iterate",
+          "q099_lake_district_iterate",
+          "q100_edinburgh_iterate",
+          "q100_lake_district_iterate",
+          "q101_edinburgh_iterate",
+          "q101_lake_district_iterate",
+          "q102_birmingham_iterate",
+          "q102_lake_district_iterate",
+          "q103_birmingham_iterate",
+          "q103_lake_district_iterate",
+          "q104_birmingham_iterate",
+          "q104_lake_district_iterate",
+          "q105_birmingham_iterate",
+          "q105_lake_district_iterate",
+          "q106_birmingham_iterate",
+          "q106_lake_district_iterate",
+          "q107_birmingham_iterate",
+          "q108_birmingham_iterate",
+          "q108_lake_district_iterate",
+          "q109_lake_district_iterate",
+          "q109_uk_iterate",
+          "q110_birmingham_iterate",
+          "q110_lake_district_iterate",
+          "q111_london_iterate",
+          "q111_norfolk_iterate",
+          "q112_london_iterate",
+          "q112_norfolk_iterate",
+          "q113_london_iterate",
+          "q113_norfolk_iterate",
+          "q113_uk_iterate",
+          "q114_london_iterate",
+          "q114_norfolk_iterate",
+          "q115_london_iterate",
+          "q115_norfolk_iterate",
+          "q115_uk_iterate",
+          "q116_cornwall_iterate",
+          "q116_edinburgh_iterate",
+          "q117_cornwall_iterate",
+          "q117_edinburgh_iterate",
+          "q119_edinburgh_iterate",
+          "q120_manchester_iterate",
+          "q120_norfolk_iterate",
+          "q121_manchester_iterate",
+          "q121_norfolk_iterate",
+          "q122_manchester_iterate",
+          "q122_norfolk_iterate",
+          "q123_manchester_iterate",
+          "q123_norfolk_iterate",
+          "q124_manchester_iterate",
+          "q125_manchester_iterate",
+          "q125_norfolk_iterate",
+          "q126_manchester_iterate",
+          "q127_london_iterate",
+          "q127_norfolk_iterate",
+          "q128_london_iterate",
+          "q128_norfolk_iterate"
+        ],
+        "tags": [
+          "q001_london_tags",
+          "q002_london_tags",
+          "q003_london_tags",
+          "q004_london_tags",
+          "q005_london_tags",
+          "q007_london_tags",
+          "q009_london_tags",
+          "q014_edinburgh_tags",
+          "q016_birmingham_tags",
+          "q017_manchester_tags",
+          "q018_manchester_tags",
+          "q019_manchester_tags",
+          "q020_manchester_tags",
+          "q021_manchester_tags",
+          "q022_manchester_tags",
+          "q023_manchester_tags",
+          "q024_manchester_tags",
+          "q025_manchester_tags",
+          "q026_manchester_tags",
+          "q027_manchester_tags",
+          "q028_manchester_tags",
+          "q029_manchester_tags",
+          "q031_manchester_tags",
+          "q032_manchester_tags",
+          "q034_edinburgh_tags",
+          "q035_edinburgh_tags",
+          "q037_london_tags",
+          "q038_london_tags",
+          "q039_london_tags",
+          "q040_london_tags",
+          "q041_london_tags",
+          "q042_edinburgh_tags",
+          "q045_london_tags",
+          "q047_manchester_tags",
+          "q049_manchester_tags",
+          "q050_manchester_tags",
+          "q053_edinburgh_tags",
+          "q054_edinburgh_tags",
+          "q056_cardiff_tags",
+          "q057_cardiff_tags",
+          "q058_cardiff_tags",
+          "q059_cardiff_tags",
+          "q060_edinburgh_tags",
+          "q064_edinburgh_tags",
+          "q065_edinburgh_tags",
+          "q066_edinburgh_tags",
+          "q067_edinburgh_tags",
+          "q068_edinburgh_tags",
+          "q073_cardiff_tags",
+          "q074_cardiff_tags",
+          "q075_cardiff_tags",
+          "q076_cardiff_tags",
+          "q077_cardiff_tags",
+          "q078_cardiff_tags",
+          "q079_cardiff_tags",
+          "q080_cardiff_tags",
+          "q081_cardiff_tags",
+          "q082_cardiff_tags",
+          "q083_belfast_tags",
+          "q084_belfast_tags",
+          "q089_edinburgh_tags",
+          "q090_edinburgh_tags",
+          "q091_edinburgh_tags",
+          "q092_edinburgh_tags",
+          "q093_edinburgh_tags",
+          "q094_edinburgh_tags",
+          "q095_edinburgh_tags",
+          "q096_edinburgh_tags",
+          "q097_edinburgh_tags",
+          "q098_edinburgh_tags",
+          "q099_edinburgh_tags",
+          "q100_edinburgh_tags",
+          "q101_edinburgh_tags",
+          "q102_birmingham_tags",
+          "q103_birmingham_tags",
+          "q105_birmingham_tags",
+          "q107_birmingham_tags",
+          "q108_birmingham_tags",
+          "q110_birmingham_tags",
+          "q111_london_tags",
+          "q112_london_tags",
+          "q113_london_tags",
+          "q114_london_tags",
+          "q115_london_tags",
+          "q116_edinburgh_tags",
+          "q117_edinburgh_tags",
+          "q119_edinburgh_tags",
+          "q120_manchester_tags",
+          "q121_manchester_tags",
+          "q122_manchester_tags",
+          "q123_manchester_tags",
+          "q124_manchester_tags",
+          "q125_manchester_tags",
+          "q126_manchester_tags",
+          "q127_london_tags",
+          "q128_london_tags"
+        ],
+        "geometry": [
+          "q003_highlands_geometry",
+          "q004_highlands_geometry",
+          "q005_highlands_geometry",
+          "q007_highlands_geometry",
+          "q008_highlands_geometry",
+          "q009_highlands_geometry",
+          "q011_highlands_geometry",
+          "q014_highlands_geometry",
+          "q015_lake_district_geometry",
+          "q016_lake_district_geometry",
+          "q018_norfolk_geometry",
+          "q019_norfolk_geometry",
+          "q020_norfolk_geometry",
+          "q021_norfolk_geometry",
+          "q022_norfolk_geometry",
+          "q023_norfolk_geometry",
+          "q024_norfolk_geometry",
+          "q025_norfolk_geometry",
+          "q026_norfolk_geometry",
+          "q027_norfolk_geometry",
+          "q028_norfolk_geometry",
+          "q029_norfolk_geometry",
+          "q030_norfolk_geometry",
+          "q031_norfolk_geometry",
+          "q032_norfolk_geometry",
+          "q033_norfolk_geometry",
+          "q034_cornwall_geometry",
+          "q035_cornwall_geometry",
+          "q036_lake_district_geometry",
+          "q039_norfolk_geometry",
+          "q041_norfolk_geometry",
+          "q042_cornwall_geometry",
+          "q046_norfolk_geometry",
+          "q047_norfolk_geometry",
+          "q049_norfolk_geometry",
+          "q050_norfolk_geometry",
+          "q053_cornwall_geometry",
+          "q054_cornwall_geometry",
+          "q056_norfolk_geometry",
+          "q057_norfolk_geometry",
+          "q058_norfolk_geometry",
+          "q059_norfolk_geometry",
+          "q060_lake_district_geometry",
+          "q061_lake_district_geometry",
+          "q063_lake_district_geometry",
+          "q064_lake_district_geometry",
+          "q065_lake_district_geometry",
+          "q066_lake_district_geometry",
+          "q067_lake_district_geometry",
+          "q068_lake_district_geometry",
+          "q070_lake_district_geometry",
+          "q071_norfolk_geometry",
+          "q073_norfolk_geometry",
+          "q074_norfolk_geometry",
+          "q075_norfolk_geometry",
+          "q076_norfolk_geometry",
+          "q077_norfolk_geometry",
+          "q078_norfolk_geometry",
+          "q079_norfolk_geometry",
+          "q080_norfolk_geometry",
+          "q081_norfolk_geometry",
+          "q082_norfolk_geometry",
+          "q083_norfolk_geometry",
+          "q084_norfolk_geometry",
+          "q086_highlands_geometry",
+          "q087_highlands_geometry",
+          "q088_highlands_geometry",
+          "q089_highlands_geometry",
+          "q092_lake_district_geometry",
+          "q093_lake_district_geometry",
+          "q094_lake_district_geometry",
+          "q095_lake_district_geometry",
+          "q096_lake_district_geometry",
+          "q097_lake_district_geometry",
+          "q098_lake_district_geometry",
+          "q099_lake_district_geometry",
+          "q100_lake_district_geometry",
+          "q101_lake_district_geometry",
+          "q102_lake_district_geometry",
+          "q103_lake_district_geometry",
+          "q104_lake_district_geometry",
+          "q105_lake_district_geometry",
+          "q106_lake_district_geometry",
+          "q108_lake_district_geometry",
+          "q109_lake_district_geometry",
+          "q110_lake_district_geometry",
+          "q111_norfolk_geometry",
+          "q112_norfolk_geometry",
+          "q113_norfolk_geometry",
+          "q114_norfolk_geometry",
+          "q115_norfolk_geometry",
+          "q116_cornwall_geometry",
+          "q117_cornwall_geometry",
+          "q120_norfolk_geometry",
+          "q121_norfolk_geometry",
+          "q122_norfolk_geometry",
+          "q123_norfolk_geometry",
+          "q125_norfolk_geometry",
+          "q127_norfolk_geometry",
+          "q128_norfolk_geometry"
+        ]
+      },
+      "verification": {
+        "geodesk/java": {
+          "content_match": 252,
+          "identities_match": 264,
+          "execution_error": 8
+        },
+        "geodesk/python": {
+          "content_match": 256,
+          "identities_match": 268
+        },
+        "geodesk/regol": {
+          "content_match": 253,
+          "identities_match": 268,
+          "execution_error": 3
+        },
+        "regol/java": {
+          "content_match": 237,
+          "identities_match": 264,
+          "content_mismatch": 15,
+          "execution_error": 8
+        },
+        "regol/python": {
+          "content_match": 241,
+          "identities_match": 268,
+          "content_mismatch": 15
+        },
+        "regol/regol": {
+          "content_match": 238,
+          "identities_match": 268,
+          "content_mismatch": 15,
+          "execution_error": 3
+        }
+      },
+      "exclusions": {
+        "geodesk/java": {
+          "q051_cornwall_iterate": "execution_error",
+          "q052_belfast_tags": "execution_error",
+          "q051_cornwall_geometry": "execution_error",
+          "q052_cornwall_iterate": "execution_error",
+          "q051_belfast_iterate": "execution_error",
+          "q051_belfast_tags": "execution_error",
+          "q052_belfast_iterate": "execution_error",
+          "q052_cornwall_geometry": "execution_error"
+        },
+        "geodesk/python": {},
+        "geodesk/regol": {
+          "q055_cornwall_geometry": "execution_error",
+          "q012_cornwall_geometry": "execution_error"
+        },
+        "regol/java": {
+          "q036_birmingham_tags": "content_mismatch",
+          "q012_belfast_tags": "content_mismatch",
+          "q030_manchester_tags": "content_mismatch",
+          "q051_cornwall_iterate": "execution_error",
+          "q052_belfast_tags": "execution_error",
+          "q011_london_tags": "content_mismatch",
+          "q008_london_tags": "content_mismatch",
+          "q051_cornwall_geometry": "execution_error",
+          "q052_cornwall_iterate": "execution_error",
+          "q055_edinburgh_tags": "content_mismatch",
+          "q015_birmingham_tags": "content_mismatch",
+          "q051_belfast_iterate": "execution_error",
+          "q104_birmingham_tags": "content_mismatch",
+          "q106_birmingham_tags": "content_mismatch",
+          "q046_london_tags": "content_mismatch",
+          "q051_belfast_tags": "execution_error",
+          "q063_edinburgh_tags": "content_mismatch",
+          "q033_manchester_tags": "content_mismatch",
+          "q070_birmingham_tags": "content_mismatch",
+          "q061_edinburgh_tags": "content_mismatch",
+          "q052_belfast_iterate": "execution_error",
+          "q052_cornwall_geometry": "execution_error"
+        },
+        "regol/python": {
+          "q036_birmingham_tags": "content_mismatch",
+          "q012_belfast_tags": "content_mismatch",
+          "q030_manchester_tags": "content_mismatch",
+          "q011_london_tags": "content_mismatch",
+          "q008_london_tags": "content_mismatch",
+          "q055_edinburgh_tags": "content_mismatch",
+          "q015_birmingham_tags": "content_mismatch",
+          "q104_birmingham_tags": "content_mismatch",
+          "q106_birmingham_tags": "content_mismatch",
+          "q046_london_tags": "content_mismatch",
+          "q063_edinburgh_tags": "content_mismatch",
+          "q033_manchester_tags": "content_mismatch",
+          "q070_birmingham_tags": "content_mismatch",
+          "q061_edinburgh_tags": "content_mismatch"
+        },
+        "regol/regol": {
+          "q036_birmingham_tags": "content_mismatch",
+          "q012_belfast_tags": "content_mismatch",
+          "q030_manchester_tags": "content_mismatch",
+          "q055_cornwall_geometry": "execution_error",
+          "q011_london_tags": "content_mismatch",
+          "q008_london_tags": "content_mismatch",
+          "q055_edinburgh_tags": "content_mismatch",
+          "q015_birmingham_tags": "content_mismatch",
+          "q012_cornwall_geometry": "execution_error",
+          "q104_birmingham_tags": "content_mismatch",
+          "q106_birmingham_tags": "content_mismatch",
+          "q046_london_tags": "content_mismatch",
+          "q063_edinburgh_tags": "content_mismatch",
+          "q033_manchester_tags": "content_mismatch",
+          "q070_birmingham_tags": "content_mismatch",
+          "q061_edinburgh_tags": "content_mismatch"
+        }
+      }
+    },
+    "cafes": {
+      "spec_sha256": "596b2ec600690cc84a74b72f80291749b8bcedcd55027bb640a16dfe0f55c17d",
+      "cohort_cases": {
+        "iterate": [
+          "uk-cafes"
+        ],
+        "tags": [],
+        "geometry": []
+      },
+      "verification": {
+        "geodesk/java": {
+          "identities_match": 1
+        },
+        "geodesk/python": {
+          "identities_match": 1
+        },
+        "geodesk/regol": {
+          "identities_match": 1
+        },
+        "regol/java": {
+          "identities_match": 1
+        },
+        "regol/python": {
+          "identities_match": 1
+        },
+        "regol/regol": {
+          "identities_match": 1
+        }
+      },
+      "exclusions": {
+        "geodesk/java": {},
+        "geodesk/python": {},
+        "geodesk/regol": {},
+        "regol/java": {},
+        "regol/python": {},
+        "regol/regol": {}
+      }
+    }
+  },
+  "harness_revision": "66fd71213b22c5f85c4bdacc0a845ecf94416a8a",
+  "elapsed_seconds": 3145.9
+}
