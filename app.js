@@ -90,7 +90,7 @@
 
   var SUITE_DESCRIPTIONS = {
     writers: "Compiles public Geofabrik .osm.pbf extracts into GOL 2.0 files (1 & 4 CPUs, warm input) and verifies output features. Lower is faster.",
-    scale: "Replays an identical 5-step map-editor viewport session per city (streets w[highway], amenities n[amenity], cafés *[amenity=cafe], pan east, and zoom to crossings n[highway=crossing]) across databases from 1 MiB (Monaco) to 3.6 GiB (UK), showing how viewport query latency scales with total file size (1 CPU, warm cache).",
+    scale: "Replays an identical 5-step map-editor viewport session per city (streets w[highway], amenities n[amenity], cafés *[amenity=cafe], pan east, and zoom to crossings n[highway=crossing]) across databases from 1 MiB (Monaco) to 3.6 GiB (UK), showing how viewport query latency scales with total file size (1 CPU, warm cache; fresh-process first pass, so GeoDesk Java includes JVM warmup).",
     cli: "Fresh-process command-line counts and exports (csv, geojson, geojsonl) over a Leeds bounding box on the 3.63 GiB UK GOL (2 CPUs), verifying decoded output equivalence.",
     applications: "Ten realistic multi-step OpenStreetMap application workflows replayed against the 3.63 GiB UK GOL (1 CPU), verifying identical feature digests across engines.",
     corpus: "524-query UK corpus grouped into three verified matched cohorts (identity streams, tag decoding, and geometry assembly) plus their combined total (1 CPU, warm cache)."
@@ -586,17 +586,36 @@
   }
 
   /* Bind controls */
+  function setActiveSuite(suite) {
+    var valid = ["writers", "scale", "cli", "applications", "corpus"];
+    if (valid.indexOf(suite) === -1) return;
+    state.activeSuite = suite;
+    document.querySelectorAll("#latest-tabs .suite-tab").forEach(function (b) {
+      var active = b.getAttribute("data-suite") === suite;
+      b.classList.toggle("is-active", active);
+      b.setAttribute("aria-selected", String(active));
+    });
+    var histSel = document.getElementById("hist-suite");
+    if (histSel && histSel.value !== suite) {
+      histSel.value = suite;
+      if (state.history) {
+        populateCaseSelect();
+        renderHistory();
+      }
+    }
+    if (state.latest) renderLatest();
+  }
+
   document.querySelectorAll("#latest-tabs .suite-tab").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      state.activeSuite = btn.getAttribute("data-suite");
-      document.querySelectorAll("#latest-tabs .suite-tab").forEach(function (b) {
-        var active = b === btn;
-        b.classList.toggle("is-active", active);
-        b.setAttribute("aria-selected", String(active));
-      });
-      renderLatest();
+      setActiveSuite(btn.getAttribute("data-suite"));
     });
   });
+
+  try {
+    var initSuite = new URLSearchParams(window.location.search).get("suite");
+    if (initSuite) setActiveSuite(initSuite);
+  } catch (e) {}
 
   document.getElementById("hist-suite").addEventListener("change", function () {
     populateCaseSelect();
