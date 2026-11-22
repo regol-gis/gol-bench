@@ -7,6 +7,6 @@ Wants=network-online.target
 Type=oneshot
 Nice=5
 Environment=PATH=%h/.cargo/bin:/usr/local/bin:/usr/bin:/bin
-Environment=GIT_SSH_COMMAND=ssh -i %h/.ssh/regol_bench_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new
+Environment="GIT_SSH_COMMAND=ssh -i %h/.ssh/regol_bench_deploy -o IdentitiesOnly=yes -o StrictHostKeyChecking=accept-new"
 WorkingDirectory=%h/regol-bench/gol-bench
 ExecStart=/usr/bin/python3 %h/regol-bench/gol-bench/runner/run_public_bench.py --work-dir %h/regol-bench --pages-dir %h/regol-bench/gh-pages --push

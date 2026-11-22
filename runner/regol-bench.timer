@@ -2,9 +2,8 @@
 Description=Periodically check regol for new commits and publish benchmarks
 
 [Timer]
-OnBootSec=10min
-OnUnitActiveSec=6h
-RandomizedDelaySec=5min
+OnCalendar=*-*-* 03,09,15,21:20:00
+RandomizedDelaySec=10min
 Persistent=true
 
 [Install]
