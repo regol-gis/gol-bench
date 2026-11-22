@@ -84,11 +84,23 @@
     return { text: "≈ parity", cls: "" };
   }
 
+  function fmtSaving(v) {
+    if (v == null) return { text: "—", cls: "" };
+    return { text: (v > 0 ? "+" : "") + v.toFixed(1) + "%",
+             cls: v >= 2 ? "ratio-good" : v <= -2 ? "ratio-bad" : "" };
+  }
+
+  function readerName(reader) {
+    return ({regol: "Regol", python: "GeoDesk Python", java: "GeoDesk Java",
+             "regol-cli": "Regol CLI", "gol-tool": "GOL Tool CLI"})[reader] || reader;
+  }
+
   function cssVar(name) {
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   }
 
   var SUITE_DESCRIPTIONS = {
+    generators: "Same reader, same UK PBF, two file generators. Positive savings mean less time on the Regol-built file. The table reports the median saving across paired rounds. Tagged releases also cover cold opens and CLI exports.",
     writers: "Compiles public Geofabrik .osm.pbf extracts into GOL 2.0 files (1 & 4 CPUs, warm input) and verifies output features. Lower is faster.",
     scale: "Replays an identical 5-step map-editor viewport session per city (streets w[highway], amenities n[amenity], cafés *[amenity=cafe], pan east, and zoom to crossings n[highway=crossing]) across databases from 1 MiB (Monaco) to 3.6 GiB (UK), showing how viewport query latency scales with total file size (1 CPU, warm cache; fresh-process first pass, so GeoDesk Java includes JVM warmup).",
     cli: "Fresh-process command-line counts and exports (csv, geojson, geojsonl) over a Leeds bounding box on the 3.63 GiB UK GOL (2 CPUs), verifying decoded output equivalence.",
@@ -99,6 +111,18 @@
   function suiteRowsFromLatest(suite) {
     if (!state.latest) return [];
     var golLabel = "GOL Tool " + ((state.latest.competitors && state.latest.competitors.gol_tool) || "2.0.0");
+    if (suite === "generators") {
+      return (state.latest.generators || []).map(function (r) {
+        var workload = r.label + " · " + readerName(r.reader);
+        var unit = r.unit || (r.key.indexOf("uk-") === 0 ? "queries" : "steps");
+        var coverage = r.verified ? r.cases + " " + (r.cases === 1 ? ({queries: "query", steps: "step", selections: "selection"})[unit] : unit) :
+          (r.differences.length ? "Mismatch in " + r.differences.join(", ") : "No matched queries");
+        return {label: workload, sub: (r.cores || 1) + ((r.cores || 1) === 1 ? " CPU · " : " CPUs · ") + (r.cache || "warm"), refLabel: "GeoDesk-built",
+                regolMs: r.regol_ms, refMs: r.geodesk_ms, saving: r.saved_pct,
+                regolRounds: r.verified ? r.regol_rounds_ms : [],
+                refRounds: r.verified ? r.geodesk_rounds_ms : [], extra: [coverage]};
+      });
+    }
     if (suite === "writers") {
       return (state.latest.writers || []).map(function (r) {
         var reg = r.engines.regol || {};
@@ -222,13 +246,15 @@
       return;
     }
 
+    var generators = state.activeSuite === "generators";
+    var measuredLabel = generators ? "Regol-built" : "regol";
     var refName = rows[0].refLabel;
     var hasJava = rows.some(function (r) { return r.javaMs != null; });
     var javaRow = rows.find(function (r) { return r.javaLabel; });
     var javaName = (javaRow && javaRow.javaLabel) || "GeoDesk Java";
 
     legendEl.innerHTML =
-      '<span class="legend-item"><span class="swatch swatch-regol"></span>regol</span>' +
+      '<span class="legend-item"><span class="swatch swatch-regol"></span>' + measuredLabel + '</span>' +
       '<span class="legend-item"><span class="swatch swatch-ref"></span>' + esc(refName) + '</span>' +
       (hasJava ? '<span class="legend-item"><span class="swatch swatch-java"></span>' + esc(javaName) + '</span>' : '') +
       '<span class="legend-item">Dots show individual rounds; bars show medians (lower is faster)</span>';
@@ -244,9 +270,9 @@
       var pReg = r.regolMs ? Math.max(0.5, (r.regolMs / maxVal) * 100) : 0;
       var pRef = r.refMs ? Math.max(0.5, (r.refMs / maxVal) * 100) : 0;
       var pJava = r.javaMs ? Math.max(0.5, (r.javaMs / maxVal) * 100) : 0;
-      var ratio = fmtRatio(r.regolMs, r.refMs);
+      var ratio = generators ? fmtSaving(r.saving) : fmtRatio(r.regolMs, r.refMs);
       var regDots = (r.regolRounds || []).map(function (v) {
-        return '<span class="bar-dot" style="left:' + ((v / maxVal) * 100).toFixed(2) + '%" title="regol round: ' + fmtMs(v) + '"></span>';
+        return '<span class="bar-dot" style="left:' + ((v / maxVal) * 100).toFixed(2) + '%" title="' + measuredLabel + ' round: ' + fmtMs(v) + '"></span>';
       }).join("");
       var refDots = (r.refRounds || []).map(function (v) {
         return '<span class="bar-dot" style="left:' + ((v / maxVal) * 100).toFixed(2) + '%" title="' + esc(r.refLabel) + ' round: ' + fmtMs(v) + '"></span>';
@@ -285,8 +311,9 @@
             ? '<th class="num">Matched cases</th>'
             : '<th>Stage</th>';
 
+    if (generators) extraCols = '<th>Verified coverage</th>';
     var body = rows.map(function (r) {
-      var ratio = fmtRatio(r.regolMs, r.refMs);
+      var ratio = generators ? fmtSaving(r.saving) : fmtRatio(r.regolMs, r.refMs);
       var javaRatio = hasJava ? fmtRatio(r.regolMs, r.javaMs) : null;
       var extras = r.extra.map(function (c) {
         return '<td class="' + (state.activeSuite === "applications" ? "" : "num") + '">' + esc(c) + '</td>';
@@ -305,8 +332,8 @@
     }).join("");
 
     tableEl.innerHTML =
-      '<thead><tr><th>Workload</th><th class="num">regol</th><th class="num">' + esc(refName) + '</th>' +
-      (hasJava ? '<th class="num">' + esc(javaName) + '</th><th class="num">vs Python</th><th class="num">vs Java</th>' : '<th class="num">Relative</th>') +
+      '<thead><tr><th>Workload</th><th class="num">' + measuredLabel + '</th><th class="num">' + esc(refName) + '</th>' +
+      (hasJava ? '<th class="num">' + esc(javaName) + '</th><th class="num">vs Python</th><th class="num">vs Java</th>' : '<th class="num">' + (generators ? 'Paired time saved' : 'Relative') + '</th>') +
       extraCols + '</tr></thead>' +
       '<tbody>' + body + '</tbody>';
   }
@@ -315,10 +342,17 @@
   function populateCaseSelect() {
     var suite = document.getElementById("hist-suite").value;
     var caseSel = document.getElementById("hist-case");
+    var metric = document.getElementById("hist-metric");
+    var generatorMode = suite === "generators";
+    metric.querySelector('[value="saved"]').hidden = !generatorMode;
+    metric.querySelector('[value="ratio"]').hidden = generatorMode;
+    if (metric.dataset.suite !== suite && generatorMode) metric.value = "saved";
+    if (!generatorMode && metric.value === "saved") metric.value = "ms";
+    metric.dataset.suite = suite;
     var seriesMap = (state.history && state.history[suite]) || {};
     var keys = Object.keys(seriesMap);
     caseSel.innerHTML = keys.map(function (k) {
-      return '<option value="' + esc(k) + '">' + esc(k) + '</option>';
+      return '<option value="' + esc(k) + '">' + esc(generatorMode ? seriesMap[k][0].label + " · " + readerName(seriesMap[k][0].reader) : k) + '</option>';
     }).join("");
   }
 
@@ -326,7 +360,9 @@
     var suite = document.getElementById("hist-suite").value;
     var key = document.getElementById("hist-case").value;
     var metric = document.getElementById("hist-metric").value;
-    var scaleMode = document.getElementById("hist-scale").value;
+    var scaleSelect = document.getElementById("hist-scale");
+    scaleSelect.disabled = metric === "saved";
+    var scaleMode = scaleSelect.disabled ? "linear" : scaleSelect.value;
     var host = document.getElementById("hist-plot");
     var note = document.getElementById("hist-note");
     var inspector = document.getElementById("hist-inspector");
@@ -344,21 +380,29 @@
       return;
     }
 
+    var generators = suite === "generators";
+    var measuredLabel = generators ? "Regol-built" : "regol";
+    if (generators) {
+      points = points.map(function (p) { return Object.assign({ref_ms: p.geodesk_ms}, p); });
+    }
     var xs = points.map(function (p, i) { return i; });
     var hasJava = points.some(function (p) { return p.java_ms != null; });
-    var firstRegol = points[0].regol_ms || 1;
+    var firstPoint = points.find(function (p) { return p.regol_ms != null; }) || {};
+    var firstRegol = firstPoint.regol_ms || 1;
     var firstJavaPt = points.find(function (p) { return p.java_ms != null; });
     var firstJava = (firstJavaPt && firstJavaPt.java_ms) || 1;
     var regSeries = points.map(function (p) {
+      if (metric === "saved") return p.saved_pct;
       if (p.regol_ms == null) return null;
       if (metric === "pct") return (p.regol_ms / firstRegol) * 100;
       if (metric === "ratio") return p.ref_ms ? (p.ref_ms / p.regol_ms) : null;
       return p.regol_ms;
     });
     var refSeries = points.map(function (p) {
+      if (metric === "saved") return p.verified ? 0 : null;
       if (metric === "ratio") return 1.0;
       if (p.ref_ms == null) return null;
-      if (metric === "pct") return (p.ref_ms / (points[0].ref_ms || 1)) * 100;
+      if (metric === "pct") return (p.ref_ms / (firstPoint.ref_ms || 1)) * 100;
       return p.ref_ms;
     });
     var javaSeries = hasJava ? points.map(function (p) {
@@ -373,15 +417,15 @@
     var javaColor = cssVar("--java");
     var ink = cssVar("--ink-soft");
     var grid = cssVar("--border");
-    var refLabel = points[0].ref_label || "Reference";
+    var refLabel = generators ? "GeoDesk-built" : (points[0].ref_label || "Reference");
 
-    var yLabel = metric === "ms" ? "ms" : metric === "pct" ? "% of first" : "× vs ref";
+    var yLabel = metric === "saved" ? "% saved" : metric === "ms" ? "ms" : metric === "pct" ? "% of first" : "× vs ref";
 
     function showPoint(idx) {
       var p = points[idx];
       if (!p) return;
       var tag = p.tag ? ' (' + esc(p.tag) + ')' : '';
-      var ratio = fmtRatio(p.regol_ms, p.ref_ms);
+      var ratio = generators ? fmtSaving(p.saved_pct) : fmtRatio(p.regol_ms, p.ref_ms);
       var javaPart = "";
       if (p.java_ms != null) {
         var jRatio = fmtRatio(p.regol_ms, p.java_ms);
@@ -390,7 +434,7 @@
       inspector.innerHTML =
         '<strong><a href="' + REGOL_REPO + '/commit/' + esc(p.commit) + '" rel="noopener">' + esc(p.short_commit) + '</a>' + tag + '</strong> · ' +
         esc(p.timestamp.slice(0, 10)) + ' · ' +
-        'regol: <strong>' + fmtMs(p.regol_ms) + '</strong> · ' +
+        esc(measuredLabel) + ' <strong>' + fmtMs(p.regol_ms) + '</strong> · ' +
         esc(refLabel) + ': <strong>' + fmtMs(p.ref_ms) + '</strong> ' +
         '(<span class="' + ratio.cls + '">' + esc(ratio.text) + '</span>)' +
         javaPart + ' · ' +
@@ -409,13 +453,13 @@
     var plotSeries = [
       { label: "Commit" },
       {
-        label: metric === "ratio" ? "regol vs " + refLabel : "regol",
+        label: metric === "saved" ? "Paired time saved" : metric === "ratio" ? "regol vs " + refLabel : measuredLabel,
         stroke: accent,
         width: 2.5,
         points: { show: true, size: 7, fill: accent }
       },
       {
-        label: metric === "ratio" ? "Parity (1.0×)" : refLabel,
+        label: metric === "saved" ? "Parity (0%)" : metric === "ratio" ? "Parity (1.0×)" : refLabel,
         stroke: refColor,
         width: 2,
         dash: [6, 4],
@@ -460,7 +504,7 @@
           values: function (_, vals) {
             return vals.map(function (v) {
               if (metric === "ms") return v >= 1000 ? (v / 1000).toFixed(1) + "s" : v.toFixed(0);
-              if (metric === "pct") return v.toFixed(0) + "%";
+              if (metric === "pct" || metric === "saved") return v.toFixed(1) + "%";
               return v.toFixed(2) + "×";
             });
           }
@@ -580,6 +624,11 @@
       ["GeoDesk Java", comps.geodesk_java ? "geodesk " + comps.geodesk_java + (comps.java_runtime ? " (" + comps.java_runtime + ")" : "") : "—"],
       ["GOL Tool", comps.gol_tool ? "v" + comps.gol_tool : "—"]
     ];
+    var files = state.latest && state.latest.datasets && state.latest.datasets.uk && state.latest.datasets.uk.generators;
+    if (files) {
+      items.push(["UK GeoDesk-built file", "GOL Tool " + files.geodesk.revision + " · " + files.geodesk.bytes.toLocaleString() + " bytes"],
+                 ["UK Regol-built file", files.regol.revision.slice(0, 7) + " · " + files.regol.bytes.toLocaleString() + " bytes"]);
+    }
     envList.innerHTML = items.map(function (pair) {
       return "<dt>" + esc(pair[0]) + "</dt><dd>" + esc(pair[1]) + "</dd>";
     }).join("");
@@ -587,7 +636,7 @@
 
   /* Bind controls */
   function setActiveSuite(suite) {
-    var valid = ["writers", "scale", "cli", "applications", "corpus"];
+    var valid = ["writers", "scale", "cli", "applications", "corpus", "generators"];
     if (valid.indexOf(suite) === -1) return;
     state.activeSuite = suite;
     document.querySelectorAll("#latest-tabs .suite-tab").forEach(function (b) {

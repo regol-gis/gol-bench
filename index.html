@@ -100,6 +100,7 @@
             <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="scale">Scale</button>
             <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="cli">CLI exports</button>
             <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="applications">UK applications</button>
+            <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="generators">File generator</button>
             <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="corpus">UK corpus (524)</button>
           </div>
         </div>
@@ -133,6 +134,7 @@
               <option value="scale">Scale (viewport histories)</option>
               <option value="cli">CLI exports (Leeds bbox)</option>
               <option value="applications">UK applications</option>
+              <option value="generators">File generator</option>
               <option value="corpus">UK corpus (524 queries)</option>
             </select>
           </label>
@@ -145,6 +147,7 @@
             <select id="hist-metric">
               <option value="ms">Median time (ms)</option>
               <option value="pct">Relative to first run (%)</option>
+              <option value="saved" hidden>Paired time saved (%)</option>
               <option value="ratio">Speedup vs reference (×)</option>
             </select>
           </label>
@@ -207,6 +210,7 @@
               <li><strong>Scale:</strong> Replays the same 5-step interactive map-editor viewport session per city (open streets <code>w[highway]</code>, amenities <code>n[amenity]</code>, cafés <code>*[amenity=cafe]</code>, pan east, zoom into crossings <code>n[highway=crossing]</code>) across datasets from 1 MiB (Monaco) to 3.6 GiB (UK) to show how query latency scales with total database size (1 CPU, warm cache).</li>
               <li><strong>CLI exports:</strong> Fresh-process counts and <code>csv</code>, <code>geojson</code>, and <code>geojsonl</code> exports over a Leeds bounding box on the 3.63 GiB UK GOL (2 CPUs), checking decoded output equivalence.</li>
               <li><strong>UK applications:</strong> Ten realistic multi-step OpenStreetMap application replays against the 3.63 GiB UK GOL (1 CPU), verifying identical digests across engines.</li>
+              <li><strong>File generator.</strong> The same reader runs on GeoDesk-built and Regol-built files from one UK PBF. Each corpus round sums identical verified queries. Application timings include opens and preserve the order of the original workflow. Tagged releases add a cold café query on evicted file copies and fresh-process Leeds CLI exports. Positive savings mean less time on the Regol-built file. File digests and excluded cases are in the <a href="data/latest.json">run data</a>.</li>
               <li><strong>UK corpus (524 queries):</strong> Broad 524-case UK query corpus aggregated into three verified cohorts—identity streams, tag decoding, and geometry assembly (1 CPU, warm cache).</li>
             </ul>
             <p class="plot-note">
