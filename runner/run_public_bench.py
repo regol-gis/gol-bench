@@ -349,7 +349,7 @@ def run_scale(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list
 def run_cli(scratch, datasets, workers, samples, cores, native=None):
     out_file = scratch / "cli-leeds.json"
     formats = ["count", "csv", "geojson", "geojsonl", "xml", "pbf"] if workers["gol_supports_pbf"] else ["count", "csv", "geojson", "geojsonl"]
-    run([
+    cmd = [
         sys.executable, ROOT / "tools/benchmark_cli.py",
         datasets["uk"]["gol"],
         *(["--native-file", native] if native else []),
@@ -363,7 +363,13 @@ def run_cli(scratch, datasets, workers, samples, cores, native=None):
         "--gol-tool", workers["gol_tool"],
         "--scratch", scratch,
         "--output", out_file,
-    ])
+    ]
+    try:
+        run(cmd)
+    except subprocess.CalledProcessError as exc:
+        # Paired campaigns report individual content failures without hiding other selectors.
+        if not native or exc.returncode != 3:
+            raise
     report = json.loads(out_file.read_text())
     rows = []
     pairs = []

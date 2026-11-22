@@ -174,7 +174,10 @@ def campaign(args):
     with args.output.open('x') as stream:
         json.dump(report, stream, indent=2, allow_nan=False)
         stream.write('\n')
-    return all(group['verified'] for group in report['results'])
+    return all(group['verified'] for group in report['results'] + report.get('generator_results', [])) and all(
+        base['arms'][engine].get('signature') == native['arms'][engine].get('signature')
+        for base, native in zip(report['results'], report.get('generator_results', []))
+        for engine in binaries)
 
 
 def main():
@@ -201,7 +204,8 @@ def main():
     if 'id' not in args.keys or not all(args.keys) or len(set(args.keys)) != len(args.keys):
         p.error('CSV columns must be distinct, nonempty and include id')
     if not campaign(args):
-        raise SystemExit('At least one format failed verification; see the report for diagnostics.')
+        print("At least one format failed verification. See the report for diagnostics.", file=sys.stderr)
+        raise SystemExit(3)
 
 
 if __name__ == '__main__':
