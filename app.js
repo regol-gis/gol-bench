@@ -127,18 +127,23 @@
         ghana: "Accra + Kumasi (10 queries)",
         uk: "Bristol + Belfast (10 queries)"
       };
+      var javaVer = (state.latest.competitors && state.latest.competitors.geodesk_java) || "2.1.0";
       return (state.latest.scale || []).map(function (r) {
         var reg = r.engines.regol || {};
         var ref = r.engines.python || {};
+        var jv = r.engines.java || {};
         return {
           key: r.key,
           label: r.dataset,
           sub: r.gol_mib + " MiB GOL · " + (cityNote[r.dataset] || "viewport history") + " · 1 CPU warm",
           regolMs: reg.median_ms,
           refMs: ref.median_ms,
+          javaMs: jv.median_ms != null ? jv.median_ms : null,
           regolRounds: reg.rounds_ms || [],
           refRounds: ref.rounds_ms || [],
+          javaRounds: jv.rounds_ms || [],
           refLabel: "GeoDesk Python",
+          javaLabel: jv.median_ms != null ? "GeoDesk Java " + javaVer : null,
           extra: [r.gol_mib + " MiB"]
         };
       });
@@ -161,18 +166,23 @@
       });
     }
     if (suite === "corpus") {
+      var corpusJavaVer = (state.latest.competitors && state.latest.competitors.geodesk_java) || "2.1.0";
       return (state.latest.corpus || []).map(function (r) {
         var reg = r.engines.regol || {};
         var ref = r.engines.python || {};
+        var jv = r.engines.java || {};
         return {
           key: r.key,
           label: r.label,
           sub: r.cases + " verified matched cases (from 524-query UK spec) · 1 CPU warm",
           regolMs: reg.median_ms,
           refMs: ref.median_ms,
+          javaMs: jv.median_ms != null ? jv.median_ms : null,
           regolRounds: reg.rounds_ms || [],
           refRounds: ref.rounds_ms || [],
+          javaRounds: jv.rounds_ms || [],
           refLabel: "GeoDesk Python",
+          javaLabel: jv.median_ms != null ? "GeoDesk Java " + corpusJavaVer : null,
           extra: [r.cases + " cases"]
         };
       });
@@ -213,14 +223,19 @@
     }
 
     var refName = rows[0].refLabel;
+    var hasJava = rows.some(function (r) { return r.javaMs != null; });
+    var javaRow = rows.find(function (r) { return r.javaLabel; });
+    var javaName = (javaRow && javaRow.javaLabel) || "GeoDesk Java";
+
     legendEl.innerHTML =
       '<span class="legend-item"><span class="swatch swatch-regol"></span>regol</span>' +
       '<span class="legend-item"><span class="swatch swatch-ref"></span>' + esc(refName) + '</span>' +
+      (hasJava ? '<span class="legend-item"><span class="swatch swatch-java"></span>' + esc(javaName) + '</span>' : '') +
       '<span class="legend-item">Dots show individual rounds; bars show medians (lower is faster)</span>';
 
     var maxVal = 0;
     rows.forEach(function (r) {
-      var vals = [r.regolMs || 0, r.refMs || 0].concat(r.regolRounds, r.refRounds);
+      var vals = [r.regolMs || 0, r.refMs || 0, r.javaMs || 0].concat(r.regolRounds || [], r.refRounds || [], r.javaRounds || []);
       vals.forEach(function (v) { if (v > maxVal) maxVal = v; });
     });
     if (maxVal <= 0) maxVal = 1;
@@ -228,6 +243,7 @@
     chartEl.innerHTML = rows.map(function (r) {
       var pReg = r.regolMs ? Math.max(0.5, (r.regolMs / maxVal) * 100) : 0;
       var pRef = r.refMs ? Math.max(0.5, (r.refMs / maxVal) * 100) : 0;
+      var pJava = r.javaMs ? Math.max(0.5, (r.javaMs / maxVal) * 100) : 0;
       var ratio = fmtRatio(r.regolMs, r.refMs);
       var regDots = (r.regolRounds || []).map(function (v) {
         return '<span class="bar-dot" style="left:' + ((v / maxVal) * 100).toFixed(2) + '%" title="regol round: ' + fmtMs(v) + '"></span>';
@@ -235,16 +251,24 @@
       var refDots = (r.refRounds || []).map(function (v) {
         return '<span class="bar-dot" style="left:' + ((v / maxVal) * 100).toFixed(2) + '%" title="' + esc(r.refLabel) + ' round: ' + fmtMs(v) + '"></span>';
       }).join("");
+      var javaDots = (r.javaRounds || []).map(function (v) {
+        return '<span class="bar-dot" style="left:' + ((v / maxVal) * 100).toFixed(2) + '%" title="' + esc(r.javaLabel || javaName) + ' round: ' + fmtMs(v) + '"></span>';
+      }).join("");
+      var javaTrack = r.javaMs != null
+        ? '<div class="bar-track"><div class="bar-fill bar-fill-java" style="width:' + pJava.toFixed(2) + '%"></div>' + javaDots + '</div>'
+        : '';
       return (
         '<div class="bar-row">' +
           '<div class="bar-label">' + esc(r.label) + '<small>' + esc(r.sub) + '</small></div>' +
           '<div class="bar-tracks">' +
             '<div class="bar-track"><div class="bar-fill bar-fill-regol" style="width:' + pReg.toFixed(2) + '%"></div>' + regDots + '</div>' +
             '<div class="bar-track"><div class="bar-fill bar-fill-ref" style="width:' + pRef.toFixed(2) + '%"></div>' + refDots + '</div>' +
+            javaTrack +
           '</div>' +
           '<div class="bar-values">' +
             '<span class="val-regol">' + fmtMs(r.regolMs) + '</span>' +
             '<span class="val-ref">' + fmtMs(r.refMs) + '</span>' +
+            (r.javaMs != null ? '<span class="val-java">' + fmtMs(r.javaMs) + '</span>' : '') +
             '<span class="' + ratio.cls + '">' + esc(ratio.text) + '</span>' +
           '</div>' +
         '</div>'
@@ -263,6 +287,7 @@
 
     var body = rows.map(function (r) {
       var ratio = fmtRatio(r.regolMs, r.refMs);
+      var javaRatio = hasJava ? fmtRatio(r.regolMs, r.javaMs) : null;
       var extras = r.extra.map(function (c) {
         return '<td class="' + (state.activeSuite === "applications" ? "" : "num") + '">' + esc(c) + '</td>';
       }).join("");
@@ -271,14 +296,18 @@
           '<td><strong>' + esc(r.label) + '</strong></td>' +
           '<td class="num">' + fmtMs(r.regolMs) + '</td>' +
           '<td class="num">' + fmtMs(r.refMs) + '</td>' +
+          (hasJava ? '<td class="num">' + fmtMs(r.javaMs) + '</td>' : '') +
           '<td class="num ' + ratio.cls + '">' + esc(ratio.text) + '</td>' +
+          (hasJava ? '<td class="num ' + javaRatio.cls + '">' + esc(javaRatio.text) + '</td>' : '') +
           extras +
         '</tr>'
       );
     }).join("");
 
     tableEl.innerHTML =
-      '<thead><tr><th>Workload</th><th class="num">regol</th><th class="num">' + esc(refName) + '</th><th class="num">Relative</th>' + extraCols + '</tr></thead>' +
+      '<thead><tr><th>Workload</th><th class="num">regol</th><th class="num">' + esc(refName) + '</th>' +
+      (hasJava ? '<th class="num">' + esc(javaName) + '</th><th class="num">vs Python</th><th class="num">vs Java</th>' : '<th class="num">Relative</th>') +
+      extraCols + '</tr></thead>' +
       '<tbody>' + body + '</tbody>';
   }
 
@@ -316,7 +345,10 @@
     }
 
     var xs = points.map(function (p, i) { return i; });
+    var hasJava = points.some(function (p) { return p.java_ms != null; });
     var firstRegol = points[0].regol_ms || 1;
+    var firstJavaPt = points.find(function (p) { return p.java_ms != null; });
+    var firstJava = (firstJavaPt && firstJavaPt.java_ms) || 1;
     var regSeries = points.map(function (p) {
       if (p.regol_ms == null) return null;
       if (metric === "pct") return (p.regol_ms / firstRegol) * 100;
@@ -329,9 +361,16 @@
       if (metric === "pct") return (p.ref_ms / (points[0].ref_ms || 1)) * 100;
       return p.ref_ms;
     });
+    var javaSeries = hasJava ? points.map(function (p) {
+      if (p.java_ms == null) return null;
+      if (metric === "pct") return (p.java_ms / firstJava) * 100;
+      if (metric === "ratio") return p.regol_ms ? (p.java_ms / p.regol_ms) : null;
+      return p.java_ms;
+    }) : null;
 
     var accent = cssVar("--accent");
     var refColor = cssVar("--ref");
+    var javaColor = cssVar("--java");
     var ink = cssVar("--ink-soft");
     var grid = cssVar("--border");
     var refLabel = points[0].ref_label || "Reference";
@@ -343,12 +382,18 @@
       if (!p) return;
       var tag = p.tag ? ' (' + esc(p.tag) + ')' : '';
       var ratio = fmtRatio(p.regol_ms, p.ref_ms);
+      var javaPart = "";
+      if (p.java_ms != null) {
+        var jRatio = fmtRatio(p.regol_ms, p.java_ms);
+        javaPart = ' · GeoDesk Java: <strong>' + fmtMs(p.java_ms) + '</strong> (<span class="' + jRatio.cls + '">' + esc(jRatio.text) + '</span>)';
+      }
       inspector.innerHTML =
         '<strong><a href="' + REGOL_REPO + '/commit/' + esc(p.commit) + '" rel="noopener">' + esc(p.short_commit) + '</a>' + tag + '</strong> · ' +
         esc(p.timestamp.slice(0, 10)) + ' · ' +
         'regol: <strong>' + fmtMs(p.regol_ms) + '</strong> · ' +
         esc(refLabel) + ': <strong>' + fmtMs(p.ref_ms) + '</strong> ' +
-        '(<span class="' + ratio.cls + '">' + esc(ratio.text) + '</span>) · ' +
+        '(<span class="' + ratio.cls + '">' + esc(ratio.text) + '</span>)' +
+        javaPart + ' · ' +
         esc(p.rustc || "");
     }
     showPoint(points.length - 1);
@@ -359,6 +404,34 @@
       if (points[i].machine_id !== points[i - 1].machine_id || points[i].rustc !== points[i - 1].rustc) {
         epochIdx.push(i);
       }
+    }
+
+    var plotSeries = [
+      { label: "Commit" },
+      {
+        label: metric === "ratio" ? "regol vs " + refLabel : "regol",
+        stroke: accent,
+        width: 2.5,
+        points: { show: true, size: 7, fill: accent }
+      },
+      {
+        label: metric === "ratio" ? "Parity (1.0×)" : refLabel,
+        stroke: refColor,
+        width: 2,
+        dash: [6, 4],
+        points: { show: metric !== "ratio", size: 6, fill: refColor }
+      }
+    ];
+    var plotData = [xs, regSeries, refSeries];
+    if (hasJava) {
+      plotSeries.push({
+        label: metric === "ratio" ? "regol vs GeoDesk Java" : "GeoDesk Java",
+        stroke: javaColor,
+        width: 2,
+        dash: metric === "ratio" ? [] : [2, 3],
+        points: { show: true, size: 6, fill: javaColor }
+      });
+      plotData.push(javaSeries);
     }
 
     var opts = {
@@ -393,22 +466,7 @@
           }
         }
       ],
-      series: [
-        { label: "Commit" },
-        {
-          label: metric === "ratio" ? "regol speedup" : "regol",
-          stroke: accent,
-          width: 2.5,
-          points: { show: true, size: 7, fill: accent }
-        },
-        {
-          label: metric === "ratio" ? "Parity (1.0×)" : refLabel,
-          stroke: refColor,
-          width: 2,
-          dash: [6, 4],
-          points: { show: metric !== "ratio", size: 6, fill: refColor }
-        }
-      ],
+      series: plotSeries,
       hooks: {
         setCursor: [function (u) {
           var idx = u.cursor.idx;
@@ -433,7 +491,7 @@
       }
     };
 
-    state.plot = new uPlot(opts, [xs, regSeries, refSeries], host);
+    state.plot = new uPlot(opts, plotData, host);
     note.textContent = points.length === 1
       ? "Initial baseline recorded. Subsequent commits on regol main and new release tags will extend this timeline automatically."
       : points.length + " recorded runs across this workload. Dashed vertical lines (if any) mark host or rustc changes.";
@@ -519,6 +577,7 @@
       ["Rust compiler", latest.rustc || "—"],
       ["Latest regol", (latest.regol_version || "—") + " (" + latest.short_commit + ")"],
       ["GeoDesk Python", comps.geodesk_python ? "geodesk " + comps.geodesk_python + (comps.shapely ? " / shapely " + comps.shapely : "") : "—"],
+      ["GeoDesk Java", comps.geodesk_java ? "geodesk " + comps.geodesk_java + (comps.java_runtime ? " (" + comps.java_runtime + ")" : "") : "—"],
       ["GOL Tool", comps.gol_tool ? "v" + comps.gol_tool : "—"]
     ];
     envList.innerHTML = items.map(function (pair) {
