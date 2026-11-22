@@ -90,10 +90,11 @@
 
   function suiteRowsFromLatest(suite) {
     if (!state.latest) return [];
+    var golLabel = "GOL Tool " + ((state.latest.competitors && state.latest.competitors.gol_tool) || "2.0.0");
     if (suite === "writers") {
       return (state.latest.writers || []).map(function (r) {
         var reg = r.engines.regol || {};
-        var ref = r.engines["geodesk-current"] || {};
+        var ref = r.engines[r.ref_engine || "geodesk-current"] || r.engines.geodesk || {};
         return {
           key: r.key,
           label: r.dataset + " (" + r.cores + " CPU" + (r.cores > 1 ? "s" : "") + ")",
@@ -102,7 +103,7 @@
           refMs: ref.wall_ms_median,
           regolRounds: reg.wall_ms_rounds || [],
           refRounds: ref.wall_ms_rounds || [],
-          refLabel: "GOL Tool 2.5.3",
+          refLabel: r.ref_label || golLabel,
           extra: [
             reg.peak_rss_mib != null ? reg.peak_rss_mib.toFixed(0) + " / " + (ref.peak_rss_mib != null ? ref.peak_rss_mib.toFixed(0) : "—") + " MiB RSS" : "—",
             reg.output_mib != null ? reg.output_mib.toFixed(1) + " / " + (ref.output_mib != null ? ref.output_mib.toFixed(1) : "—") + " MiB GOL" : "—"
@@ -139,7 +140,7 @@
           refMs: ref.median_ms,
           regolRounds: reg.rounds_ms || [],
           refRounds: ref.rounds_ms || [],
-          refLabel: "GOL Tool 2.5.3",
+          refLabel: golLabel,
           extra: [r.selected != null ? r.selected.toLocaleString() : "—"]
         };
       });
@@ -156,7 +157,7 @@
         refMs: ref.median_ms,
         regolRounds: reg.rounds_ms || [],
         refRounds: ref.rounds_ms || [],
-        refLabel: isCli ? "GOL Tool 2.5.3" : "GeoDesk Python",
+        refLabel: isCli ? golLabel : "GeoDesk Python",
         extra: [isCli ? "CLI export" : "Reader"]
       };
     });
