@@ -234,6 +234,7 @@ def run_writers(scratch: Path, datasets: dict, workers: dict, cores_list: list[i
     ref_eng = workers["writer_ref_engine"]
     for ds in ("monaco", "bremen", "ghana"):
         out_dir = scratch / f"writers-{ds}"
+        verif = "identities" if ds == "ghana" else "tags"
         run([
             sys.executable, ROOT / "tools/build_compare.py",
             datasets[ds]["pbf"],
@@ -242,7 +243,7 @@ def run_writers(scratch: Path, datasets: dict, workers: dict, cores_list: list[i
             "--cores", *map(str, cores_list),
             "--rounds", str(rounds),
             "--cache", "warm",
-            "--verification", "tags",
+            "--verification", verif,
             "--discard-outputs",
             "--writer", workers["regol_cli"],
             "--gol-tool", workers["gol_legacy"],
@@ -322,7 +323,7 @@ def run_scale(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list
 
 def run_cli(scratch: Path, datasets: dict, workers: dict, samples: int, cores: int) -> list[dict]:
     out_file = scratch / "cli-leeds.json"
-    formats = ["count", "csv", "geojson", "geojsonl", "xml", "pbf"] if workers["gol_supports_pbf"] else ["count", "csv", "geojson", "geojsonl", "xml"]
+    formats = ["count", "csv", "geojson", "geojsonl", "xml", "pbf"] if workers["gol_supports_pbf"] else ["count", "csv", "geojson", "geojsonl"]
     run([
         sys.executable, ROOT / "tools/benchmark_cli.py",
         datasets["uk"]["gol"],
