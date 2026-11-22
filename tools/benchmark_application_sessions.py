@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Replay independent first-pass workloads on the pinned UK GOL inputs."""
+from contextlib import nullcontext
+from benchmark_cache import FileCache
 from paths import SDK, WORKER
 from provenance import harness_source
 import argparse
@@ -309,12 +311,15 @@ def run(args):
         report["versions"]["gol_tool_sha256"] = file_digest(args.gol_tool)
     args.output.parent.mkdir(parents=True, exist_ok=True)
 
+    caches = {label: FileCache(paths[label]) for label in inputs} if args.cache == "warm" else {}
+    report["cache"] = args.cache
     for number in range(args.samples):
         order = round_order(jobs, number)
         report["round_order"].append([result_key(*job) for job in order])
         for label, case, engine in order:
             key = result_key(label, case, engine)
-            rows = run_worker(case, engine, args, gol=paths[label])
+            with caches[label].warm_mapping() if caches else nullcontext():
+                rows = run_worker(case, engine, args, gol=paths[label])
             result = report["results"].setdefault(key, dict(runs=[]))
             result["runs"].append(rows)
             print(f"{key} {sum(r['elapsed_ns'] for r in rows)/1e6:.2f} ms", flush=True)
@@ -374,6 +379,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("file", type=Path, nargs="?")
     parser.add_argument("--native-file", type=Path, help="Also benchmark the default native UK build")
+    parser.add_argument("--cache", choices=["inherit", "warm"], default="inherit")
     parser.add_argument("--case", choices=CASES, action="append")
     parser.add_argument("--engine", choices=["all", "readers", "rust", "python", "cli"], default="all",
                         help="Select all work, the matched reader pair, Rust, Python, or both export CLIs")

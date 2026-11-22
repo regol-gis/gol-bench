@@ -98,6 +98,7 @@
       ]
     },
     "pbf_url": "https://download.geofabrik.de/europe/united-kingdom-260101.osm.pbf",
+    "pbf": {"bytes": 2132066000, "sha256": "2ac3b0550d7c8e0666f6a45f06b419dfbc3cda55469ae352349c78b577294a33"},
     "producer": "GOL Tool 2.0.0"
   },
   "planet": {

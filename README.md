@@ -44,6 +44,25 @@ Run `./gol-bench list` for all available subcommands, or `python3 -m unittest di
 
 `runner/run_public_bench.py` checks `https://github.com/regol-gis/regol` for newly merged `main` commits or `v*` tags, runs the public benchmark suite on dedicated bare-metal hardware, verifies every output, and updates the compact JSON time series on the `gh-pages` branch.
 
+The **File generator** tab compares the same reader on two UK files built from the
+January 2026 Geofabrik PBF. GOL Tool 2.0.0 supplies the cached reference file.
+The runner builds a second file with the tested Regol commit and its default
+settings. The run JSON records the source and file digests, sizes and settings.
+
+The 524-case corpus and a separate nationwide `na[amenity=cafe]` query run
+with one CPU, verified warm pages and a full rotation of reader/file pairs.
+The ten application replays use four paired rounds and include each workflow's
+open costs. Savings are the median of `100 × (1 − Regol-file time / GeoDesk-file time)`
+over corresponding rounds. Corpus totals sum the same verified cases in each
+round. The existing UK corpus series retains the cases matched on the GeoDesk
+file. The file-generator series uses cases matched across both files and records
+exclusions under `generator_evidence`. Workflow content differences suppress the
+affected timing comparison. CLI workflows compare decoded OSM exports.
+
+Use `--suites generators` for a local paired run. The scheduled service includes
+it by default. The writer cache retains one UK native artifact and stages its
+replacement before swapping it in.
+
 ## License
 
 The benchmark harness is licensed under the Apache License, Version 2.0 ([LICENSE](LICENSE)). External benchmarked engines retain their own licenses. OpenStreetMap data extracts are © OpenStreetMap contributors (ODbL 1.0).

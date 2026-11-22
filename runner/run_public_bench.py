@@ -20,6 +20,9 @@ import statistics
 import subprocess
 import sys
 import tempfile
+import time
+
+from generators import corpus_pairs, corpus_rows, native_file, workflow_pair
 
 ROOT = Path(__file__).resolve().parents[1]
 REGOL_REPO_URL = "https://github.com/regol-gis/regol.git"
@@ -227,7 +230,7 @@ def prepare_datasets(dataset_dir: Path, pbf_dir: Path, workers: dict) -> dict:
                 "gol": gol_path,
                 "gol_bytes": gol_path.stat().st_size,
                 "gol_sha256": file_sha256(gol_path),
-                "pbf_sha256": file_sha256(pbf_path),
+                "pbf_sha256": expected_sha or file_sha256(pbf_path),
             }
             continue
         out = run(cmd, capture=True)
@@ -237,7 +240,7 @@ def prepare_datasets(dataset_dir: Path, pbf_dir: Path, workers: dict) -> dict:
             "gol": gol_path,
             "gol_bytes": gol_path.stat().st_size,
             "gol_sha256": file_sha256(gol_path),
-            "pbf_sha256": file_sha256(pbf_path),
+            "pbf_sha256": expected_sha or file_sha256(pbf_path),
         }
     return prepared
 
@@ -389,164 +392,80 @@ def run_cli(scratch: Path, datasets: dict, workers: dict, samples: int, cores: i
     return rows
 
 
-def run_applications(scratch: Path, datasets: dict, workers: dict, samples: int) -> list[dict]:
+def run_applications(scratch, datasets, workers, samples, native=None):
     out_file = scratch / "applications.json"
-    engine_mode = "all" if workers["gol_supports_pbf"] else "readers"
+    uk = datasets["uk"]
     run([
-        sys.executable, ROOT / "tools/benchmark_application_sessions.py",
-        datasets["uk"]["gol"],
-        "--engine", engine_mode,
-        "--cores", "1",
-        "--samples", str(samples),
-        "--rust", workers["regol_worker"],
-        "--python", workers["python"],
-        "--gol-tool", workers["gol_tool"],
-        "--rust-cli", workers["regol_cli"],
-        "--scratch", scratch,
-        "--allow-unpinned-input",
+        sys.executable, ROOT / "tools/benchmark_application_sessions.py", uk["gol"],
+        *(["--native-file", native, "--cache", "warm"] if native else []),
+        "--engine", "all" if workers["gol_supports_pbf"] else "readers",
+        "--cores", "1", "--samples", str(samples), "--rust", workers["regol_worker"],
+        "--python", workers["python"], "--gol-tool", workers["gol_tool"],
+        "--rust-cli", workers["regol_cli"], "--scratch", scratch, "--allow-unpinned-input",
         "--output", out_file,
     ])
-    report = json.loads(out_file.read_text())
-    manifest = json.loads((ROOT / "benchmarks/application-sessions.json").read_text())
-    by_id = {c["id"]: c for c in manifest["cases"]}
-    rows = []
-    for case_id, case in by_id.items():
-        res = report["results"]
-        # Reader pair
-        if f"{case_id}/rust" in res and f"{case_id}/python" in res:
-            r_arm, p_arm = res[f"{case_id}/rust"], res[f"{case_id}/python"]
-            kind = "reader"
-        elif f"{case_id}/rust-reader" in res and f"{case_id}/python-reader" in res:
-            r_arm, p_arm = res[f"{case_id}/rust-reader"], res[f"{case_id}/python-reader"]
-            kind = "reader"
-        else:
-            r_arm = p_arm = None
-            kind = "reader"
-        if r_arm and p_arm:
-            r_runs = [round(sum(s["elapsed_ns"] for s in run_rows) / 1e6, 2) for run_rows in r_arm["runs"]]
-            p_runs = [round(sum(s["elapsed_ns"] for s in run_rows) / 1e6, 2) for run_rows in p_arm["runs"]]
-            rows.append({
-                "key": f"{case_id}-reader",
-                "id": case_id,
-                "label": case["id"],
-                "interface": case["interface"],
-                "kind": kind,
-                "cores": 1,
-                "verified": bool(r_arm.get("complete") and p_arm.get("complete")),
-                "engines": {
-                    "regol": {"median_ms": round(r_arm["median_ms"], 2), "rounds_ms": r_runs},
-                    "python": {"median_ms": round(p_arm["median_ms"], 2), "rounds_ms": p_runs},
-                },
-            })
-        # CLI pair when present
-        if f"{case_id}/rust-cli" in res and f"{case_id}/cli" in res:
-            r_arm, c_arm = res[f"{case_id}/rust-cli"], res[f"{case_id}/cli"]
-            r_runs = [round(sum(s["elapsed_ns"] for s in run_rows) / 1e6, 2) for run_rows in r_arm["runs"]]
-            c_runs = [round(sum(s["elapsed_ns"] for s in run_rows) / 1e6, 2) for run_rows in c_arm["runs"]]
-            rows.append({
-                "key": f"{case_id}-cli",
-                "id": case_id,
-                "label": f"{case['id']} (CLI export)",
-                "interface": case["interface"],
-                "kind": "cli",
-                "cores": 1,
-                "verified": bool(r_arm.get("complete") and c_arm.get("complete")),
-                "engines": {
-                    "regol-cli": {"median_ms": round(r_arm["median_ms"], 2), "rounds_ms": r_runs},
-                    "gol-tool": {"median_ms": round(c_arm["median_ms"], 2), "rounds_ms": c_runs},
-                },
-            })
-    return rows
+    report = json.loads(out_file.read_bytes())
+    if native and (report["inputs"]["native"]["sha256"] != uk["generators"]["regol"]["sha256"]
+                   or report["gol_sha256"] != uk["gol_sha256"]):
+        raise ValueError("workflow input differs from the recorded generator artifact")
+    manifest = json.loads((ROOT / "benchmarks/application-sessions.json").read_bytes())
+    rows, pairs = [], []
+    prefix = "geodesk/" if native else ""
+    for case in manifest["cases"]:
+        for kind, engines in (("reader", ("rust", "python")), ("reader", ("rust-reader", "python-reader")),
+                              ("cli", ("rust-cli", "cli"))):
+            key = f"{case['id']}-{kind}"
+            label = case["id"] + (" (CLI export)" if kind == "cli" else "")
+            arms = [report["results"].get(f"{prefix}{case['id']}/{e}") for e in engines]
+            if not all(arms):
+                continue
+            stats = {}
+            names = ("regol-cli", "gol-tool") if kind == "cli" else ("regol", "python")
+            for engine, name, arm in zip(engines, names, arms, strict=True):
+                suffix = f"{case['id']}/{engine}"
+                times = [round(sum(s["elapsed_ns"] for s in batch) / 1e6, 2) for batch in arm["runs"]]
+                stats[name] = dict(median_ms=round(arm["median_ms"], 2), rounds_ms=times)
+                if native:
+                    pairs.append(workflow_pair(key, label, name, arm, report["results"]["native/" + suffix]))
+            rows.append(dict(key=key, id=case["id"], label=label, interface=case["interface"],
+                                 kind=kind, cores=1, cache=report["cache"], verified=True, engines=stats))
+    return rows, pairs
 
 
-def run_corpus(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list[dict]:
-    out_dir = scratch / "corpus"
-    engines = ["regol", "python", "java"] if workers.get("has_java") else ["regol", "python"]
-    run([
-        sys.executable, ROOT / "tools/campaign.py",
-        "--library", f"geodesk={datasets['uk']['gol']}",
-        "--engines", *engines,
-        "--cores", "1",
-        "--rounds", str(rounds),
-        "--cache", "warm",
-        "--rust", workers["regol_mmap"],
-        "--python", workers["python"],
-        "--spec", ROOT / "benchmarks/uk-corpus-queries.json",
-        "--output", out_dir,
-    ])
-    summary = json.loads((out_dir / "summary.json").read_text())
-    labels = {
-        "iterate": "Identity streams",
-        "tags": "Tag decoding",
-        "geometry": "Geometry assembly",
-    }
-    rows = []
-    tot_regol: dict[str, float] = {}
-    tot_python: dict[str, float] = {}
-    tot_java: dict[str, float] = {}
-    has_java_out = False
-    total_cases = 0
-    for op in ("iterate", "tags", "geometry"):
-        cohort = summary["cohorts"][op]
-        n_cases = len(cohort["cases"])
-        total_cases += n_cases
-        pns = cohort["prepare_and_scan_ms"]
-        r_arm = pns["geodesk/regol/1"]
-        p_arm = pns["geodesk/python/1"]
-        r_rounds = [round(r_arm["rounds"][k], 2) for k in sorted(r_arm["rounds"], key=int)]
-        p_rounds = [round(p_arm["rounds"][k], 2) for k in sorted(p_arm["rounds"], key=int)]
-        for k, v in r_arm["rounds"].items():
-            tot_regol[k] = tot_regol.get(k, 0.0) + v
-        for k, v in p_arm["rounds"].items():
-            tot_python[k] = tot_python.get(k, 0.0) + v
-        eng_map = {
-            "regol": {"median_ms": round(r_arm["median"], 2), "rounds_ms": r_rounds},
-            "python": {"median_ms": round(p_arm["median"], 2), "rounds_ms": p_rounds},
-        }
-        if "geodesk/java/1" in pns:
-            has_java_out = True
-            j_arm = pns["geodesk/java/1"]
-            j_rounds = [round(j_arm["rounds"][k], 2) for k in sorted(j_arm["rounds"], key=int)]
-            for k, v in j_arm["rounds"].items():
-                tot_java[k] = tot_java.get(k, 0.0) + v
-            eng_map["java"] = {"median_ms": round(j_arm["median"], 2), "rounds_ms": j_rounds}
-        rows.append({
-            "key": f"uk-corpus-{op}",
-            "cohort": op,
-            "label": labels[op],
-            "cases": n_cases,
-            "total_spec_cases": 524,
-            "cores": 1,
-            "cache": "warm",
-            "verified": True,
-            "engines": eng_map,
-        })
-    r_tot_rounds = [round(tot_regol[k], 2) for k in sorted(tot_regol, key=int)]
-    p_tot_rounds = [round(tot_python[k], 2) for k in sorted(tot_python, key=int)]
-    tot_eng = {
-        "regol": {"median_ms": round(statistics.median(r_tot_rounds), 2), "rounds_ms": r_tot_rounds},
-        "python": {"median_ms": round(statistics.median(p_tot_rounds), 2), "rounds_ms": p_tot_rounds},
-    }
-    if has_java_out and tot_java:
-        j_tot_rounds = [round(tot_java[k], 2) for k in sorted(tot_java, key=int)]
-        tot_eng["java"] = {"median_ms": round(statistics.median(j_tot_rounds), 2), "rounds_ms": j_tot_rounds}
-    rows.append({
-        "key": "uk-corpus-total",
-        "cohort": "total",
-        "label": "All matched cohorts",
-        "cases": total_cases,
-        "total_spec_cases": 524,
-        "cores": 1,
-        "cache": "warm",
-        "verified": True,
-        "engines": tot_eng,
-    })
-    return rows
+def run_corpus(scratch, datasets, workers, native=None, cafes=False):
+    uk = datasets["uk"]
+    out = scratch / ("cafes" if cafes else "corpus")
+    spec = ROOT / "benchmarks" / ("uk-national-cafes.json" if cafes else "uk-corpus-queries.json")
+    engines = ["regol", "python"] + (["java"] if workers["has_java"] else [])
+    args = ["--library", f"geodesk={uk['gol']}"]
+    baseline = scratch / "geodesk-corpus.json"
+    if native:
+        lock = scratch / "uk-inputs.json"
+        lock.write_text(json.dumps(uk["generators"]))
+        args += ["--library", f"regol={native}", "--input-lock", lock]
+        if not cafes:
+            args += ["--reference-summary", baseline]
+    run([sys.executable, ROOT / "tools/campaign.py", *args, "--engines", *engines, "--cores", "1",
+         "--rounds", str(2 * len(engines) if native else 3), "--cache", "warm",
+         "--rust", workers["regol_mmap"], "--python", workers["python"], "--spec", spec, "--output", out])
+    summary = json.loads((out / "summary.json").read_bytes())
+    legacy = []
+    if not cafes:
+        reference = json.loads(baseline.read_bytes()) if native else summary
+        legacy = corpus_rows(reference, len(json.loads(spec.read_bytes())))
+    evidence = dict(spec_sha256=summary["spec_sha256"],
+                    cohort_cases={op: c["cases"] for op, c in summary["cohorts"].items()},
+                    verification=summary["verification"],
+                    exclusions={arm: {c["name"]: c["status"] for c in cases
+                                      if c["role"] == "candidate_selector" and c["reference_count"]
+                                      and c["status"] not in ("identities_match", "content_match")}
+                                for arm, cases in summary["verification_cases"].items()})
+    return legacy, corpus_pairs(summary, cafes=cafes) if native else [], evidence
 
 
 def rebuild_aggregates(data_dir: Path, manifest: dict):
     runs_dir = data_dir / "runs"
-    history = {"writers": {}, "scale": {}, "cli": {}, "applications": {}, "corpus": {}}
+    history = {"writers": {}, "scale": {}, "cli": {}, "applications": {}, "corpus": {}, "generators": {}}
     latest_run = None
     for meta in manifest["runs"]:
         run_path = data_dir.parent / meta["file"]
@@ -641,6 +560,11 @@ def rebuild_aggregates(data_dir: Path, manifest: dict):
                 "ref_label": ref_label,
                 "verified": bool(row.get("verified")),
             })
+        for row in payload.get("generators", []):
+            history["generators"].setdefault(row["key"], []).append({
+                **base, **{k: row[k] for k in ("reader", "label", "cases", "verified", "saved_pct",
+                                                "regol_ms", "geodesk_ms", "differences")},
+            })
         for row in payload.get("corpus", []):
             reg = row["engines"].get("regol", {})
             ref = row["engines"].get("python", {})
@@ -673,8 +597,8 @@ def main():
     parser.add_argument("--pages-dir", type=Path, required=True, help="Local checkout of the gh-pages branch")
     parser.add_argument("--ref", default="origin/main", help="Git ref in regol-gis/regol to benchmark")
     parser.add_argument("--jobs", type=int, default=min(4, os.cpu_count() or 2))
-    parser.add_argument("--suites", nargs="+", default=["writers", "scale", "cli", "applications", "corpus"],
-                        choices=["writers", "scale", "cli", "applications", "corpus"])
+    parser.add_argument("--suites", nargs="+", default=["writers", "scale", "cli", "applications", "corpus", "generators"],
+                        choices=["writers", "scale", "cli", "applications", "corpus", "generators"])
     parser.add_argument("--force", action="store_true", help="Run even if this commit is already recorded")
     parser.add_argument("--push", action="store_true", help="Commit and push updated data to gh-pages")
     args = parser.parse_args()
@@ -706,16 +630,29 @@ def main():
     else:
         manifest = {"schema_version": 1, "updated_at": None, "machines": {}, "runs": []}
 
-    already = any(
-        r["commit"] == rev["commit"] and r["machine_id"] == machine["id"]
-        for r in manifest["runs"]
-    )
-    if already and not args.force:
-        print(f"Commit {rev['short_commit']} already benchmarked on {machine['id']}; nothing to do.")
+    suites = set(args.suites)
+    prior = [json.loads((pages / r["file"]).read_bytes()) for r in manifest["runs"]
+             if r["commit"] == rev["commit"] and r["machine_id"] == machine["id"]]
+    if prior and all(prior[-1].get(s) for s in suites) and not args.force:
+        print(f"Requested suites already recorded for {rev['short_commit']} on {machine['id']}.")
         return
-
+    if args.push and prior:
+        # Each published snapshot stands alone, including on the first generator rollout.
+        suites.update(s for s in ("writers", "scale", "cli", "applications", "corpus", "generators")
+                      if prior[-1].get(s))
+    started = time.monotonic()
     workers = setup_workers(regol_dir, rev["commit"], args.jobs)
     datasets = prepare_datasets(work / "datasets", work / "pbfs", workers)
+    native = None
+    if "generators" in suites:
+        uk = datasets["uk"]
+        if prior and (prior[-1]["datasets"]["uk"]["gol_sha256"] != uk["gol_sha256"] or
+                      prior[-1]["datasets"]["uk"]["pbf_sha256"] != uk["pbf_sha256"]):
+            raise ValueError("the cached UK input differs from the previous run for this revision")
+        native, info = native_file(work / "datasets", uk, workers["regol_cli"], rev["commit"])
+        uk["generators"] = {"regol": info, "geodesk": dict(producer="GOL Tool", revision="2.0.0",
+                            settings=["-w"], page_alignment_bytes=4096, pbf_sha256=uk["pbf_sha256"],
+                            bytes=uk["gol_bytes"], sha256=uk["gol_sha256"])}
     rustc = run(["rustc", "--version"], capture=True)
 
     now = datetime.now(timezone.utc)
@@ -737,6 +674,7 @@ def main():
                     "gol_bytes": info["gol_bytes"],
                     "gol_sha256": info["gol_sha256"],
                     "pbf_sha256": info["pbf_sha256"],
+                    **({"generators": info["generators"]} if "generators" in info else {}),
                 }
                 for name, info in datasets.items()
             },
@@ -747,26 +685,30 @@ def main():
             "corpus": [],
         }
 
-        if "writers" in args.suites:
+        payload["generators"] = []
+        if "writers" in suites:
             payload["writers"] = run_writers(scratch, datasets, workers, [1, min(4, machine["cores"])], rounds=3)
-        if "scale" in args.suites:
+        if "scale" in suites:
             payload["scale"] = run_scale(scratch, datasets, workers, rounds=5)
-        if "cli" in args.suites:
+        if "cli" in suites:
             payload["cli"] = run_cli(scratch, datasets, workers, samples=5, cores=min(2, machine["cores"]))
-        if "applications" in args.suites:
-            payload["applications"] = run_applications(scratch, datasets, workers, samples=3)
-        if "corpus" in args.suites:
-            payload["corpus"] = run_corpus(scratch, datasets, workers, rounds=3)
+        if "applications" in suites or native:
+            payload["applications"], pairs = run_applications(scratch, datasets, workers, 4 if native else 3, native)
+            payload["generators"].extend(pairs)
+        if "corpus" in suites or native:
+            payload["corpus"], pairs, corpus = run_corpus(scratch, datasets, workers, native)
+            payload["generators"].extend(pairs)
+        if native:
+            _, pairs, cafes = run_corpus(scratch, datasets, workers, native, cafes=True)
+            payload["generators"].extend(pairs)
+            payload["generator_evidence"] = {"corpus": corpus, "cafes": cafes}
+        payload["harness_revision"] = run(["git", "-C", ROOT, "rev-parse", "HEAD"], capture=True)
+        payload["elapsed_seconds"] = round(time.monotonic() - started, 1)
 
     (pages / run_rel).write_text(json.dumps(payload, indent=2) + "\n")
 
     manifest["machines"][machine["id"]] = machine
     manifest["updated_at"] = payload["timestamp"]
-    # Replace existing entry if --force re-ran the same commit on the same machine.
-    manifest["runs"] = [
-        r for r in manifest["runs"]
-        if not (r["commit"] == rev["commit"] and r["machine_id"] == machine["id"])
-    ]
     manifest["runs"].append({
         "id": run_id,
         "timestamp": payload["timestamp"],

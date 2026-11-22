@@ -63,6 +63,7 @@ def main():
                         help='include library and executor startup in a single-query benchmark')
     parser.add_argument('--spec', type=Path, default=ROOT / 'benchmarks/uk-corpus-queries.json')
     parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--reference-summary', type=Path, help='also summarize the reference file on its own eligible cases')
     args = parser.parse_args()
     previous = json.loads(args.same_cases_as.read_bytes()) if args.same_cases_as else None
     spec_bytes = args.spec.read_bytes()
@@ -159,6 +160,19 @@ def main():
     reference = {n: checks[args.reference, 'python', n] for n in cases}
     status = {k: ('affinity_disagreement' if k in disagreements else
                   compare(v, reference[k[2]], cases[k[2]]['operation'])) for k, v in checks.items()}
+    def summarize(selected):
+        return cohort_summary(cases, reference, checks, status, disagreements, selected,
+                              [s for s in sessions if (s['producer'], s['reader']) in selected],
+                              {p: inputs[p] for p, _ in selected}, spec_hash, args.include_open, previous)
+
+    args.output.write_text(json.dumps(summarize(expected_checks), indent=2) + '\n')
+    if args.reference_summary:
+        selected = {pair for pair in expected_checks if pair[0] == args.reference}
+        args.reference_summary.write_text(json.dumps(summarize(selected), indent=2) + '\n')
+
+
+def cohort_summary(cases, reference, checks, status, disagreements, expected_checks, sessions,
+                   inputs, spec_hash, include_open, previous):
     alternate_disagreements = {}
     for producer, engine in sorted(expected_checks):
         if engine in ALTERNATE_READERS and (producer, 'regol') in expected_checks:
@@ -203,13 +217,13 @@ def main():
                     if 'error' in row or row.get('count') != chk['count'] or row.get('work_items') != chk.get('work_items', chk.get('items')):
                         raise ValueError(f'timed payload mismatch: {producer}/{engine}/{name}')
                     total += row['setup_ns'] + row['first_execution_ns']
-                    if args.include_open:
+                    if include_open:
                         total += row['open_ns'] + row.get('executor_setup_ns', 0)
             key = f"{producer}/{r['reader']}/{r['cores']}"
             if r['round'] in samples[key]:
                 raise ValueError(f'duplicate {key} round {r["round"]}')
             samples[key][r['round']] = total / 1e6
-        interval = 'open_prepare_and_scan_ms' if args.include_open else 'prepare_and_scan_ms'
+        interval = 'open_prepare_and_scan_ms' if include_open else 'prepare_and_scan_ms'
         summary['cohorts'][operation] = {
             'cases': sorted(keep),
             'excluded_arms': [
@@ -217,9 +231,7 @@ def main():
                 for p, e in sorted(expected_checks - pairs)],
             interval: {
                 k: {'rounds': v, 'median': median(v.values())} for k, v in sorted(samples.items())}}
-    with args.output.open('w') as out:
-        json.dump(summary, out, indent=2)
-        out.write('\n')
+    return summary
 
 
 if __name__ == '__main__':
