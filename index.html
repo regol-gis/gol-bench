@@ -105,6 +105,17 @@
           </div>
         </div>
 
+        <div id="generator-filters" hidden>
+          <div class="compare-pickers">
+            <label class="control"><span>Reader</span><select id="generator-reader">
+              <option value="">All readers</option>
+            </select></label>
+            <label class="control"><span>Workloads</span><select id="generator-workloads">
+              <option value="">All workloads</option><option value="corpus">UK corpus and cafés</option>
+              <option value="applications">Application workflows</option><option value="cli">CLI counts and exports</option>
+            </select></label>
+          </div>
+        </div>
         <div class="panel" id="latest-chart-wrap">
           <div class="chart-legend" id="latest-legend"></div>
           <div class="bar-chart" id="latest-chart"></div>

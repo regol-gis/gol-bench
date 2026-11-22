@@ -112,7 +112,19 @@
     if (!state.latest) return [];
     var golLabel = "GOL Tool " + ((state.latest.competitors && state.latest.competitors.gol_tool) || "2.0.0");
     if (suite === "generators") {
-      return (state.latest.generators || []).map(function (r) {
+      var raw = state.latest.generators || [];
+      var reader = document.getElementById("generator-reader");
+      var selected = reader.value;
+      var readers = Array.from(new Set(raw.map(function (r) { return r.reader; })));
+      reader.innerHTML = '<option value="">All readers</option>' + readers.map(function (r) {
+        return '<option value="' + esc(r) + '">' + esc(readerName(r)) + '</option>';
+      }).join("");
+      reader.value = readers.includes(selected) ? selected : "";
+      var scope = document.getElementById("generator-workloads").value;
+      return raw.filter(function (r) {
+        var group = r.key.startsWith("uk-") ? "corpus" : r.key.startsWith("leeds-") ? "cli" : "applications";
+        return (!reader.value || r.reader === reader.value) && (!scope || scope === group);
+      }).map(function (r) {
         var workload = r.label + " · " + readerName(r.reader);
         var unit = r.unit || (r.key.indexOf("uk-") === 0 ? "queries" : "steps");
         var coverage = r.verified ? r.cases + " " + (r.cases === 1 ? ({queries: "query", steps: "step", selections: "selection"})[unit] : unit) :
@@ -230,6 +242,7 @@
   }
 
   function renderLatest() {
+    document.getElementById("generator-filters").hidden = state.activeSuite !== "generators";
     var rows = suiteRowsFromLatest(state.activeSuite);
     var chartEl = document.getElementById("latest-chart");
     var legendEl = document.getElementById("latest-legend");
@@ -241,7 +254,8 @@
 
     if (!rows.length) {
       legendEl.innerHTML = "";
-      chartEl.innerHTML = "<p>No results recorded for this suite yet.</p>";
+      chartEl.textContent = state.activeSuite === "generators" && state.latest && (state.latest.generators || []).length
+        ? "No measurements for this reader and workload selection." : "No results recorded for this suite yet.";
       tableEl.innerHTML = "";
       return;
     }
@@ -354,6 +368,7 @@
     caseSel.innerHTML = keys.map(function (k) {
       return '<option value="' + esc(k) + '">' + esc(generatorMode ? seriesMap[k][0].label + " · " + readerName(seriesMap[k][0].reader) : k) + '</option>';
     }).join("");
+    if (generatorMode && keys.includes("uk-corpus-total/regol")) caseSel.value = "uk-corpus-total/regol";
   }
 
   function renderHistory() {
@@ -657,6 +672,9 @@
     if (state.latest) renderLatest();
   }
 
+  ["generator-reader", "generator-workloads"].forEach(function (id) {
+    document.getElementById(id).addEventListener("change", renderLatest);
+  });
   document.querySelectorAll("#latest-tabs .suite-tab").forEach(function (btn) {
     btn.addEventListener("click", function () {
       setActiveSuite(btn.getAttribute("data-suite"));
