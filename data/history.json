@@ -6110,6 +6110,394 @@
         "geodesk_ms": 49.346568000000005,
         "differences": []
       }
+    ],
+    "uk-cafes-cold/java": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "java",
+        "label": "UK-wide caf\u00e9s (cold open and query)",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": 11.856534114113604,
+        "regol_ms": 24322.638109,
+        "geodesk_ms": 27576.68428,
+        "differences": []
+      }
+    ],
+    "uk-cafes-cold/python": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "python",
+        "label": "UK-wide caf\u00e9s (cold open and query)",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": 1.8072302140951404,
+        "regol_ms": 26740.022693,
+        "geodesk_ms": 27484.6098465,
+        "differences": []
+      }
+    ],
+    "uk-cafes-cold/regol": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "regol",
+        "label": "UK-wide caf\u00e9s (cold open and query)",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": 3.5503230730297544,
+        "regol_ms": 43135.4854595,
+        "geodesk_ms": 44919.476576999994,
+        "differences": []
+      }
+    ],
+    "leeds-cafes-count/regol-cli": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "regol-cli",
+        "label": "Leeds cafes \u00b7 count",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -5.228808136057017,
+        "regol_ms": 5.234263,
+        "geodesk_ms": 4.8754745,
+        "differences": []
+      }
+    ],
+    "leeds-cafes-count/gol-tool": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "gol-tool",
+        "label": "Leeds cafes \u00b7 count",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -11.802263903637389,
+        "regol_ms": 5.689138,
+        "geodesk_ms": 5.1737649999999995,
+        "differences": []
+      }
+    ],
+    "leeds-cafes-csv/regol-cli": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "regol-cli",
+        "label": "Leeds cafes \u00b7 csv",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -15.90160577527201,
+        "regol_ms": 5.56503,
+        "geodesk_ms": 4.765402,
+        "differences": []
+      }
+    ],
+    "leeds-cafes-csv/gol-tool": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "gol-tool",
+        "label": "Leeds cafes \u00b7 csv",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -1.2674152514825066,
+        "regol_ms": 5.5433140000000005,
+        "geodesk_ms": 5.191697,
+        "differences": []
+      }
+    ],
+    "leeds-cafes-geojson/regol-cli": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "regol-cli",
+        "label": "Leeds cafes \u00b7 geojson",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -3.7089392981594305,
+        "regol_ms": 5.4869465,
+        "geodesk_ms": 5.289897,
+        "differences": []
+      }
+    ],
+    "leeds-cafes-geojson/gol-tool": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "gol-tool",
+        "label": "Leeds cafes \u00b7 geojson",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -11.08118142343103,
+        "regol_ms": 5.759031,
+        "geodesk_ms": 5.155234999999999,
+        "differences": []
+      }
+    ],
+    "leeds-cafes-geojsonl/regol-cli": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "regol-cli",
+        "label": "Leeds cafes \u00b7 geojsonl",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -8.947768577200112,
+        "regol_ms": 5.515701,
+        "geodesk_ms": 4.9997015000000005,
+        "differences": []
+      }
+    ],
+    "leeds-cafes-geojsonl/gol-tool": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "gol-tool",
+        "label": "Leeds cafes \u00b7 geojsonl",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -4.540589976528064,
+        "regol_ms": 5.696123999999999,
+        "geodesk_ms": 5.451396,
+        "differences": []
+      }
+    ],
+    "leeds-roads-count/regol-cli": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "regol-cli",
+        "label": "Leeds roads \u00b7 count",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -15.851193196159773,
+        "regol_ms": 5.869728,
+        "geodesk_ms": 5.099202,
+        "differences": []
+      }
+    ],
+    "leeds-roads-count/gol-tool": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "gol-tool",
+        "label": "Leeds roads \u00b7 count",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -14.311253004303047,
+        "regol_ms": 5.799728999999999,
+        "geodesk_ms": 5.1455115,
+        "differences": []
+      }
+    ],
+    "leeds-roads-csv/regol-cli": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "regol-cli",
+        "label": "Leeds roads \u00b7 csv",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": 5.214107035797855,
+        "regol_ms": 6.0678529999999995,
+        "geodesk_ms": 6.301302,
+        "differences": []
+      }
+    ],
+    "leeds-roads-csv/gol-tool": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "gol-tool",
+        "label": "Leeds roads \u00b7 csv",
+        "cases": 1,
+        "verified": true,
+        "saved_pct": -14.991120502309096,
+        "regol_ms": 7.4196925,
+        "geodesk_ms": 6.112785000000001,
+        "differences": []
+      }
+    ],
+    "leeds-roads-geojson/regol-cli": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "regol-cli",
+        "label": "Leeds roads \u00b7 geojson",
+        "cases": 1,
+        "verified": false,
+        "saved_pct": null,
+        "regol_ms": null,
+        "geodesk_ms": null,
+        "differences": [
+          "decoded output differs between files"
+        ]
+      }
+    ],
+    "leeds-roads-geojson/gol-tool": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "gol-tool",
+        "label": "Leeds roads \u00b7 geojson",
+        "cases": 1,
+        "verified": false,
+        "saved_pct": null,
+        "regol_ms": null,
+        "geodesk_ms": null,
+        "differences": [
+          "decoded output differs between files"
+        ]
+      }
+    ],
+    "leeds-roads-geojsonl/regol-cli": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "regol-cli",
+        "label": "Leeds roads \u00b7 geojsonl",
+        "cases": 1,
+        "verified": false,
+        "saved_pct": null,
+        "regol_ms": null,
+        "geodesk_ms": null,
+        "differences": [
+          "decoded output differs between files"
+        ]
+      }
+    ],
+    "leeds-roads-geojsonl/gol-tool": [
+      {
+        "run_id": "2026-11-22T185857Z-356303f",
+        "timestamp": "2026-11-22T18:58:57.184475Z",
+        "commit": "356303f53a1ba626b71bb0dc22c775d361c5c148",
+        "short_commit": "356303f",
+        "tag": "v0.2.2",
+        "regol_version": "0.2.2",
+        "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+        "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+        "reader": "gol-tool",
+        "label": "Leeds roads \u00b7 geojsonl",
+        "cases": 1,
+        "verified": false,
+        "saved_pct": null,
+        "regol_ms": null,
+        "geodesk_ms": null,
+        "differences": [
+          "decoded output differs between files"
+        ]
+      }
     ]
   }
 }

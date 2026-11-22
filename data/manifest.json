@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-11-22T18:58:57.184475Z",
+  "updated_at": "2026-11-22T19:42:33.518455+00:00",
   "machines": {
     "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g": {
       "id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
@@ -117,7 +117,8 @@
         "geodesk_java": "2.1.0",
         "java_runtime": "openjdk version \"25.0.5\" 2026-10-20"
       },
-      "file": "data/runs/2026-11-22T185857Z-356303f.json"
+      "file": "data/runs/2026-11-22T185857Z-356303f.json",
+      "release_file": "data/releases/2026-11-22T185857Z-356303f.json"
     }
   ]
 }

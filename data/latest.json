@@ -2084,6 +2084,520 @@
         32.775873,
         33.082327
       ]
+    },
+    {
+      "key": "uk-cafes-cold/java",
+      "label": "UK-wide caf\u00e9s (cold open and query)",
+      "reader": "java",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 27576.68428,
+      "regol_ms": 24322.638109,
+      "saved_pct": 11.856534114113604,
+      "geodesk_rounds_ms": [
+        29284.404916,
+        27586.478214,
+        27481.27029,
+        27566.890346,
+        27728.265853,
+        27216.824718
+      ],
+      "regol_rounds_ms": [
+        24436.566645,
+        25272.09048,
+        24112.582257,
+        24409.118275,
+        24054.062981,
+        24236.157943
+      ],
+      "cache": "cold",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-cafes-cold/python",
+      "label": "UK-wide caf\u00e9s (cold open and query)",
+      "reader": "python",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 27484.6098465,
+      "regol_ms": 26740.022693,
+      "saved_pct": 1.8072302140951404,
+      "geodesk_rounds_ms": [
+        26184.175364,
+        27525.942514,
+        27806.350099,
+        26686.213555,
+        27443.277179,
+        27668.436588
+      ],
+      "regol_rounds_ms": [
+        27273.955443,
+        28991.41462,
+        26615.895862,
+        26864.149524,
+        26187.404467,
+        25941.900772
+      ],
+      "cache": "cold",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "uk-cafes-cold/regol",
+      "label": "UK-wide caf\u00e9s (cold open and query)",
+      "reader": "regol",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 44919.476576999994,
+      "regol_ms": 43135.4854595,
+      "saved_pct": 3.5503230730297544,
+      "geodesk_rounds_ms": [
+        44576.761895,
+        49529.084818,
+        44870.007002,
+        45535.638568,
+        44968.946152,
+        44799.822243
+      ],
+      "regol_rounds_ms": [
+        43016.747583,
+        42714.668245,
+        43254.223336,
+        42915.830616,
+        43427.626554,
+        43535.783079
+      ],
+      "cache": "cold",
+      "cores": 1,
+      "unit": "queries"
+    },
+    {
+      "key": "leeds-cafes-count/regol-cli",
+      "label": "Leeds cafes \u00b7 count",
+      "reader": "regol-cli",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 4.8754745,
+      "regol_ms": 5.234263,
+      "saved_pct": -5.228808136057017,
+      "geodesk_rounds_ms": [
+        4.750885,
+        5.000064,
+        5.333095,
+        4.685354
+      ],
+      "regol_rounds_ms": [
+        5.233192,
+        4.885471,
+        5.349397,
+        5.235334
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-cafes-count/gol-tool",
+      "label": "Leeds cafes \u00b7 count",
+      "reader": "gol-tool",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 5.1737649999999995,
+      "regol_ms": 5.689138,
+      "saved_pct": -11.802263903637389,
+      "geodesk_rounds_ms": [
+        5.412151,
+        4.935379,
+        4.599519,
+        5.582546
+      ],
+      "regol_rounds_ms": [
+        6.089271,
+        5.730056,
+        5.109763,
+        5.64822
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-cafes-csv/regol-cli",
+      "label": "Leeds cafes \u00b7 csv",
+      "reader": "regol-cli",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 4.765402,
+      "regol_ms": 5.56503,
+      "saved_pct": -15.90160577527201,
+      "geodesk_rounds_ms": [
+        5.158654,
+        4.656351,
+        4.874453,
+        4.339169
+      ],
+      "regol_rounds_ms": [
+        5.844619,
+        5.818521,
+        5.311539,
+        5.142169
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-cafes-csv/gol-tool",
+      "label": "Leeds cafes \u00b7 csv",
+      "reader": "gol-tool",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 5.191697,
+      "regol_ms": 5.5433140000000005,
+      "saved_pct": -1.2674152514825066,
+      "geodesk_rounds_ms": [
+        5.541965,
+        6.014244,
+        4.841429,
+        3.348081
+      ],
+      "regol_rounds_ms": [
+        5.484507,
+        5.857948,
+        5.014346,
+        5.602121
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-cafes-geojson/regol-cli",
+      "label": "Leeds cafes \u00b7 geojson",
+      "reader": "regol-cli",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 5.289897,
+      "regol_ms": 5.4869465,
+      "saved_pct": -3.7089392981594305,
+      "geodesk_rounds_ms": [
+        5.427988,
+        3.830956,
+        5.368881,
+        5.210913
+      ],
+      "regol_rounds_ms": [
+        4.973687,
+        5.808386,
+        5.625817,
+        5.348076
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-cafes-geojson/gol-tool",
+      "label": "Leeds cafes \u00b7 geojson",
+      "reader": "gol-tool",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 5.155234999999999,
+      "regol_ms": 5.759031,
+      "saved_pct": -11.08118142343103,
+      "geodesk_rounds_ms": [
+        5.020935,
+        5.48888,
+        5.289535,
+        4.89972
+      ],
+      "regol_rounds_ms": [
+        5.520389,
+        6.159343,
+        5.218499,
+        5.997673
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-cafes-geojsonl/regol-cli",
+      "label": "Leeds cafes \u00b7 geojsonl",
+      "reader": "regol-cli",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 4.9997015000000005,
+      "regol_ms": 5.515701,
+      "saved_pct": -8.947768577200112,
+      "geodesk_rounds_ms": [
+        5.139815,
+        4.99593,
+        4.944541,
+        5.003473
+      ],
+      "regol_rounds_ms": [
+        5.197273,
+        5.834129,
+        4.735055,
+        5.984619
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-cafes-geojsonl/gol-tool",
+      "label": "Leeds cafes \u00b7 geojsonl",
+      "reader": "gol-tool",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 5.451396,
+      "regol_ms": 5.696123999999999,
+      "saved_pct": -4.540589976528064,
+      "geodesk_rounds_ms": [
+        5.766058,
+        5.284922,
+        4.77345,
+        5.61787
+      ],
+      "regol_rounds_ms": [
+        5.583078,
+        5.6137,
+        7.595872,
+        5.778548
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-roads-count/regol-cli",
+      "label": "Leeds roads \u00b7 count",
+      "reader": "regol-cli",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 5.099202,
+      "regol_ms": 5.869728,
+      "saved_pct": -15.851193196159773,
+      "geodesk_rounds_ms": [
+        5.360971,
+        4.684627,
+        5.269895,
+        4.928509
+      ],
+      "regol_rounds_ms": [
+        5.491454,
+        5.839447,
+        5.901784,
+        5.900009
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-roads-count/gol-tool",
+      "label": "Leeds roads \u00b7 count",
+      "reader": "gol-tool",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 5.1455115,
+      "regol_ms": 5.799728999999999,
+      "saved_pct": -14.311253004303047,
+      "geodesk_rounds_ms": [
+        5.162246,
+        4.980673,
+        6.210838,
+        5.128777
+      ],
+      "regol_rounds_ms": [
+        6.04205,
+        5.557408,
+        5.301459,
+        6.298147
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-roads-csv/regol-cli",
+      "label": "Leeds roads \u00b7 csv",
+      "reader": "regol-cli",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 6.301302,
+      "regol_ms": 6.0678529999999995,
+      "saved_pct": 5.214107035797855,
+      "geodesk_rounds_ms": [
+        6.39227,
+        6.410673,
+        6.210334,
+        6.164146
+      ],
+      "regol_rounds_ms": [
+        5.947071,
+        6.188635,
+        7.20834,
+        5.032851
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-roads-csv/gol-tool",
+      "label": "Leeds roads \u00b7 csv",
+      "reader": "gol-tool",
+      "cases": 1,
+      "verified": true,
+      "differences": [],
+      "geodesk_ms": 6.112785000000001,
+      "regol_ms": 7.4196925,
+      "saved_pct": -14.991120502309096,
+      "geodesk_rounds_ms": [
+        5.911584,
+        6.903491,
+        5.800917,
+        6.313986
+      ],
+      "regol_rounds_ms": [
+        5.3796,
+        7.365494,
+        7.473891,
+        7.784509
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-roads-geojson/regol-cli",
+      "label": "Leeds roads \u00b7 geojson",
+      "reader": "regol-cli",
+      "cases": 1,
+      "verified": false,
+      "differences": [
+        "decoded output differs between files"
+      ],
+      "geodesk_ms": null,
+      "regol_ms": null,
+      "saved_pct": null,
+      "geodesk_rounds_ms": [
+        12.48533,
+        12.747725,
+        13.172029,
+        12.6328
+      ],
+      "regol_rounds_ms": [
+        13.199884,
+        13.024798,
+        12.817077,
+        12.611464
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-roads-geojson/gol-tool",
+      "label": "Leeds roads \u00b7 geojson",
+      "reader": "gol-tool",
+      "cases": 1,
+      "verified": false,
+      "differences": [
+        "decoded output differs between files"
+      ],
+      "geodesk_ms": null,
+      "regol_ms": null,
+      "saved_pct": null,
+      "geodesk_rounds_ms": [
+        18.363255,
+        18.29195,
+        18.303316,
+        18.825301
+      ],
+      "regol_rounds_ms": [
+        24.268957,
+        21.477277,
+        19.535731,
+        20.739708
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-roads-geojsonl/regol-cli",
+      "label": "Leeds roads \u00b7 geojsonl",
+      "reader": "regol-cli",
+      "cases": 1,
+      "verified": false,
+      "differences": [
+        "decoded output differs between files"
+      ],
+      "geodesk_ms": null,
+      "regol_ms": null,
+      "saved_pct": null,
+      "geodesk_rounds_ms": [
+        12.551956,
+        12.121388,
+        11.965023,
+        12.957126
+      ],
+      "regol_rounds_ms": [
+        12.822331,
+        12.67349,
+        13.359141,
+        12.453551
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
+    },
+    {
+      "key": "leeds-roads-geojsonl/gol-tool",
+      "label": "Leeds roads \u00b7 geojsonl",
+      "reader": "gol-tool",
+      "cases": 1,
+      "verified": false,
+      "differences": [
+        "decoded output differs between files"
+      ],
+      "geodesk_ms": null,
+      "regol_ms": null,
+      "saved_pct": null,
+      "geodesk_rounds_ms": [
+        18.533122,
+        18.918043,
+        16.928709,
+        20.36916
+      ],
+      "regol_rounds_ms": [
+        17.456568,
+        19.928433,
+        18.374141,
+        18.667444
+      ],
+      "cache": "warm",
+      "cores": 2,
+      "unit": "selections"
     }
   ],
   "generator_evidence": {
@@ -2666,5 +3180,6 @@
     }
   },
   "harness_revision": "b8ba059bedd4e80d626a5b3240affa7c32644037",
-  "elapsed_seconds": 1645.2
+  "elapsed_seconds": 1645.2,
+  "release_file": "data/releases/2026-11-22T185857Z-356303f.json"
 }
