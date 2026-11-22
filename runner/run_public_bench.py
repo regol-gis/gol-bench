@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 from datetime import datetime, timezone
+import fcntl
 import hashlib
 import json
 import os
@@ -223,13 +224,14 @@ def run_writers(scratch: Path, datasets: dict, workers: dict, cores_list: list[i
         out_dir = scratch / f"writers-{ds}"
         run([
             sys.executable, ROOT / "tools/build_compare.py",
-            "--pbf", datasets[ds]["pbf"],
+            datasets[ds]["pbf"],
             "--reference-gol", datasets[ds]["gol"],
             "--engines", "regol", "geodesk-current",
             "--cores", *map(str, cores_list),
             "--rounds", str(rounds),
             "--cache", "warm",
             "--verification", "tags",
+            "--discard-outputs",
             "--writer", workers["regol_cli"],
             "--gol-tool-current", workers["gol_tool"],
             "--python", workers["python"],
@@ -267,6 +269,7 @@ def run_scale(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list
         "--cores", "1",
         "--rounds", str(rounds),
         "--cache", "warm",
+        "--allow-unpinned-inputs",
         "--rust", workers["regol_mmap"],
         "--python", workers["python"],
         "--output", out_dir,
@@ -277,8 +280,8 @@ def run_scale(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list
     idx = json.loads((out_dir / "index.json").read_text())
     rows = []
     for ds in ("monaco", "liechtenstein", "bremen", "ghana", "uk"):
-        entry = idx["datasets"][ds]
-        summary = entry["summary"]
+        entry = idx[ds]
+        summary = entry["prepare_and_scan"]
         reg = summary.get("regol/1") or {}
         py = summary.get("python/1") or {}
         rows.append({
@@ -326,7 +329,7 @@ def run_cli(scratch: Path, datasets: dict, workers: dict, samples: int, cores: i
         engines = {}
         selected = None
         for name, arm in item["arms"].items():
-            runs_ms = [round(r["elapsed_ns"] / 1e6, 2) for r in arm.get("runs", [])]
+            runs_ms = [round(r["wall_ns"] / 1e6, 2) for r in arm.get("runs", [])]
             if selected is None and isinstance(arm.get("signature"), dict):
                 selected = arm["signature"].get("selected")
             engines[name] = {
@@ -341,7 +344,7 @@ def run_cli(scratch: Path, datasets: dict, workers: dict, samples: int, cores: i
             "format": fmt,
             "cores": cores,
             "selected": selected,
-            "verified": item.get("comparable", False),
+            "verified": bool(item.get("verified", False)),
             "engines": engines,
         })
     return rows
@@ -528,6 +531,14 @@ def main():
     args = parser.parse_args()
 
     work = args.work_dir.expanduser().resolve()
+    work.mkdir(parents=True, exist_ok=True)
+    lock_file = (work / ".bench.lock").open("w")
+    try:
+        fcntl.flock(lock_file, fcntl.LOCK_EX | fcntl.LOCK_NB)
+    except BlockingIOError:
+        print("Another regol-bench run is already in progress; exiting.")
+        return
+
     pages = args.pages_dir.expanduser().resolve()
     data_dir = pages / "data"
     runs_dir = data_dir / "runs"

@@ -130,6 +130,8 @@ def main():
     p.add_argument('--timeout',type=int,default=1800,help='seconds per timed history or per verified case')
     p.add_argument('--rust',type=Path,default=WORKER)
     p.add_argument('--python',type=Path,default=SDK/'python-current313/bin/python')
+    p.add_argument('--allow-unpinned-inputs', action='store_true',
+                   help='Allow locally built public PBF GOLs without matching legacy Forgejo blob hashes')
     a = p.parse_args()
     if a.stack_samples < 1 or a.stack_target_ms < 0:
         p.error('stack samples must be positive and target time nonnegative')
@@ -156,14 +158,17 @@ def main():
         path = existing.get(key) or dataset_path(key, item, a.directory.resolve())
         if not path.exists():
             path = prepare(key, item, a.directory.resolve(), planet_url=a.planet_url if key == 'planet' else None)
-        lock = dest / (key + '.lock.json')
-        save_json(lock, {key:item})
+        lock_args = []
+        if not a.allow_unpinned_inputs:
+            lock = dest / (key + '.lock.json')
+            save_json(lock, {key:item})
+            lock_args = ['--input-lock', lock]
         cases = history(item, a.world_scan and key=='planet')
         spec = dest/(key+'.queries.json')
         spec.write_text(json.dumps(cases,indent=2)+'\n')
         d = dest/key
         subprocess.run([sys.executable, ROOT/'tools/campaign.py','--library',f'{key}={path}',
-                        '--input-lock',lock,'--engines',*a.engines,'--cores',*map(str,a.cores),'--rounds',str(a.rounds),
+                        *lock_args,'--engines',*a.engines,'--cores',*map(str,a.cores),'--rounds',str(a.rounds),
                         '--cache',a.cache,'--pool-workers',str(a.pool_workers),'--timeout',str(a.timeout),
                         '--rust',a.rust.absolute(),'--python',a.python.absolute(),'--spec',spec,'--output',d],check=True)
         checks = [d/f'{key}-{n}.jsonl' for n in a.cores]
