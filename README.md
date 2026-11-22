@@ -59,6 +59,15 @@ file. The file-generator series uses cases matched across both files and records
 exclusions under `generator_evidence`. Workflow content differences suppress the
 affected timing comparison. CLI workflows compare decoded OSM exports.
 
+Tagged releases also compare the two generators on fresh-process Leeds counts
+and exports, with a four-arm rotation of file and CLI. Cold UK cafés include
+file open, query preparation and the first scan. Before each cold process the
+harness evicts private copies of both files and checks resident bytes with
+`fincore`. This measures Linux page-cache cold latency on the reported storage.
+Release-only samples and residency evidence are linked by `release_file` in
+the manifest and merged into the dashboard. Adding them to a previously measured
+release reuses the original files and keeps the original run record intact.
+
 Use `--suites generators` for a local paired run. The scheduled service includes
 it by default. The writer cache retains one UK native artifact and stages its
 replacement before swapping it in.

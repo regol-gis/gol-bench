@@ -35,6 +35,7 @@ def main():
     p.add_argument('--cache', choices=['inherit','warm','evict'], default='inherit')
     p.add_argument('--input-lock', type=Path, help='JSON catalogue entries keyed by the selected library labels')
     p.add_argument('--spec', type=Path, default=ROOT/'benchmarks/uk-corpus-queries.json')
+    p.add_argument('--include-open', action='store_true', help='include open and executor setup for a one-query process')
     p.add_argument('--reference-summary', type=Path, help='also report reference-only cohorts from the same timings')
     p.add_argument('--same-cases-as', type=Path)
     p.add_argument('--output', type=Path, required=True, help='new result directory')
@@ -84,7 +85,8 @@ def main():
                 checks += ['--checks',f'{label}/pooled={pool}']
     subprocess.run([sys.executable,ROOT/'tools/summarize_producer_corpus.py',raw,'--spec',a.spec,
                     '--reference','geodesk' if 'geodesk' in libraries else next(iter(libraries)),
-                    *checks,*(['--reference-summary', a.reference_summary] if a.reference_summary else []),
+                    *checks,*(['--include-open'] if a.include_open else []),
+                    *(['--reference-summary', a.reference_summary] if a.reference_summary else []),
                     *(['--same-cases-as',a.same_cases_as] if a.same_cases_as else []),
                     '--output',d/'summary.json'],check=True)
     print(d/'summary.json')

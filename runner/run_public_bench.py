@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import fcntl
+import gzip
 import hashlib
 import json
 import os
@@ -22,7 +23,7 @@ import sys
 import tempfile
 import time
 
-from generators import corpus_pairs, corpus_rows, native_file, workflow_pair
+from generators import corpus_pairs, corpus_rows, native_file, paired_row, workflow_pair
 
 ROOT = Path(__file__).resolve().parents[1]
 REGOL_REPO_URL = "https://github.com/regol-gis/regol.git"
@@ -345,12 +346,13 @@ def run_scale(scratch: Path, datasets: dict, workers: dict, rounds: int) -> list
     return rows
 
 
-def run_cli(scratch: Path, datasets: dict, workers: dict, samples: int, cores: int) -> list[dict]:
+def run_cli(scratch, datasets, workers, samples, cores, native=None):
     out_file = scratch / "cli-leeds.json"
     formats = ["count", "csv", "geojson", "geojsonl", "xml", "pbf"] if workers["gol_supports_pbf"] else ["count", "csv", "geojson", "geojsonl"]
     run([
         sys.executable, ROOT / "tools/benchmark_cli.py",
         datasets["uk"]["gol"],
+        *(["--native-file", native] if native else []),
         "--query", "n[amenity=cafe]",
         "--query", "w[highway]",
         "--bbox=-1.57,53.785,-1.51,53.815",
@@ -364,6 +366,11 @@ def run_cli(scratch: Path, datasets: dict, workers: dict, samples: int, cores: i
     ])
     report = json.loads(out_file.read_text())
     rows = []
+    pairs = []
+    other = {(item["query"], item["format"]): item for item in report.get("generator_results", [])}
+    if native and any(report["inputs"][p]["sha256"] != info["sha256"]
+                      for p, info in datasets["uk"]["generators"].items()):
+        raise ValueError("CLI input differs from the recorded generator artifact")
     for item in report["results"]:
         q = item["query"]
         fmt = item["format"]
@@ -389,7 +396,17 @@ def run_cli(scratch: Path, datasets: dict, workers: dict, samples: int, cores: i
             "verified": bool(item.get("verified", False)),
             "engines": engines,
         })
-    return rows
+        if native:
+            alt = other[q, fmt]
+            for name, reader in (("Regol", "regol-cli"), ("GOL Tool", "gol-tool")):
+                base_arm, native_arm = item["arms"][name], alt["arms"][name]
+                issues = [group["reason"] for group in (item, alt) if not group["verified"]]
+                if not issues and base_arm["signature"] != native_arm["signature"]:
+                    issues = ["decoded output differs between files"]
+                times = [[r["wall_ns"] / 1e6 for r in arm["runs"]] for arm in (base_arm, native_arm)]
+                pair = paired_row(f"leeds-{q_slug}-{fmt}", f"Leeds {q_slug} · {fmt}", reader, *times, 1, issues)
+                pairs.append(dict(pair, cache="warm", cores=cores, unit="selections"))
+    return rows, pairs
 
 
 def run_applications(scratch, datasets, workers, samples, native=None):
@@ -432,12 +449,18 @@ def run_applications(scratch, datasets, workers, samples, native=None):
     return rows, pairs
 
 
-def run_corpus(scratch, datasets, workers, native=None, cafes=False):
+def run_corpus(scratch, datasets, workers, native=None, cafes=False, cold=False):
     uk = datasets["uk"]
-    out = scratch / ("cafes" if cafes else "corpus")
+    out = scratch / ("cold-cafes" if cold else "cafes" if cafes else "corpus")
     spec = ROOT / "benchmarks" / ("uk-national-cafes.json" if cafes else "uk-corpus-queries.json")
     engines = ["regol", "python"] + (["java"] if workers["has_java"] else [])
-    args = ["--library", f"geodesk={uk['gol']}"]
+    base = uk["gol"]
+    if cold:
+        # Evict only private copies, preserving the ordinary shared benchmark cache.
+        shutil.copyfile(base, scratch / "cold-geodesk.gol")
+        shutil.copyfile(native, scratch / "cold-regol.gol")
+        base, native = scratch / "cold-geodesk.gol", scratch / "cold-regol.gol"
+    args = ["--library", f"geodesk={base}"]
     baseline = scratch / "geodesk-corpus.json"
     if native:
         lock = scratch / "uk-inputs.json"
@@ -445,8 +468,10 @@ def run_corpus(scratch, datasets, workers, native=None, cafes=False):
         args += ["--library", f"regol={native}", "--input-lock", lock]
         if not cafes:
             args += ["--reference-summary", baseline]
+    if cold:
+        args += ["--include-open"]
     run([sys.executable, ROOT / "tools/campaign.py", *args, "--engines", *engines, "--cores", "1",
-         "--rounds", str(2 * len(engines) if native else 3), "--cache", "warm",
+         "--rounds", str(2 * len(engines) if native else 3), "--cache", "evict" if cold else "warm",
          "--rust", workers["regol_mmap"], "--python", workers["python"], "--spec", spec, "--output", out])
     summary = json.loads((out / "summary.json").read_bytes())
     legacy = []
@@ -460,7 +485,11 @@ def run_corpus(scratch, datasets, workers, native=None, cafes=False):
                                       if c["role"] == "candidate_selector" and c["reference_count"]
                                       and c["status"] not in ("identities_match", "content_match")}
                                 for arm, cases in summary["verification_cases"].items()})
-    return legacy, corpus_pairs(summary, cafes=cafes) if native else [], evidence
+    if cold:
+        with gzip.open(out / "timings.jsonl.gz", "rt") as f:
+            evidence["page_bytes"] = json.loads(next(f))["page_size"]
+            evidence["max_resident_bytes_before"] = max(max(json.loads(line)["resident_bytes_before"].values()) for line in f)
+    return legacy, corpus_pairs(summary, cafes=cafes, cold=cold) if native else [], evidence
 
 
 def rebuild_aggregates(data_dir: Path, manifest: dict):
@@ -472,6 +501,12 @@ def rebuild_aggregates(data_dir: Path, manifest: dict):
         if not run_path.is_file():
             continue
         payload = json.loads(run_path.read_text())
+        if meta.get("release_file"):
+            release = json.loads((data_dir.parent / meta["release_file"]).read_bytes())
+            if release["run_id"] != meta["id"]:
+                raise ValueError("release measurements belong to a different benchmark run")
+            payload["generators"].extend(release["generators"])
+            payload["release_file"] = meta["release_file"]
         latest_run = payload
         base = {
             "run_id": meta["id"],
@@ -631,12 +666,15 @@ def main():
         manifest = {"schema_version": 1, "updated_at": None, "machines": {}, "runs": []}
 
     suites = set(args.suites)
-    prior = [json.loads((pages / r["file"]).read_bytes()) for r in manifest["runs"]
-             if r["commit"] == rev["commit"] and r["machine_id"] == machine["id"]]
-    if prior and all(prior[-1].get(s) for s in suites) and not args.force:
+    recorded = [r for r in manifest["runs"] if r["commit"] == rev["commit"] and r["machine_id"] == machine["id"]]
+    prior = [json.loads((pages / r["file"]).read_bytes()) for r in recorded[-1:]]
+    release_due = "generators" in suites and bool(rev["tag"] and rev["tag"].startswith("v"))
+    complete = bool(prior) and all(prior[-1].get(s) for s in suites)
+    supplement = complete and release_due and not recorded[-1].get("release_file") and not args.force
+    if complete and not args.force and not supplement:
         print(f"Requested suites already recorded for {rev['short_commit']} on {machine['id']}.")
         return
-    if args.push and prior:
+    if args.push and prior and not supplement:
         # Each published snapshot stands alone, including on the first generator rollout.
         suites.update(s for s in ("writers", "scale", "cli", "applications", "corpus", "generators")
                       if prior[-1].get(s))
@@ -646,9 +684,11 @@ def main():
     native = None
     if "generators" in suites:
         uk = datasets["uk"]
-        if prior and (prior[-1]["datasets"]["uk"]["gol_sha256"] != uk["gol_sha256"] or
-                      prior[-1]["datasets"]["uk"]["pbf_sha256"] != uk["pbf_sha256"]):
-            raise ValueError("the cached UK input differs from the previous run for this revision")
+        last_host_run = next((r for r in reversed(manifest["runs"]) if r["machine_id"] == machine["id"]), None)
+        if last_host_run:
+            historical = json.loads((pages / last_host_run["file"]).read_bytes())["datasets"]["uk"]
+            if (historical["gol_sha256"], historical["pbf_sha256"]) != (uk["gol_sha256"], uk["pbf_sha256"]):
+                raise ValueError("the UK files differ from the existing reader series on this host")
         native, info = native_file(work / "datasets", uk, workers["regol_cli"], rev["commit"])
         uk["generators"] = {"regol": info, "geodesk": dict(producer="GOL Tool", revision="2.0.0",
                             settings=["-w"], page_alignment_bytes=4096, pbf_sha256=uk["pbf_sha256"],
@@ -658,6 +698,20 @@ def main():
     now = datetime.now(timezone.utc)
     run_id = f"{now.strftime('%Y-%m-%dT%H%M%SZ')}-{rev['short_commit']}"
     run_rel = f"data/runs/{run_id}.json"
+
+    if supplement:
+        original = prior[-1]
+        if (original["datasets"]["uk"]["generators"] != uk["generators"] or original["rustc"] != rustc
+                or original["competitors"] != workers["competitors"]):
+            raise ValueError("release supplement requires the original reader versions and generator artifacts")
+        with tempfile.TemporaryDirectory(prefix="regol-release-", dir=work) as tmp:
+            release = release_measurements(Path(tmp), datasets, workers, native, machine)
+        publish_release(pages, recorded[-1], release)
+        manifest["updated_at"] = release["timestamp"]
+        rebuild_aggregates(data_dir, manifest)
+        if args.push:
+            push_data(pages, rev)
+        return
 
     with tempfile.TemporaryDirectory(prefix="regol-bench-", dir=work) as tmp:
         scratch = Path(tmp)
@@ -690,8 +744,8 @@ def main():
             payload["writers"] = run_writers(scratch, datasets, workers, [1, min(4, machine["cores"])], rounds=3)
         if "scale" in suites:
             payload["scale"] = run_scale(scratch, datasets, workers, rounds=5)
-        if "cli" in suites:
-            payload["cli"] = run_cli(scratch, datasets, workers, samples=5, cores=min(2, machine["cores"]))
+        if "cli" in suites and not release_due:
+            payload["cli"], _ = run_cli(scratch, datasets, workers, samples=5, cores=min(2, machine["cores"]))
         if "applications" in suites or native:
             payload["applications"], pairs = run_applications(scratch, datasets, workers, 4 if native else 3, native)
             payload["generators"].extend(pairs)
@@ -702,6 +756,9 @@ def main():
             _, pairs, cafes = run_corpus(scratch, datasets, workers, native, cafes=True)
             payload["generators"].extend(pairs)
             payload["generator_evidence"] = {"corpus": corpus, "cafes": cafes}
+        if release_due:
+            release = release_measurements(scratch, datasets, workers, native, machine)
+            payload["cli"] = release["cli"]
         payload["harness_revision"] = run(["git", "-C", ROOT, "rev-parse", "HEAD"], capture=True)
         payload["elapsed_seconds"] = round(time.monotonic() - started, 1)
 
@@ -718,16 +775,40 @@ def main():
         "competitors": workers["competitors"],
         "file": run_rel,
     })
+    if release_due:
+        publish_release(pages, manifest["runs"][-1], release)
     manifest["runs"].sort(key=lambda r: (r["commit_date"], r["timestamp"]))
 
     rebuild_aggregates(data_dir, manifest)
     print(f"Wrote benchmark run {run_id} to {pages / run_rel}")
 
     if args.push:
-        run(["git", "-C", pages, "add", "data/"])
-        label = rev["tag"] or rev["short_commit"]
-        run(["git", "-C", pages, "commit", "-m", f"Record benchmark results for regol {label}"])
-        run(["git", "-C", pages, "push", "origin", "gh-pages"])
+        push_data(pages, rev)
+
+
+def release_measurements(scratch, datasets, workers, native, machine):
+    started = time.monotonic()
+    cli, exports = run_cli(scratch, datasets, workers, 4, min(2, machine["cores"]), native)
+    _, cold, evidence = run_corpus(scratch, datasets, workers, native, cafes=True, cold=True)
+    return dict(cli=cli, generators=[*cold, *exports], cold_evidence=evidence,
+                elapsed_seconds=round(time.monotonic() - started, 1))
+
+
+def publish_release(pages, meta, release):
+    dest = Path("data/releases") / (meta["id"] + ".json")
+    (pages / dest).parent.mkdir(exist_ok=True)
+    release.update(run_id=meta["id"], timestamp=datetime.now(timezone.utc).isoformat(),
+                   harness_revision=run(["git", "-C", ROOT, "rev-parse", "HEAD"], capture=True))
+    (pages / dest).write_text(json.dumps(release, indent=2) + "\n")
+    meta["release_file"] = str(dest)
+
+
+def push_data(pages, rev):
+    run(["git", "-C", pages, "add", "data/"])
+    label = rev["tag"] or rev["short_commit"]
+    run(["git", "-C", pages, "commit", "-m", f"Record benchmark results for regol {label}"])
+    run(["git", "-C", pages, "pull", "--rebase", "origin", "gh-pages"])
+    run(["git", "-C", pages, "push", "origin", "gh-pages"])
 
 
 if __name__ == "__main__":

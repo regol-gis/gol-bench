@@ -35,7 +35,7 @@ def native_file(directory, uk, writer, revision):
 
 
 def paired_row(key, label, reader, base, native, cases, differences=()):
-    if not base or len(base) != len(native):
+    if not differences and (not base or len(base) != len(native)):
         raise ValueError(f"{key}/{reader}: incomplete paired rounds")
     verified = bool(cases) and not differences
     savings = [100 * (1 - n / b) for b, n in zip(base, native, strict=True)] if verified else []
@@ -45,7 +45,7 @@ def paired_row(key, label, reader, base, native, cases, differences=()):
                 geodesk_rounds_ms=base, regol_rounds_ms=native)
 
 
-def corpus_series(summary):
+def corpus_series(summary, interval="prepare_and_scan_ms"):
     """Round sums retain query membership and the original measurement precision."""
     result = {}
     total = {}
@@ -54,7 +54,7 @@ def corpus_series(summary):
         cohort = summary["cohorts"][op]
         names.extend(cohort["cases"])
         arms = {}
-        for arm, times in cohort["prepare_and_scan_ms"].items():
+        for arm, times in cohort[interval].items():
             rounds = times["rounds"]
             values = [rounds[k] for k in sorted(rounds, key=int)]
             arms[arm] = values
@@ -77,17 +77,22 @@ def corpus_rows(summary, n_cases):
     return rows
 
 
-def corpus_pairs(summary, *, cafes=False):
+def corpus_pairs(summary, *, cafes=False, cold=False):
     rows = []
-    for op, (label, names, arms) in corpus_series(summary).items():
+    interval = "open_prepare_and_scan_ms" if cold else "prepare_and_scan_ms"
+    for op, (label, names, arms) in corpus_series(summary, interval).items():
         if cafes and op != "iterate":
             continue
         key = "uk-cafes" if cafes else "uk-corpus-" + op
         label = "UK-wide cafés" if cafes else label
+        if cold:
+            key += "-cold"
+            label += " (cold open and query)"
         for arm, base in arms.items():
             producer, reader, width = arm.split("/")
             if producer == "geodesk":
-                rows.append(paired_row(key, label, reader, base, arms[f"regol/{reader}/{width}"], len(names)))
+                row = paired_row(key, label, reader, base, arms[f"regol/{reader}/{width}"], len(names))
+                rows.append(dict(row, cache="cold" if cold else "warm", cores=int(width), unit="queries"))
     return rows
 
 

@@ -1,9 +1,12 @@
 """Regression checks for the public same-reader comparison."""
 from pathlib import Path
+import json
+import tempfile
 import sys
 import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'runner'))
+from run_public_bench import rebuild_aggregates
 from generators import corpus_rows, paired_row, workflow_pair
 
 
@@ -27,6 +30,23 @@ class PublicGeneratorTests(unittest.TestCase):
         row = dict(exports={'roads': {'objects': 4, 'fingerprint': 'x'}}, signature=[], runs=[[dict(elapsed_ns=3)]])
         other = dict(row, signature=[{'items': 450}])
         self.assertTrue(workflow_pair('cli', 'Export', 'gol-tool', row, other)['verified'])
+
+    def test_release_history_extends_only_its_original_run(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            data = root/'data'
+            data.mkdir()
+            row = paired_row('uk', 'UK', 'java', [2], [3], 1)
+            meta = dict(file='data/base.json', id='v1', commit='c', timestamp='t', short_commit='c', machine_id='m')
+            base = dict(generators=[row])
+            (data/'base.json').write_text(json.dumps(base))
+            meta['release_file'] = 'data/release.json'
+            release = dict(run_id='v1', generators=[dict(row, key='cold/java')])
+            (data/'release.json').write_text(json.dumps(release))
+            rebuild_aggregates(data, dict(runs=[meta]))
+            self.assertEqual(json.loads((data/'base.json').read_bytes()), base)
+            self.assertEqual(set(json.loads((data/'history.json').read_bytes())['generators']), {'uk/java', 'cold/java'})
+            self.assertEqual(len(json.loads((data/'latest.json').read_bytes())['generators']), 2)
 
     def test_corpus_totals_sum_within_round(self):
         cohorts = {op: dict(cases=[op], prepare_and_scan_ms={'geodesk/regol/1': {'rounds': rounds}})

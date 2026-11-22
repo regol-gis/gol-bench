@@ -1,4 +1,6 @@
 """Compare fresh CLI counts and exports on identical selections and CPU budgets."""
+from contextlib import nullcontext
+from itertools import product
 import argparse
 import csv
 import struct
@@ -17,6 +19,7 @@ import tempfile
 from application_export import export_signature, record_hash, write_cli_output
 from application_reference import file_digest
 from benchmark_producer_corpus import williams_order
+from benchmark_cache import FileCache
 from input_identity import identify, unchanged
 from paths import ROOT, SDK
 from provenance import harness_source
@@ -76,18 +79,24 @@ def compare(rows, samples):
 
 
 def campaign(args):
-    inp = identify(args.file)
+    paths = {'geodesk': args.file}
+    if args.native_file:
+        paths['regol'] = args.native_file
+    inputs = {label: identify(path) for label, path in paths.items()}
+    warm = {label: FileCache(path) for label, path in paths.items()} if args.native_file else {}
     binaries = {'Regol': args.regol.resolve(strict=True), 'GOL Tool': args.gol_tool.resolve(strict=True)}
     available = sorted(os.sched_getaffinity(0))
     if args.cores > len(available):
         raise ValueError('CPU budget exceeds available affinity')
     cpus = available[:args.cores]
-    report = dict(suite='cli-outputs', host=platform.node(), input=inp, cpus=cpus, samples=args.samples,
+    report = dict(suite='cli-outputs', host=platform.node(), input=inputs['geodesk'], cpus=cpus, samples=args.samples,
                   harness_source=harness_source(), bbox=args.bbox, csv_keys=args.keys, requested_threads=len(cpus),
                   cache='inherited after full input digest', scratch=str(args.scratch.resolve()),
                   timing='fresh process through exit writing stdout to a regular file, no fsync; decoding after timing',
                   binaries={name:{'path':str(p),'sha256':file_digest(p)} for name,p in binaries.items()},
                   results=[])
+    if args.native_file:
+        report.update(inputs=inputs, cache='warm', generator_results=[])
     args.output.parent.mkdir(parents=True, exist_ok=True)
     if args.output.exists():
         raise FileExistsError(args.output)
@@ -96,30 +105,31 @@ def campaign(args):
     try:
         with tempfile.TemporaryDirectory(dir=args.scratch) as scratch:
             for index, query in enumerate(args.query):
-                groups = []
+                groups = {}
+                arms = list(product(binaries, paths))
                 for fmt in args.formats:
-                    group = dict(query=query, format=fmt, arms={})
-                    for name, binary in binaries.items():
-                        cmd = [str(binary), 'query', str(args.file.resolve()), query, '-f', fmt,
-                               '--threads', str(len(cpus))]
-                        if args.bbox:
-                            cmd.append('-b='+args.bbox)
-                        if fmt=='csv':
-                            cmd.extend(['--keys', ','.join(args.keys)])
-                        group['arms'][name] = dict(command=cmd, runs=[])
-                    groups.append(group)
+                    for producer, path in paths.items():
+                        group = dict(query=query, format=fmt, arms={})
+                        for name, binary in binaries.items():
+                            cmd = [str(binary), 'query', str(path.resolve()), query, '-f', fmt,
+                                   '--threads', str(len(cpus))]
+                            if args.bbox:
+                                cmd.append('-b='+args.bbox)
+                            if fmt == 'csv':
+                                cmd.extend(['--keys', ','.join(args.keys)])
+                            group['arms'][name] = dict(command=cmd, runs=[])
+                        groups[fmt, producer] = group
                 for sample in range(args.samples):
-                    # Rotate formats between rounds and alternate which executable runs first.
-                    for position in williams_order(list(range(len(groups))), index+sample):
-                        group = groups[position]
-                        fmt = group['format']
-                        for name in williams_order(list(binaries), index+sample+position):
-                            row = group['arms'][name]
+                    for position in williams_order(list(range(len(args.formats))), index+sample):
+                        fmt = args.formats[position]
+                        for name, producer in williams_order(arms, index+sample+position):
+                            row = groups[fmt, producer]['arms'][name]
                             if 'error' in row:
                                 continue
                             out = Path(scratch)/('output.'+fmt)
                             try:
-                                elapsed, size = write_cli_output(row['command'], out, timeout=args.timeout)
+                                with warm[producer].warm_mapping() if warm else nullcontext():
+                                    elapsed, size = write_cli_output(row['command'], out, timeout=args.timeout)
                                 checked = signature(out, fmt, args.keys)
                                 if row.setdefault('signature', checked) != checked:
                                     raise ValueError('decoded output changed between rounds')
@@ -130,32 +140,37 @@ def campaign(args):
                                 row['error'] = str(err)
                             finally:
                                 out.unlink(missing_ok=True)
-                for group in groups:
+                for group in groups.values():
                     rows = list(group['arms'].values())
                     reason = compare(rows, args.samples)
                     group['verified'] = reason is None
                     if reason:
                         group['reason'] = reason
-                    report['results'].append(group)
-                count = next((g for g in groups if g['format']=='count' and g['verified']), None)
-                if count:
-                    selected = count['arms']['GOL Tool']['signature']['selected']
-                    for group in groups:
-                        if not group['verified'] or group['format']=='count':
-                            continue
-                        sig = group['arms']['GOL Tool']['signature']
-                        objects = sum(sig.get('objects', {}).values())
-                        if ('selected' in sig and sig['selected'] != selected or
-                                'objects' in sig and (objects < selected or selected == 0 and objects != 0)):
-                            group.update(verified=False, reason='output cardinality conflicts with scalar count')
-                for group in groups:
+                for producer in paths:
+                    same_file = [groups[fmt, producer] for fmt in args.formats]
+                    count = next((g for g in same_file if g['format']=='count' and g['verified']), None)
+                    if count:
+                        selected = count['arms']['GOL Tool']['signature']['selected']
+                        for group in same_file:
+                            if not group['verified'] or group['format']=='count':
+                                continue
+                            sig = group['arms']['GOL Tool']['signature']
+                            objects = sum(sig.get('objects', {}).values())
+                            if ('selected' in sig and sig['selected'] != selected or
+                                    'objects' in sig and (objects < selected or selected == 0 and objects != 0)):
+                                group.update(verified=False, reason='output cardinality conflicts with scalar count')
+                report['results'].extend(groups[fmt, 'geodesk'] for fmt in args.formats)
+                if args.native_file:
+                    report['generator_results'].extend(groups[fmt, 'regol'] for fmt in args.formats)
+                for (fmt, producer), group in groups.items():
                     detail = group.get('reason') or ', '.join(
                         f"{n} {statistics.median(r['wall_ns'] for r in a['runs'])/1e6:.2f} ms"
                         for n,a in group['arms'].items())
-                    print(query, group['format'], detail, flush=True)
+                    print(producer, query, fmt, detail, flush=True)
     finally:
         os.sched_setaffinity(0, available)
-    unchanged(args.file, inp)
+    for label, path in paths.items():
+        unchanged(path, inputs[label])
     with args.output.open('x') as stream:
         json.dump(report, stream, indent=2, allow_nan=False)
         stream.write('\n')
@@ -165,6 +180,7 @@ def campaign(args):
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('file', type=Path)
+    p.add_argument('--native-file', type=Path, help='pair both CLIs on a second file in balanced warm rounds')
     p.add_argument('--query', action='append', required=True, help='GOQL selector, repeat for more workloads')
     p.add_argument('--bbox', help='optional west,south,east,north in degrees, applied to every selector')
     p.add_argument('--formats', choices=FORMATS, nargs='+', default=FORMATS)
