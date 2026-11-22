@@ -1,6 +1,6 @@
 {
-  "id": "2026-11-22T103616Z-49fa7aa",
-  "timestamp": "2026-11-22T10:36:16.705670Z",
+  "id": "2026-11-22T110940Z-49fa7aa",
+  "timestamp": "2026-11-22T11:09:40.964293Z",
   "commit": "49fa7aa06e9c4abc33c1a5b6a531bed056e289bc",
   "short_commit": "49fa7aa",
   "commit_date": "2026-11-21T22:50:50Z",
@@ -23,7 +23,9 @@
     "geodesk_python": "2.3.1",
     "shapely": "2.2.0",
     "gol_tool": "2.0.0",
-    "gol_tool_legacy": "2.0.0"
+    "gol_tool_legacy": "2.0.0",
+    "geodesk_java": "2.1.0",
+    "java_runtime": "openjdk version \"25.0.5\" 2026-10-20"
   },
   "datasets": {
     "monaco": {
@@ -61,24 +63,24 @@
       "ref_label": "GOL Tool 2.0.0",
       "engines": {
         "regol": {
-          "wall_ms_median": 79.61,
+          "wall_ms_median": 80.76,
           "wall_ms_rounds": [
-            71.69,
-            79.61,
-            106.32
+            80.76,
+            74.38,
+            82.4
           ],
-          "peak_rss_mib": 31.38,
+          "peak_rss_mib": 31.35,
           "output_mib": 0.93,
           "verified": true
         },
         "geodesk": {
-          "wall_ms_median": 947.66,
+          "wall_ms_median": 943.0,
           "wall_ms_rounds": [
-            945.86,
-            948.82,
-            947.66
+            943.0,
+            934.72,
+            943.24
           ],
-          "peak_rss_mib": 588.42,
+          "peak_rss_mib": 588.61,
           "output_mib": 0.95,
           "verified": true
         }
@@ -92,24 +94,24 @@
       "ref_label": "GOL Tool 2.0.0",
       "engines": {
         "regol": {
-          "wall_ms_median": 76.69,
+          "wall_ms_median": 72.24,
           "wall_ms_rounds": [
-            92.97,
-            73.67,
-            76.69
+            72.24,
+            70.87,
+            82.95
           ],
-          "peak_rss_mib": 31.38,
+          "peak_rss_mib": 31.35,
           "output_mib": 0.93,
           "verified": true
         },
         "geodesk": {
-          "wall_ms_median": 853.45,
+          "wall_ms_median": 804.89,
           "wall_ms_rounds": [
-            853.45,
-            812.46,
-            858.89
+            795.79,
+            804.89,
+            819.58
           ],
-          "peak_rss_mib": 586.62,
+          "peak_rss_mib": 586.59,
           "output_mib": 0.95,
           "verified": true
         }
@@ -123,24 +125,24 @@
       "ref_label": "GOL Tool 2.0.0",
       "engines": {
         "regol": {
-          "wall_ms_median": 1556.3,
+          "wall_ms_median": 1533.17,
           "wall_ms_rounds": [
-            1630.39,
-            1540.44,
-            1556.3
+            1533.17,
+            1646.11,
+            1531.61
           ],
-          "peak_rss_mib": 162.33,
+          "peak_rss_mib": 162.18,
           "output_mib": 36.24,
           "verified": true
         },
         "geodesk": {
-          "wall_ms_median": 5317.9,
+          "wall_ms_median": 5300.37,
           "wall_ms_rounds": [
-            5317.9,
-            5260.69,
-            5463.26
+            5412.3,
+            5300.37,
+            5261.62
           ],
-          "peak_rss_mib": 1120.46,
+          "peak_rss_mib": 1119.78,
           "output_mib": 37.09,
           "verified": true
         }
@@ -154,24 +156,24 @@
       "ref_label": "GOL Tool 2.0.0",
       "engines": {
         "regol": {
-          "wall_ms_median": 830.6,
+          "wall_ms_median": 816.74,
           "wall_ms_rounds": [
-            830.6,
-            806.21,
-            949.13
+            816.74,
+            1031.22,
+            796.58
           ],
-          "peak_rss_mib": 223.5,
+          "peak_rss_mib": 220.26,
           "output_mib": 36.24,
           "verified": true
         },
         "geodesk": {
-          "wall_ms_median": 2816.81,
+          "wall_ms_median": 2831.38,
           "wall_ms_rounds": [
-            2816.81,
-            3058.92,
-            2761.89
+            2844.08,
+            2831.38,
+            2805.2
           ],
-          "peak_rss_mib": 1120.0,
+          "peak_rss_mib": 1117.48,
           "output_mib": 37.09,
           "verified": true
         }
@@ -185,24 +187,24 @@
       "ref_label": "GOL Tool 2.0.0",
       "engines": {
         "regol": {
-          "wall_ms_median": 8898.26,
+          "wall_ms_median": 8908.05,
           "wall_ms_rounds": [
-            8896.81,
-            8898.26,
-            8927.88
+            8908.05,
+            8819.87,
+            9320.99
           ],
-          "peak_rss_mib": 913.25,
+          "peak_rss_mib": 914.2,
           "output_mib": 196.09,
           "verified": true
         },
         "geodesk": {
-          "wall_ms_median": 16890.85,
+          "wall_ms_median": 17083.1,
           "wall_ms_rounds": [
-            17473.65,
-            16769.52,
-            16890.85
+            17083.1,
+            16908.32,
+            17340.19
           ],
-          "peak_rss_mib": 1594.77,
+          "peak_rss_mib": 1565.54,
           "output_mib": 196.79,
           "verified": true
         }
@@ -216,24 +218,24 @@
       "ref_label": "GOL Tool 2.0.0",
       "engines": {
         "regol": {
-          "wall_ms_median": 4055.22,
+          "wall_ms_median": 4048.18,
           "wall_ms_rounds": [
-            4727.5,
-            4009.39,
-            4055.22
+            3992.37,
+            4235.13,
+            4048.18
           ],
-          "peak_rss_mib": 915.03,
+          "peak_rss_mib": 916.25,
           "output_mib": 196.09,
           "verified": true
         },
         "geodesk": {
-          "wall_ms_median": 7106.86,
+          "wall_ms_median": 6869.88,
           "wall_ms_rounds": [
-            7106.86,
-            6849.42,
-            7336.08
+            6868.15,
+            7053.19,
+            6869.88
           ],
-          "peak_rss_mib": 1533.23,
+          "peak_rss_mib": 1547.11,
           "output_mib": 196.79,
           "verified": true
         }
@@ -249,23 +251,33 @@
       "cache": "warm",
       "engines": {
         "regol": {
-          "median_ms": 0.452,
+          "median_ms": 0.402,
           "rounds_ms": [
-            0.804,
-            0.482,
-            0.452,
-            0.444,
-            0.406
+            0.398,
+            0.403,
+            0.409,
+            0.402,
+            0.369
           ]
         },
         "python": {
-          "median_ms": 0.648,
+          "median_ms": 0.61,
           "rounds_ms": [
-            0.653,
-            0.648,
-            0.664,
-            0.646,
-            0.647
+            0.593,
+            0.596,
+            0.65,
+            0.614,
+            0.61
+          ]
+        },
+        "java": {
+          "median_ms": 51.267,
+          "rounds_ms": [
+            65.105,
+            50.357,
+            49.984,
+            51.267,
+            60.309
           ]
         }
       },
@@ -279,23 +291,33 @@
       "cache": "warm",
       "engines": {
         "regol": {
-          "median_ms": 0.26,
+          "median_ms": 0.262,
           "rounds_ms": [
-            0.331,
-            0.26,
-            0.266,
-            0.258,
-            0.226
+            0.566,
+            0.325,
+            0.262,
+            0.262,
+            0.23
           ]
         },
         "python": {
-          "median_ms": 0.621,
+          "median_ms": 0.622,
           "rounds_ms": [
-            0.615,
-            0.765,
-            0.67,
             0.621,
-            0.619
+            0.653,
+            0.615,
+            0.622,
+            0.624
+          ]
+        },
+        "java": {
+          "median_ms": 60.086,
+          "rounds_ms": [
+            62.814,
+            66.29,
+            55.08,
+            60.086,
+            52.806
           ]
         }
       },
@@ -309,23 +331,33 @@
       "cache": "warm",
       "engines": {
         "regol": {
-          "median_ms": 0.604,
+          "median_ms": 0.579,
           "rounds_ms": [
-            0.948,
-            0.616,
-            0.604,
-            0.594,
-            0.542
+            0.705,
+            0.549,
+            0.557,
+            0.624,
+            0.579
           ]
         },
         "python": {
-          "median_ms": 0.989,
+          "median_ms": 0.974,
           "rounds_ms": [
-            1.031,
-            0.975,
-            0.989,
-            0.985,
-            1.023
+            0.997,
+            0.988,
+            0.927,
+            0.921,
+            0.974
+          ]
+        },
+        "java": {
+          "median_ms": 62.568,
+          "rounds_ms": [
+            61.882,
+            62.568,
+            70.035,
+            61.677,
+            79.01
           ]
         }
       },
@@ -339,23 +371,33 @@
       "cache": "warm",
       "engines": {
         "regol": {
-          "median_ms": 0.418,
+          "median_ms": 0.412,
           "rounds_ms": [
-            0.619,
-            0.418,
-            0.437,
-            0.41,
-            0.372
+            0.599,
+            0.408,
+            0.412,
+            0.414,
+            0.391
           ]
         },
         "python": {
-          "median_ms": 1.42,
+          "median_ms": 1.452,
           "rounds_ms": [
-            1.46,
-            1.414,
-            1.386,
-            1.433,
-            1.42
+            1.452,
+            1.586,
+            1.387,
+            1.417,
+            1.468
+          ]
+        },
+        "java": {
+          "median_ms": 68.513,
+          "rounds_ms": [
+            70.94,
+            78.318,
+            68.513,
+            65.445,
+            57.881
           ]
         }
       },
@@ -369,23 +411,33 @@
       "cache": "warm",
       "engines": {
         "regol": {
-          "median_ms": 2.014,
+          "median_ms": 1.747,
           "rounds_ms": [
-            1.928,
-            2.127,
-            2.058,
-            1.749,
-            2.014
+            1.812,
+            1.747,
+            1.87,
+            1.178,
+            1.741
           ]
         },
         "python": {
-          "median_ms": 2.011,
+          "median_ms": 2.002,
           "rounds_ms": [
-            1.967,
-            1.99,
-            2.022,
-            2.056,
-            2.011
+            1.984,
+            1.97,
+            2.069,
+            2.06,
+            2.002
+          ]
+        },
+        "java": {
+          "median_ms": 77.67,
+          "rounds_ms": [
+            70.343,
+            77.67,
+            72.118,
+            82.078,
+            92.959
           ]
         }
       },
@@ -403,24 +455,24 @@
       "verified": true,
       "engines": {
         "Regol": {
-          "median_ms": 2.7,
+          "median_ms": 2.69,
           "rounds_ms": [
-            5.39,
-            2.6,
-            2.82,
-            2.7,
-            2.5
+            4.3,
+            2.65,
+            2.59,
+            2.81,
+            2.69
           ],
           "error": null
         },
         "GOL Tool": {
-          "median_ms": 3.0,
+          "median_ms": 3.08,
           "rounds_ms": [
-            3.2,
+            3.07,
             3.08,
-            2.95,
-            3.0,
-            2.87
+            3.25,
+            3.75,
+            2.95
           ],
           "error": null
         }
@@ -436,24 +488,24 @@
       "verified": true,
       "engines": {
         "Regol": {
-          "median_ms": 2.58,
+          "median_ms": 2.52,
           "rounds_ms": [
-            2.58,
-            2.62,
+            2.54,
+            2.71,
             2.52,
-            2.45,
-            2.68
+            2.51,
+            2.52
           ],
           "error": null
         },
         "GOL Tool": {
-          "median_ms": 3.04,
+          "median_ms": 3.05,
           "rounds_ms": [
-            2.93,
-            3.04,
-            3.22,
-            3.17,
-            2.94
+            3.01,
+            3.15,
+            3.05,
+            3.64,
+            2.86
           ],
           "error": null
         }
@@ -469,24 +521,24 @@
       "verified": true,
       "engines": {
         "Regol": {
-          "median_ms": 2.8,
+          "median_ms": 2.86,
           "rounds_ms": [
-            2.77,
+            3.91,
+            2.86,
+            2.83,
             2.95,
-            2.84,
-            2.8,
-            2.74
+            2.66
           ],
           "error": null
         },
         "GOL Tool": {
-          "median_ms": 3.33,
+          "median_ms": 3.45,
           "rounds_ms": [
-            3.38,
+            3.45,
             3.17,
-            3.33,
-            3.11,
-            3.63
+            3.99,
+            3.51,
+            3.36
           ],
           "error": null
         }
@@ -502,24 +554,24 @@
       "verified": true,
       "engines": {
         "Regol": {
-          "median_ms": 2.92,
+          "median_ms": 2.77,
           "rounds_ms": [
-            2.98,
-            3.68,
-            2.92,
+            2.89,
             2.7,
-            2.66
+            2.87,
+            2.72,
+            2.77
           ],
           "error": null
         },
         "GOL Tool": {
-          "median_ms": 3.33,
+          "median_ms": 3.15,
           "rounds_ms": [
-            3.24,
-            4.37,
-            3.48,
-            3.33,
-            3.11
+            3.13,
+            3.32,
+            3.15,
+            3.29,
+            3.1
           ],
           "error": null
         }
@@ -535,24 +587,24 @@
       "verified": true,
       "engines": {
         "Regol": {
-          "median_ms": 2.94,
+          "median_ms": 2.93,
           "rounds_ms": [
             2.88,
-            5.01,
-            2.88,
-            5.6,
-            2.94
+            3.71,
+            2.93,
+            3.07,
+            2.87
           ],
           "error": null
         },
         "GOL Tool": {
-          "median_ms": 5.09,
+          "median_ms": 4.85,
           "rounds_ms": [
-            5.09,
-            3.43,
-            5.82,
-            5.99,
-            4.99
+            4.85,
+            3.24,
+            5.38,
+            3.34,
+            5.56
           ],
           "error": null
         }
@@ -568,24 +620,24 @@
       "verified": true,
       "engines": {
         "Regol": {
-          "median_ms": 7.15,
+          "median_ms": 4.84,
           "rounds_ms": [
             4.54,
-            7.68,
-            7.9,
-            5.95,
-            7.15
+            4.84,
+            7.55,
+            4.69,
+            6.66
           ],
           "error": null
         },
         "GOL Tool": {
-          "median_ms": 6.04,
+          "median_ms": 5.9,
           "rounds_ms": [
-            4.43,
-            8.07,
-            6.75,
-            4.5,
-            6.04
+            5.9,
+            6.37,
+            5.36,
+            7.27,
+            5.29
           ],
           "error": null
         }
@@ -601,24 +653,24 @@
       "verified": true,
       "engines": {
         "Regol": {
-          "median_ms": 16.64,
+          "median_ms": 16.98,
           "rounds_ms": [
-            16.9,
-            16.35,
-            16.64,
-            17.1,
-            16.47
+            16.49,
+            18.22,
+            16.98,
+            17.16,
+            16.73
           ],
           "error": null
         },
         "GOL Tool": {
-          "median_ms": 20.45,
+          "median_ms": 19.14,
           "rounds_ms": [
-            20.85,
-            20.45,
-            22.35,
-            16.45,
-            15.82
+            15.39,
+            20.23,
+            16.07,
+            19.14,
+            20.58
           ],
           "error": null
         }
@@ -634,24 +686,24 @@
       "verified": true,
       "engines": {
         "Regol": {
-          "median_ms": 14.56,
+          "median_ms": 14.76,
           "rounds_ms": [
-            14.01,
-            15.97,
-            14.23,
-            16.84,
-            14.56
+            14.06,
+            16.66,
+            14.76,
+            17.37,
+            14.06
           ],
           "error": null
         },
         "GOL Tool": {
-          "median_ms": 17.68,
+          "median_ms": 18.85,
           "rounds_ms": [
-            17.68,
-            20.6,
-            17.61,
-            16.18,
-            20.23
+            19.24,
+            18.03,
+            18.85,
+            20.44,
+            16.45
           ],
           "error": null
         }
@@ -669,19 +721,19 @@
       "verified": true,
       "engines": {
         "regol": {
-          "median_ms": 31.32,
+          "median_ms": 31.53,
           "rounds_ms": [
-            34.51,
-            31.14,
-            31.32
+            32.54,
+            31.53,
+            31.41
           ]
         },
         "python": {
-          "median_ms": 67.64,
+          "median_ms": 67.71,
           "rounds_ms": [
-            67.69,
-            67.39,
-            67.64
+            67.71,
+            68.53,
+            67.01
           ]
         }
       }
@@ -696,19 +748,19 @@
       "verified": true,
       "engines": {
         "regol": {
-          "median_ms": 127.18,
+          "median_ms": 126.05,
           "rounds_ms": [
-            127.18,
-            126.8,
-            127.24
+            126.6,
+            126.05,
+            125.65
           ]
         },
         "python": {
-          "median_ms": 648.56,
+          "median_ms": 650.48,
           "rounds_ms": [
-            648.56,
-            651.84,
-            648.45
+            650.43,
+            665.43,
+            650.48
           ]
         }
       }
@@ -723,19 +775,19 @@
       "verified": true,
       "engines": {
         "regol": {
-          "median_ms": 1.08,
+          "median_ms": 1.04,
           "rounds_ms": [
-            1.12,
-            1.08,
-            1.05
+            1.04,
+            1.1,
+            1.03
           ]
         },
         "python": {
-          "median_ms": 2.92,
+          "median_ms": 2.94,
           "rounds_ms": [
-            2.89,
-            2.96,
-            2.92
+            2.94,
+            2.94,
+            2.94
           ]
         }
       }
@@ -750,19 +802,19 @@
       "verified": true,
       "engines": {
         "regol": {
-          "median_ms": 1.38,
+          "median_ms": 1.37,
           "rounds_ms": [
+            1.35,
             1.39,
-            1.38,
-            1.36
+            1.37
           ]
         },
         "python": {
-          "median_ms": 6.0,
+          "median_ms": 5.96,
           "rounds_ms": [
-            6.3,
-            6.0,
-            5.88
+            5.96,
+            5.95,
+            6.0
           ]
         }
       }
@@ -779,17 +831,17 @@
         "regol": {
           "median_ms": 5.77,
           "rounds_ms": [
-            5.79,
-            5.74,
-            5.77
+            5.77,
+            5.76,
+            6.38
           ]
         },
         "python": {
-          "median_ms": 17.74,
+          "median_ms": 17.92,
           "rounds_ms": [
-            17.71,
-            17.74,
-            17.82
+            18.03,
+            17.83,
+            17.92
           ]
         }
       }
@@ -804,19 +856,19 @@
       "verified": true,
       "engines": {
         "regol": {
-          "median_ms": 1.88,
+          "median_ms": 1.9,
           "rounds_ms": [
-            1.88,
             1.91,
-            1.83
+            1.89,
+            1.9
           ]
         },
         "python": {
-          "median_ms": 8.88,
+          "median_ms": 8.87,
           "rounds_ms": [
-            8.88,
-            8.78,
-            8.9
+            8.87,
+            8.95,
+            8.82
           ]
         }
       }
@@ -831,19 +883,19 @@
       "verified": true,
       "engines": {
         "regol": {
-          "median_ms": 122.01,
+          "median_ms": 123.22,
           "rounds_ms": [
-            122.12,
-            122.01,
-            121.92
+            122.41,
+            123.22,
+            123.83
           ]
         },
         "python": {
-          "median_ms": 285.94,
+          "median_ms": 284.99,
           "rounds_ms": [
-            288.73,
-            285.94,
-            284.19
+            283.74,
+            284.99,
+            289.6
           ]
         }
       }
@@ -861,16 +913,16 @@
           "median_ms": 0.45,
           "rounds_ms": [
             0.45,
-            0.47,
+            0.45,
             0.45
           ]
         },
         "python": {
-          "median_ms": 1.09,
+          "median_ms": 1.1,
           "rounds_ms": [
             1.05,
-            1.09,
-            1.15
+            1.16,
+            1.1
           ]
         }
       }
@@ -885,19 +937,19 @@
       "verified": true,
       "engines": {
         "regol": {
-          "median_ms": 29.18,
+          "median_ms": 29.37,
           "rounds_ms": [
-            30.01,
-            29.18,
-            29.13
+            29.37,
+            29.05,
+            29.42
           ]
         },
         "python": {
-          "median_ms": 62.54,
+          "median_ms": 62.82,
           "rounds_ms": [
-            62.72,
-            62.54,
-            62.18
+            62.15,
+            63.99,
+            62.82
           ]
         }
       }
@@ -912,19 +964,165 @@
       "verified": true,
       "engines": {
         "regol": {
-          "median_ms": 1.11,
+          "median_ms": 1.19,
           "rounds_ms": [
-            1.11,
-            1.11,
-            1.2
+            1.22,
+            1.18,
+            1.19
           ]
         },
         "python": {
-          "median_ms": 6.14,
+          "median_ms": 5.99,
           "rounds_ms": [
-            5.89,
-            6.14,
-            6.33
+            5.95,
+            6.16,
+            5.99
+          ]
+        }
+      }
+    }
+  ],
+  "corpus": [
+    {
+      "key": "uk-corpus-iterate",
+      "cohort": "iterate",
+      "label": "Identity streams",
+      "cases": 224,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 949.8,
+          "rounds_ms": [
+            953.26,
+            945.97,
+            949.8
+          ]
+        },
+        "python": {
+          "median_ms": 1436.24,
+          "rounds_ms": [
+            1429.88,
+            1436.24,
+            1453.67
+          ]
+        },
+        "java": {
+          "median_ms": 2660.51,
+          "rounds_ms": [
+            2660.51,
+            3625.4,
+            2258.77
+          ]
+        }
+      }
+    },
+    {
+      "key": "uk-corpus-tags",
+      "cohort": "tags",
+      "label": "Tag decoding",
+      "cases": 110,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 285.52,
+          "rounds_ms": [
+            285.52,
+            287.23,
+            285.42
+          ]
+        },
+        "python": {
+          "median_ms": 691.81,
+          "rounds_ms": [
+            688.07,
+            695.77,
+            691.81
+          ]
+        },
+        "java": {
+          "median_ms": 847.39,
+          "rounds_ms": [
+            847.39,
+            1007.33,
+            705.71
+          ]
+        }
+      }
+    },
+    {
+      "key": "uk-corpus-geometry",
+      "cohort": "geometry",
+      "label": "Geometry assembly",
+      "cases": 100,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 197.85,
+          "rounds_ms": [
+            199.52,
+            197.85,
+            197.47
+          ]
+        },
+        "python": {
+          "median_ms": 464.03,
+          "rounds_ms": [
+            458.67,
+            464.03,
+            468.91
+          ]
+        },
+        "java": {
+          "median_ms": 932.48,
+          "rounds_ms": [
+            932.48,
+            989.54,
+            867.23
+          ]
+        }
+      }
+    },
+    {
+      "key": "uk-corpus-total",
+      "cohort": "total",
+      "label": "All matched cohorts",
+      "cases": 434,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 1432.69,
+          "rounds_ms": [
+            1438.3,
+            1431.05,
+            1432.69
+          ]
+        },
+        "python": {
+          "median_ms": 2596.04,
+          "rounds_ms": [
+            2576.62,
+            2596.04,
+            2614.39
+          ]
+        },
+        "java": {
+          "median_ms": 4440.38,
+          "rounds_ms": [
+            4440.38,
+            5622.26,
+            3831.71
           ]
         }
       }

@@ -1,0 +1,1131 @@
+{
+  "id": "2026-11-22T110940Z-49fa7aa",
+  "timestamp": "2026-11-22T11:09:40.964293Z",
+  "commit": "49fa7aa06e9c4abc33c1a5b6a531bed056e289bc",
+  "short_commit": "49fa7aa",
+  "commit_date": "2026-11-21T22:50:50Z",
+  "commit_subject": "Initial public release of regol 0.2.0",
+  "tag": "v0.2.0",
+  "regol_version": "0.2.0",
+  "rustc": "rustc 1.100.0 (0ef1bc386 2026-11-09)",
+  "machine_id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+  "machine": {
+    "id": "intel-xeon-cpu-e3-1245-v2-3-40ghz-31g",
+    "label": "Intel(R) Xeon(R) CPU E3-1245 V2 @ 3.40GHz (4C/8T) \u00b7 31 GiB RAM \u00b7 HDD (7200 RPM)",
+    "cpu": "Intel(R) Xeon(R) CPU E3-1245 V2 @ 3.40GHz",
+    "cores": 4,
+    "threads": 8,
+    "ram_gib": 31,
+    "storage": "HDD (7200 RPM)",
+    "os": "Linux 7.2.12+deb14-amd64 (x86_64)"
+  },
+  "competitors": {
+    "geodesk_python": "2.3.1",
+    "shapely": "2.2.0",
+    "gol_tool": "2.0.0",
+    "gol_tool_legacy": "2.0.0",
+    "geodesk_java": "2.1.0",
+    "java_runtime": "openjdk version \"25.0.5\" 2026-10-20"
+  },
+  "datasets": {
+    "monaco": {
+      "gol_bytes": 1003520,
+      "gol_sha256": "40aa0d924505496ec0d5ed101dc70dc6a989e882d884cfcaea07ebfe8bdc8cc0",
+      "pbf_sha256": "2c0debd7676c0d0d80ec534251cb004a6797441d14512cb83d01fe1ad81363bf"
+    },
+    "liechtenstein": {
+      "gol_bytes": 5537792,
+      "gol_sha256": "b6adbbc7779a32419a6fa78324d6f26fe5c8108db44dd3912a10165f13aa681b",
+      "pbf_sha256": "38c281920dcf599754a1e58f399b88c35d18b40dff932bd4dd926aa1a79cda76"
+    },
+    "bremen": {
+      "gol_bytes": 38895616,
+      "gol_sha256": "c54d28dbf54e7c40de5e609a007938e286756423788e04a9fc667bdcf3ca2d5a",
+      "pbf_sha256": "f53e7d31150ddb34a6464282ec58422c1dd8f16a7f69f7dee060d44a8fac9b51"
+    },
+    "ghana": {
+      "gol_bytes": 205615104,
+      "gol_sha256": "829cd079229c05f83f82837b7a13cd0e07b9fefdaa7b9f07e3abee43efa1c9b2",
+      "pbf_sha256": "64a00500ad5f8670ec23eee0099a4c696f0f14c9892b373744cdce7423a4c8f6"
+    },
+    "uk": {
+      "gol_bytes": 3808686080,
+      "gol_sha256": "56cb7135cc147c4bbea662aab0fa751131a7768ffa2cc1f2fc744ded55f4cfab",
+      "pbf_sha256": "2ac3b0550d7c8e0666f6a45f06b419dfbc3cda55469ae352349c78b577294a33"
+    }
+  },
+  "writers": [
+    {
+      "key": "monaco-1c",
+      "dataset": "monaco",
+      "cores": 1,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 80.76,
+          "wall_ms_rounds": [
+            80.76,
+            74.38,
+            82.4
+          ],
+          "peak_rss_mib": 31.35,
+          "output_mib": 0.93,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 943.0,
+          "wall_ms_rounds": [
+            943.0,
+            934.72,
+            943.24
+          ],
+          "peak_rss_mib": 588.61,
+          "output_mib": 0.95,
+          "verified": true
+        }
+      }
+    },
+    {
+      "key": "monaco-4c",
+      "dataset": "monaco",
+      "cores": 4,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 72.24,
+          "wall_ms_rounds": [
+            72.24,
+            70.87,
+            82.95
+          ],
+          "peak_rss_mib": 31.35,
+          "output_mib": 0.93,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 804.89,
+          "wall_ms_rounds": [
+            795.79,
+            804.89,
+            819.58
+          ],
+          "peak_rss_mib": 586.59,
+          "output_mib": 0.95,
+          "verified": true
+        }
+      }
+    },
+    {
+      "key": "bremen-1c",
+      "dataset": "bremen",
+      "cores": 1,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 1533.17,
+          "wall_ms_rounds": [
+            1533.17,
+            1646.11,
+            1531.61
+          ],
+          "peak_rss_mib": 162.18,
+          "output_mib": 36.24,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 5300.37,
+          "wall_ms_rounds": [
+            5412.3,
+            5300.37,
+            5261.62
+          ],
+          "peak_rss_mib": 1119.78,
+          "output_mib": 37.09,
+          "verified": true
+        }
+      }
+    },
+    {
+      "key": "bremen-4c",
+      "dataset": "bremen",
+      "cores": 4,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 816.74,
+          "wall_ms_rounds": [
+            816.74,
+            1031.22,
+            796.58
+          ],
+          "peak_rss_mib": 220.26,
+          "output_mib": 36.24,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 2831.38,
+          "wall_ms_rounds": [
+            2844.08,
+            2831.38,
+            2805.2
+          ],
+          "peak_rss_mib": 1117.48,
+          "output_mib": 37.09,
+          "verified": true
+        }
+      }
+    },
+    {
+      "key": "ghana-1c",
+      "dataset": "ghana",
+      "cores": 1,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 8908.05,
+          "wall_ms_rounds": [
+            8908.05,
+            8819.87,
+            9320.99
+          ],
+          "peak_rss_mib": 914.2,
+          "output_mib": 196.09,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 17083.1,
+          "wall_ms_rounds": [
+            17083.1,
+            16908.32,
+            17340.19
+          ],
+          "peak_rss_mib": 1565.54,
+          "output_mib": 196.79,
+          "verified": true
+        }
+      }
+    },
+    {
+      "key": "ghana-4c",
+      "dataset": "ghana",
+      "cores": 4,
+      "ref_engine": "geodesk",
+      "ref_label": "GOL Tool 2.0.0",
+      "engines": {
+        "regol": {
+          "wall_ms_median": 4048.18,
+          "wall_ms_rounds": [
+            3992.37,
+            4235.13,
+            4048.18
+          ],
+          "peak_rss_mib": 916.25,
+          "output_mib": 196.09,
+          "verified": true
+        },
+        "geodesk": {
+          "wall_ms_median": 6869.88,
+          "wall_ms_rounds": [
+            6868.15,
+            7053.19,
+            6869.88
+          ],
+          "peak_rss_mib": 1547.11,
+          "output_mib": 196.79,
+          "verified": true
+        }
+      }
+    }
+  ],
+  "scale": [
+    {
+      "key": "monaco-1c-warm",
+      "dataset": "monaco",
+      "gol_mib": 0.96,
+      "cores": 1,
+      "cache": "warm",
+      "engines": {
+        "regol": {
+          "median_ms": 0.402,
+          "rounds_ms": [
+            0.398,
+            0.403,
+            0.409,
+            0.402,
+            0.369
+          ]
+        },
+        "python": {
+          "median_ms": 0.61,
+          "rounds_ms": [
+            0.593,
+            0.596,
+            0.65,
+            0.614,
+            0.61
+          ]
+        },
+        "java": {
+          "median_ms": 51.267,
+          "rounds_ms": [
+            65.105,
+            50.357,
+            49.984,
+            51.267,
+            60.309
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "key": "liechtenstein-1c-warm",
+      "dataset": "liechtenstein",
+      "gol_mib": 5.28,
+      "cores": 1,
+      "cache": "warm",
+      "engines": {
+        "regol": {
+          "median_ms": 0.262,
+          "rounds_ms": [
+            0.566,
+            0.325,
+            0.262,
+            0.262,
+            0.23
+          ]
+        },
+        "python": {
+          "median_ms": 0.622,
+          "rounds_ms": [
+            0.621,
+            0.653,
+            0.615,
+            0.622,
+            0.624
+          ]
+        },
+        "java": {
+          "median_ms": 60.086,
+          "rounds_ms": [
+            62.814,
+            66.29,
+            55.08,
+            60.086,
+            52.806
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "key": "bremen-1c-warm",
+      "dataset": "bremen",
+      "gol_mib": 37.09,
+      "cores": 1,
+      "cache": "warm",
+      "engines": {
+        "regol": {
+          "median_ms": 0.579,
+          "rounds_ms": [
+            0.705,
+            0.549,
+            0.557,
+            0.624,
+            0.579
+          ]
+        },
+        "python": {
+          "median_ms": 0.974,
+          "rounds_ms": [
+            0.997,
+            0.988,
+            0.927,
+            0.921,
+            0.974
+          ]
+        },
+        "java": {
+          "median_ms": 62.568,
+          "rounds_ms": [
+            61.882,
+            62.568,
+            70.035,
+            61.677,
+            79.01
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "key": "ghana-1c-warm",
+      "dataset": "ghana",
+      "gol_mib": 196.09,
+      "cores": 1,
+      "cache": "warm",
+      "engines": {
+        "regol": {
+          "median_ms": 0.412,
+          "rounds_ms": [
+            0.599,
+            0.408,
+            0.412,
+            0.414,
+            0.391
+          ]
+        },
+        "python": {
+          "median_ms": 1.452,
+          "rounds_ms": [
+            1.452,
+            1.586,
+            1.387,
+            1.417,
+            1.468
+          ]
+        },
+        "java": {
+          "median_ms": 68.513,
+          "rounds_ms": [
+            70.94,
+            78.318,
+            68.513,
+            65.445,
+            57.881
+          ]
+        }
+      },
+      "verified": true
+    },
+    {
+      "key": "uk-1c-warm",
+      "dataset": "uk",
+      "gol_mib": 3632.25,
+      "cores": 1,
+      "cache": "warm",
+      "engines": {
+        "regol": {
+          "median_ms": 1.747,
+          "rounds_ms": [
+            1.812,
+            1.747,
+            1.87,
+            1.178,
+            1.741
+          ]
+        },
+        "python": {
+          "median_ms": 2.002,
+          "rounds_ms": [
+            1.984,
+            1.97,
+            2.069,
+            2.06,
+            2.002
+          ]
+        },
+        "java": {
+          "median_ms": 77.67,
+          "rounds_ms": [
+            70.343,
+            77.67,
+            72.118,
+            82.078,
+            92.959
+          ]
+        }
+      },
+      "verified": true
+    }
+  ],
+  "cli": [
+    {
+      "key": "leeds-cafes-count",
+      "dataset": "uk (Leeds bbox)",
+      "query": "n[amenity=cafe]",
+      "format": "count",
+      "cores": 2,
+      "selected": 213,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 2.69,
+          "rounds_ms": [
+            4.3,
+            2.65,
+            2.59,
+            2.81,
+            2.69
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 3.08,
+          "rounds_ms": [
+            3.07,
+            3.08,
+            3.25,
+            3.75,
+            2.95
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-cafes-csv",
+      "dataset": "uk (Leeds bbox)",
+      "query": "n[amenity=cafe]",
+      "format": "csv",
+      "cores": 2,
+      "selected": 213,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 2.52,
+          "rounds_ms": [
+            2.54,
+            2.71,
+            2.52,
+            2.51,
+            2.52
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 3.05,
+          "rounds_ms": [
+            3.01,
+            3.15,
+            3.05,
+            3.64,
+            2.86
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-cafes-geojson",
+      "dataset": "uk (Leeds bbox)",
+      "query": "n[amenity=cafe]",
+      "format": "geojson",
+      "cores": 2,
+      "selected": 213,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 2.86,
+          "rounds_ms": [
+            3.91,
+            2.86,
+            2.83,
+            2.95,
+            2.66
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 3.45,
+          "rounds_ms": [
+            3.45,
+            3.17,
+            3.99,
+            3.51,
+            3.36
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-cafes-geojsonl",
+      "dataset": "uk (Leeds bbox)",
+      "query": "n[amenity=cafe]",
+      "format": "geojsonl",
+      "cores": 2,
+      "selected": 213,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 2.77,
+          "rounds_ms": [
+            2.89,
+            2.7,
+            2.87,
+            2.72,
+            2.77
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 3.15,
+          "rounds_ms": [
+            3.13,
+            3.32,
+            3.15,
+            3.29,
+            3.1
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-roads-count",
+      "dataset": "uk (Leeds bbox)",
+      "query": "w[highway]",
+      "format": "count",
+      "cores": 2,
+      "selected": 11189,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 2.93,
+          "rounds_ms": [
+            2.88,
+            3.71,
+            2.93,
+            3.07,
+            2.87
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 4.85,
+          "rounds_ms": [
+            4.85,
+            3.24,
+            5.38,
+            3.34,
+            5.56
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-roads-csv",
+      "dataset": "uk (Leeds bbox)",
+      "query": "w[highway]",
+      "format": "csv",
+      "cores": 2,
+      "selected": 11189,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 4.84,
+          "rounds_ms": [
+            4.54,
+            4.84,
+            7.55,
+            4.69,
+            6.66
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 5.9,
+          "rounds_ms": [
+            5.9,
+            6.37,
+            5.36,
+            7.27,
+            5.29
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-roads-geojson",
+      "dataset": "uk (Leeds bbox)",
+      "query": "w[highway]",
+      "format": "geojson",
+      "cores": 2,
+      "selected": 11189,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 16.98,
+          "rounds_ms": [
+            16.49,
+            18.22,
+            16.98,
+            17.16,
+            16.73
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 19.14,
+          "rounds_ms": [
+            15.39,
+            20.23,
+            16.07,
+            19.14,
+            20.58
+          ],
+          "error": null
+        }
+      }
+    },
+    {
+      "key": "leeds-roads-geojsonl",
+      "dataset": "uk (Leeds bbox)",
+      "query": "w[highway]",
+      "format": "geojsonl",
+      "cores": 2,
+      "selected": 11189,
+      "verified": true,
+      "engines": {
+        "Regol": {
+          "median_ms": 14.76,
+          "rounds_ms": [
+            14.06,
+            16.66,
+            14.76,
+            17.37,
+            14.06
+          ],
+          "error": null
+        },
+        "GOL Tool": {
+          "median_ms": 18.85,
+          "rounds_ms": [
+            19.24,
+            18.03,
+            18.85,
+            20.44,
+            16.45
+          ],
+          "error": null
+        }
+      }
+    }
+  ],
+  "applications": [
+    {
+      "key": "osm2world-reader",
+      "id": "osm2world",
+      "label": "osm2world",
+      "interface": "Java",
+      "kind": "reader",
+      "cores": 1,
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 31.53,
+          "rounds_ms": [
+            32.54,
+            31.53,
+            31.41
+          ]
+        },
+        "python": {
+          "median_ms": 67.71,
+          "rounds_ms": [
+            67.71,
+            68.53,
+            67.01
+          ]
+        }
+      }
+    },
+    {
+      "key": "ascend-reader",
+      "id": "ascend",
+      "label": "ascend",
+      "interface": "C++",
+      "kind": "reader",
+      "cores": 1,
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 126.05,
+          "rounds_ms": [
+            126.6,
+            126.05,
+            125.65
+          ]
+        },
+        "python": {
+          "median_ms": 650.48,
+          "rounds_ms": [
+            650.43,
+            665.43,
+            650.48
+          ]
+        }
+      }
+    },
+    {
+      "key": "openplanetdata-reader",
+      "id": "openplanetdata",
+      "label": "openplanetdata",
+      "interface": "Airflow \u2192 gol CLI",
+      "kind": "reader",
+      "cores": 1,
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 1.04,
+          "rounds_ms": [
+            1.04,
+            1.1,
+            1.03
+          ]
+        },
+        "python": {
+          "median_ms": 2.94,
+          "rounds_ms": [
+            2.94,
+            2.94,
+            2.94
+          ]
+        }
+      }
+    },
+    {
+      "key": "cesium-reader",
+      "id": "cesium",
+      "label": "cesium",
+      "interface": "C++ / Unreal",
+      "kind": "reader",
+      "cores": 1,
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 1.37,
+          "rounds_ms": [
+            1.35,
+            1.39,
+            1.37
+          ]
+        },
+        "python": {
+          "median_ms": 5.96,
+          "rounds_ms": [
+            5.96,
+            5.95,
+            6.0
+          ]
+        }
+      }
+    },
+    {
+      "key": "osm-extractor-reader",
+      "id": "osm-extractor",
+      "label": "osm-extractor",
+      "interface": "Node.js \u2192 gol CLI",
+      "kind": "reader",
+      "cores": 1,
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 5.77,
+          "rounds_ms": [
+            5.77,
+            5.76,
+            6.38
+          ]
+        },
+        "python": {
+          "median_ms": 17.92,
+          "rounds_ms": [
+            18.03,
+            17.83,
+            17.92
+          ]
+        }
+      }
+    },
+    {
+      "key": "world2pixel-reader",
+      "id": "world2pixel",
+      "label": "world2pixel",
+      "interface": "C++",
+      "kind": "reader",
+      "cores": 1,
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 1.9,
+          "rounds_ms": [
+            1.91,
+            1.89,
+            1.9
+          ]
+        },
+        "python": {
+          "median_ms": 8.87,
+          "rounds_ms": [
+            8.87,
+            8.95,
+            8.82
+          ]
+        }
+      }
+    },
+    {
+      "key": "next-higher-reader",
+      "id": "next-higher",
+      "label": "next-higher",
+      "interface": "Java",
+      "kind": "reader",
+      "cores": 1,
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 123.22,
+          "rounds_ms": [
+            122.41,
+            123.22,
+            123.83
+          ]
+        },
+        "python": {
+          "median_ms": 284.99,
+          "rounds_ms": [
+            283.74,
+            284.99,
+            289.6
+          ]
+        }
+      }
+    },
+    {
+      "key": "campsbourne-reader",
+      "id": "campsbourne",
+      "label": "campsbourne",
+      "interface": "Python notebook",
+      "kind": "reader",
+      "cores": 1,
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 0.45,
+          "rounds_ms": [
+            0.45,
+            0.45,
+            0.45
+          ]
+        },
+        "python": {
+          "median_ms": 1.1,
+          "rounds_ms": [
+            1.05,
+            1.16,
+            1.1
+          ]
+        }
+      }
+    },
+    {
+      "key": "varna-reader",
+      "id": "varna",
+      "label": "varna",
+      "interface": "C++",
+      "kind": "reader",
+      "cores": 1,
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 29.37,
+          "rounds_ms": [
+            29.37,
+            29.05,
+            29.42
+          ]
+        },
+        "python": {
+          "median_ms": 62.82,
+          "rounds_ms": [
+            62.15,
+            63.99,
+            62.82
+          ]
+        }
+      }
+    },
+    {
+      "key": "hillbomb-reader",
+      "id": "hillbomb",
+      "label": "hillbomb",
+      "interface": "Python",
+      "kind": "reader",
+      "cores": 1,
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 1.19,
+          "rounds_ms": [
+            1.22,
+            1.18,
+            1.19
+          ]
+        },
+        "python": {
+          "median_ms": 5.99,
+          "rounds_ms": [
+            5.95,
+            6.16,
+            5.99
+          ]
+        }
+      }
+    }
+  ],
+  "corpus": [
+    {
+      "key": "uk-corpus-iterate",
+      "cohort": "iterate",
+      "label": "Identity streams",
+      "cases": 224,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 949.8,
+          "rounds_ms": [
+            953.26,
+            945.97,
+            949.8
+          ]
+        },
+        "python": {
+          "median_ms": 1436.24,
+          "rounds_ms": [
+            1429.88,
+            1436.24,
+            1453.67
+          ]
+        },
+        "java": {
+          "median_ms": 2660.51,
+          "rounds_ms": [
+            2660.51,
+            3625.4,
+            2258.77
+          ]
+        }
+      }
+    },
+    {
+      "key": "uk-corpus-tags",
+      "cohort": "tags",
+      "label": "Tag decoding",
+      "cases": 110,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 285.52,
+          "rounds_ms": [
+            285.52,
+            287.23,
+            285.42
+          ]
+        },
+        "python": {
+          "median_ms": 691.81,
+          "rounds_ms": [
+            688.07,
+            695.77,
+            691.81
+          ]
+        },
+        "java": {
+          "median_ms": 847.39,
+          "rounds_ms": [
+            847.39,
+            1007.33,
+            705.71
+          ]
+        }
+      }
+    },
+    {
+      "key": "uk-corpus-geometry",
+      "cohort": "geometry",
+      "label": "Geometry assembly",
+      "cases": 100,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 197.85,
+          "rounds_ms": [
+            199.52,
+            197.85,
+            197.47
+          ]
+        },
+        "python": {
+          "median_ms": 464.03,
+          "rounds_ms": [
+            458.67,
+            464.03,
+            468.91
+          ]
+        },
+        "java": {
+          "median_ms": 932.48,
+          "rounds_ms": [
+            932.48,
+            989.54,
+            867.23
+          ]
+        }
+      }
+    },
+    {
+      "key": "uk-corpus-total",
+      "cohort": "total",
+      "label": "All matched cohorts",
+      "cases": 434,
+      "total_spec_cases": 524,
+      "cores": 1,
+      "cache": "warm",
+      "verified": true,
+      "engines": {
+        "regol": {
+          "median_ms": 1432.69,
+          "rounds_ms": [
+            1438.3,
+            1431.05,
+            1432.69
+          ]
+        },
+        "python": {
+          "median_ms": 2596.04,
+          "rounds_ms": [
+            2576.62,
+            2596.04,
+            2614.39
+          ]
+        },
+        "java": {
+          "median_ms": 4440.38,
+          "rounds_ms": [
+            4440.38,
+            5622.26,
+            3831.71
+          ]
+        }
+      }
+    }
+  ]
+}
