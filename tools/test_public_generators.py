@@ -9,8 +9,9 @@ from generators import corpus_rows, paired_row, workflow_pair
 
 class PublicGeneratorTests(unittest.TestCase):
     def test_paired_ratios_are_calculated_before_median(self):
-        row = paired_row('q', 'Q', 'java', [1, 10, 100], [2, 8, 70], 1)
+        row = paired_row('q', 'Q', 'java', [1, 10, 100], [2, 8, 5], 1)
         self.assertAlmostEqual(row['saved_pct'], 20)
+        self.assertEqual(row['regol_ms'], 5)  # Ratio of medians would incorrectly show 50%.
         with self.assertRaises(ValueError):
             paired_row('q', 'Q', 'java', [1, 2], [1], 1)
 

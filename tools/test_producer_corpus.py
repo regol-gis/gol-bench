@@ -144,7 +144,11 @@ class ProducerComparison(unittest.TestCase):
             output = d/'summary'
             cmd = [sys.executable, ROOT/'tools/summarize_producer_corpus.py', d/'timings.gz',
                    *checks, '--spec', d/'spec.json', '--output', output]
-            subprocess.run(cmd, check=True)
+            reference = d/'reference-summary.json'
+            subprocess.run([*cmd, '--reference-summary', reference], check=True)
+            legacy = json.loads(reference.read_bytes())
+            self.assertEqual(legacy['cohorts']['tags']['cases'], sorted(names))
+            self.assertEqual(set(legacy['cohorts']['tags']['prepare_and_scan_ms']), {'geodesk/python/1'})
             summary = json.loads(output.read_text())
             tags = summary['cohorts']['tags']
             self.assertIn({'name': 'different', 'operation': 'tags', 'role': 'candidate_selector',
