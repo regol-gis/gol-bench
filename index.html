@@ -100,6 +100,7 @@
             <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="scale">Scale</button>
             <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="cli">CLI exports</button>
             <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="applications">UK applications</button>
+            <button type="button" class="suite-tab" role="tab" aria-selected="false" data-suite="corpus">UK corpus (524)</button>
           </div>
         </div>
 
@@ -132,6 +133,7 @@
               <option value="scale">Scale (viewport histories)</option>
               <option value="cli">CLI exports (Leeds bbox)</option>
               <option value="applications">UK applications</option>
+              <option value="corpus">UK corpus (524 queries)</option>
             </select>
           </label>
           <label class="control control-wide">
@@ -199,13 +201,17 @@
             <dl class="kv-list" id="env-list"></dl>
           </div>
           <div class="panel">
-            <h3>Verification &amp; reproducibility</h3>
+            <h3>What each suite measures</h3>
             <ul class="method-list">
-              <li>Every timed workload is checked in a separate verification pass outside the timer; unverified results are excluded.</li>
-              <li>Inputs come from public, checksum-verified Geofabrik OpenStreetMap PBF snapshots (Monaco, Liechtenstein, Bremen, Ghana, and United Kingdom).</li>
-              <li>Processes are pinned with Linux <code>taskset</code>, arms are rotated in balanced Williams order, and warm runs verify full page residency.</li>
-              <li>Harness source and replay instructions live at <a href="https://github.com/regol-gis/gol-bench" rel="noopener">github.com/regol-gis/gol-bench</a>.</li>
+              <li><strong>Writers:</strong> Compiles public Geofabrik <code>.osm.pbf</code> files into GOL 2.0 databases (1 &amp; 4 CPUs, warm input), measuring wall time, peak RSS, and file size while verifying output feature equivalence.</li>
+              <li><strong>Scale:</strong> Replays the same 5-step interactive map-editor viewport session per city (open streets <code>w[highway]</code>, amenities <code>n[amenity]</code>, cafés <code>*[amenity=cafe]</code>, pan east, zoom into crossings <code>n[highway=crossing]</code>) across datasets from 1 MiB (Monaco) to 3.6 GiB (UK) to show how query latency scales with total database size (1 CPU, warm cache).</li>
+              <li><strong>CLI exports:</strong> Fresh-process counts and <code>csv</code>, <code>geojson</code>, and <code>geojsonl</code> exports over a Leeds bounding box on the 3.63 GiB UK GOL (2 CPUs), checking decoded output equivalence.</li>
+              <li><strong>UK applications:</strong> Ten realistic multi-step OpenStreetMap application replays against the 3.63 GiB UK GOL (1 CPU), verifying identical digests across engines.</li>
+              <li><strong>UK corpus (524 queries):</strong> Broad 524-case UK query corpus aggregated into three verified cohorts—identity streams, tag decoding, and geometry assembly (1 CPU, warm cache).</li>
             </ul>
+            <p class="plot-note">
+              Processes are pinned with Linux <code>taskset</code>, arms rotate in Williams order, and every timed output is verified outside the timer. Harness source: <a href="https://github.com/regol-gis/gol-bench" rel="noopener">github.com/regol-gis/gol-bench</a>.
+            </p>
           </div>
         </div>
       </div>

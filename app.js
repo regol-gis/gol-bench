@@ -88,6 +88,14 @@
     return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
   }
 
+  var SUITE_DESCRIPTIONS = {
+    writers: "Compiles public Geofabrik .osm.pbf extracts into GOL 2.0 files (1 & 4 CPUs, warm input) and verifies output features. Lower is faster.",
+    scale: "Replays an identical 5-step map-editor viewport session per city (streets w[highway], amenities n[amenity], cafés *[amenity=cafe], pan east, and zoom to crossings n[highway=crossing]) across databases from 1 MiB (Monaco) to 3.6 GiB (UK), showing how viewport query latency scales with total file size (1 CPU, warm cache).",
+    cli: "Fresh-process command-line counts and exports (csv, geojson, geojsonl) over a Leeds bounding box on the 3.63 GiB UK GOL (2 CPUs), verifying decoded output equivalence.",
+    applications: "Ten realistic multi-step OpenStreetMap application workflows replayed against the 3.63 GiB UK GOL (1 CPU), verifying identical feature digests across engines.",
+    corpus: "524-query UK corpus grouped into three verified matched cohorts (identity streams, tag decoding, and geometry assembly) plus their combined total (1 CPU, warm cache)."
+  };
+
   function suiteRowsFromLatest(suite) {
     if (!state.latest) return [];
     var golLabel = "GOL Tool " + ((state.latest.competitors && state.latest.competitors.gol_tool) || "2.0.0");
@@ -112,13 +120,20 @@
       });
     }
     if (suite === "scale") {
+      var cityNote = {
+        monaco: "Monaco (5 queries)",
+        liechtenstein: "Vaduz (5 queries)",
+        bremen: "Bremen (5 queries)",
+        ghana: "Accra + Kumasi (10 queries)",
+        uk: "Bristol + Belfast (10 queries)"
+      };
       return (state.latest.scale || []).map(function (r) {
         var reg = r.engines.regol || {};
         var ref = r.engines.python || {};
         return {
           key: r.key,
           label: r.dataset,
-          sub: r.gol_mib + " MiB GOL · 1 CPU · warm",
+          sub: r.gol_mib + " MiB GOL · " + (cityNote[r.dataset] || "viewport history") + " · 1 CPU warm",
           regolMs: reg.median_ms,
           refMs: ref.median_ms,
           regolRounds: reg.rounds_ms || [],
@@ -145,6 +160,23 @@
         };
       });
     }
+    if (suite === "corpus") {
+      return (state.latest.corpus || []).map(function (r) {
+        var reg = r.engines.regol || {};
+        var ref = r.engines.python || {};
+        return {
+          key: r.key,
+          label: r.label,
+          sub: r.cases + " verified matched cases (from 524-query UK spec) · 1 CPU warm",
+          regolMs: reg.median_ms,
+          refMs: ref.median_ms,
+          regolRounds: reg.rounds_ms || [],
+          refRounds: ref.rounds_ms || [],
+          refLabel: "GeoDesk Python",
+          extra: [r.cases + " cases"]
+        };
+      });
+    }
     return (state.latest.applications || []).map(function (r) {
       var isCli = r.kind === "cli";
       var reg = isCli ? (r.engines["regol-cli"] || {}) : (r.engines.regol || {});
@@ -168,6 +200,10 @@
     var chartEl = document.getElementById("latest-chart");
     var legendEl = document.getElementById("latest-legend");
     var tableEl = document.getElementById("latest-table");
+    var subtitleEl = document.getElementById("latest-subtitle");
+    if (subtitleEl && SUITE_DESCRIPTIONS[state.activeSuite]) {
+      subtitleEl.textContent = SUITE_DESCRIPTIONS[state.activeSuite];
+    }
 
     if (!rows.length) {
       legendEl.innerHTML = "";
@@ -221,7 +257,9 @@
         ? '<th class="num">GOL size</th>'
         : state.activeSuite === "cli"
           ? '<th class="num">Features</th>'
-          : '<th>Stage</th>';
+          : state.activeSuite === "corpus"
+            ? '<th class="num">Matched cases</th>'
+            : '<th>Stage</th>';
 
     var body = rows.map(function (r) {
       var ratio = fmtRatio(r.regolMs, r.refMs);
@@ -432,7 +470,7 @@
     var targetRun = runs[Number(document.getElementById("cmp-target").value)] || runs[runs.length - 1];
 
     var rows = [];
-    ["writers", "scale", "cli", "applications"].forEach(function (suite) {
+    ["writers", "scale", "cli", "applications", "corpus"].forEach(function (suite) {
       var map = (state.history && state.history[suite]) || {};
       Object.keys(map).forEach(function (key) {
         var pts = map[key];
