@@ -68,6 +68,11 @@ Release-only samples and residency evidence are linked by `release_file` in
 the manifest and merged into the dashboard. Adding them to a previously measured
 release reuses the original files and keeps the original run record intact.
 
+To measure a performance change on an untagged commit, pass
+`--extended-generators` to `runner/run_public_bench.py`. This includes the
+same cold UK café and paired CLI export measurements as a tagged run.
+`--ref <commit>` pins the reader and writer to the revision being compared.
+
 Use `--suites generators` for a local paired run. The scheduled service includes
 it by default. The writer cache retains one UK native artifact and stages its
 replacement before swapping it in.

@@ -640,6 +640,8 @@ def main():
     parser.add_argument("--jobs", type=int, default=min(4, os.cpu_count() or 2))
     parser.add_argument("--suites", nargs="+", default=["writers", "scale", "cli", "applications", "corpus", "generators"],
                         choices=["writers", "scale", "cli", "applications", "corpus", "generators"])
+    parser.add_argument("--extended-generators", action="store_true",
+                        help="Include the generator suite with cold UK cafés and paired CLI exports on any revision")
     parser.add_argument("--force", action="store_true", help="Run even if this commit is already recorded")
     parser.add_argument("--push", action="store_true", help="Commit and push updated data to gh-pages")
     args = parser.parse_args()
@@ -672,9 +674,11 @@ def main():
         manifest = {"schema_version": 1, "updated_at": None, "machines": {}, "runs": []}
 
     suites = set(args.suites)
+    if args.extended_generators:
+        suites.add("generators")
     recorded = [r for r in manifest["runs"] if r["commit"] == rev["commit"] and r["machine_id"] == machine["id"]]
     prior = [json.loads((pages / r["file"]).read_bytes()) for r in recorded[-1:]]
-    release_due = "generators" in suites and bool(rev["tag"] and rev["tag"].startswith("v"))
+    release_due = "generators" in suites and (args.extended_generators or bool(rev["tag"] and rev["tag"].startswith("v")))
     complete = bool(prior) and all(prior[-1].get(s) for s in suites)
     supplement = complete and release_due and not recorded[-1].get("release_file") and not args.force
     if complete and not args.force and not supplement:
